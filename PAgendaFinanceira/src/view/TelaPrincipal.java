@@ -37,11 +37,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
             e.printStackTrace();
         }
         tabelaPrincipal();
-        diaDaSemana();
-        
+        Calendar c = Calendar.getInstance();
+        int dia = c.get(Calendar.DAY_OF_WEEK);
+        diaDaSemana(dia);
+
     }
     Agenda agenda = new Agenda();
-    String diaSemana;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -396,7 +397,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
         int linha = tblPrincipal.getSelectedRow();
-        
+
         if (evt.getClickCount() == 2) {
             try {
                 dt.setData(sdfD.parse(txtData.getText()));
@@ -418,45 +419,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Caixa c = new Caixa(this, rootPaneCheckingEnabled);
         c.setVisible(true);
     }//GEN-LAST:event_jButton11ActionPerformed
-    
-    public void diaDaSemana() {
-        Calendar c = Calendar.getInstance();
-        int dia = c.get(Calendar.DAY_OF_WEEK);
-        
-        switch (dia) {
-            case 1:
-                diaSemana = "Domingo";
-                lblDiaSemana.setText(diaSemana);
-                break;
-            case 2:
-                diaSemana = "Segunda-Feira";
-                lblDiaSemana.setText(diaSemana);
-                break;
-            case 3:
-                diaSemana = "Terça-Feira";
-                lblDiaSemana.setText(diaSemana);
-                break;
-            case 4:
-                diaSemana = "Quarta-Feira";
-                lblDiaSemana.setText(diaSemana);
-                break;
-            case 5:
-                diaSemana = "Quinta-Feira";
-                lblDiaSemana.setText(diaSemana);
-                break;
-            case 6:
-                diaSemana = "Sexta-Feira";
-                lblDiaSemana.setText(diaSemana);
-                break;
-            case 7:
-                diaSemana = "Sábado";
-                lblDiaSemana.setText(diaSemana);
-                break;
+
+    public void diaDaSemana(int dia) {
+        String diaDaSemana[] = {"Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"};
+        for (int i = 0; i < 6; i++) {
         }
+        lblDiaSemana.setText(diaDaSemana[dia - 1]);
     }
-    
+
     private void tabelaPrincipal() {
-        
+
         ArrayList<String> listaPeriodo = new ArrayList<String>();
 
         //Seta a hora inicial  
@@ -490,7 +462,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
             //Soma o minuto  
             inicial.add(Calendar.MINUTE, minute);
-            
+
         }
 
         //pega o modelo da Tabela e coloca na variavel "model"
