@@ -1,6 +1,8 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -12,7 +14,17 @@ public class Agenda {
     private Date data;
     private Date hora;
     private String descricao;
+    private List<Telefone> listaTelefones;
+    
+    public Agenda(){
+        
+        listaTelefones = new ArrayList<>();
+    }
 
+    public void addTelefone (Telefone telefone){
+        listaTelefones.add(telefone);
+    }
+    
     public Pessoa getPessoa() {
         return pessoa;
     }

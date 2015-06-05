@@ -9,7 +9,10 @@ import entity.Agenda;
 import entity.DataHora;
 import entity.Pessoa;
 import entity.Servico;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -165,6 +168,16 @@ public class Agendamento extends javax.swing.JDialog {
         p.setNome(txtNome.getText());
         a.setPessoa(p);
         a.setDescricao(txtaDescricao.getText());
+        try {
+            a.setData(sdfD.parse(lblData.getText()));
+        } catch (ParseException ex) {
+            Logger.getLogger(Agendamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            a.setHora(sdfH.parse(lblHorario.getText()));
+        } catch (ParseException ex) {
+            Logger.getLogger(Agendamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
     }//GEN-LAST:event_btnSalvarActionPerformed

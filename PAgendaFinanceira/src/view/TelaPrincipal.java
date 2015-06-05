@@ -7,6 +7,7 @@ package view;
 
 import entity.Agenda;
 import entity.DataHora;
+import entity.Pessoa;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -421,14 +422,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCaixaActionPerformed
 
     public void diaDaSemana(int dia) {
-        String diaDaSemana[] = {"Domingo", "Segunda-Feira", "Terça-Feira", 
+        String diaDaSemana[] = {"Domingo", "Segunda-Feira", "Terça-Feira",
             "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"};
         for (int i = 0; i < 6; i++) {
         }
         lblDiaSemana.setText(diaDaSemana[dia - 1]);
     }
 
-        private void tabelaPrincipal() {
+    private void tabelaPrincipal() {
+
+        Pessoa p = new Pessoa();
+        Agenda a = new Agenda();
 
         ArrayList<String> listaPeriodo = new ArrayList<String>();
 
@@ -486,6 +490,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //laço para inserir os dados dos objetos na Tabela
         for (int i = 0; i < listaPeriodo.size(); i++) {
             model.setValueAt(listaPeriodo.get(i), i, 0);
+           
         }
     }
 
