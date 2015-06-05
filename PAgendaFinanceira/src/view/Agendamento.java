@@ -7,6 +7,8 @@ package view;
 
 import entity.Agenda;
 import entity.DataHora;
+import entity.Pessoa;
+import entity.Servico;
 import java.text.SimpleDateFormat;
 
 /**
@@ -123,6 +125,11 @@ public class Agendamento extends javax.swing.JDialog {
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Apply.png"))); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(238, 253, -1, -1));
 
         jLabel5.setText("Dia:");
@@ -151,6 +158,16 @@ public class Agendamento extends javax.swing.JDialog {
         Financeiro f = new Financeiro(null, rootPaneCheckingEnabled);
         f.setVisible(true);
     }//GEN-LAST:event_btnFinanceiroActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Pessoa p = new Pessoa();
+        Agenda a = new Agenda();
+        p.setNome(txtNome.getText());
+        a.setPessoa(p);
+        a.setDescricao(txtaDescricao.getText());
+        
+        
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments

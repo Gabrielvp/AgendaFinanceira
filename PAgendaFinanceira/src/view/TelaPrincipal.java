@@ -388,7 +388,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProdutoActionPerformed
 
     private void btnServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnServicoActionPerformed
-        Servico s = new Servico(this, rootPaneCheckingEnabled);
+        TelaServico s = new TelaServico(this, rootPaneCheckingEnabled);
         s.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_btnServicoActionPerformed
 
