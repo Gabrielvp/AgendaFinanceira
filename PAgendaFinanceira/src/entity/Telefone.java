@@ -10,6 +10,10 @@ public class Telefone {
     private String numero;
     private TipoTelefone tipoTelefone;
 
+    @Override
+    public String toString(){
+        return numero + " - " +tipoTelefone.getTipo();
+    }
     public int getIdTelefone() {
         return idTelefone;
     }

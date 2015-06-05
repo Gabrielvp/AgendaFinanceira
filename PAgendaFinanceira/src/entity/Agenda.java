@@ -20,6 +20,11 @@ public class Agenda {
         
         listaTelefones = new ArrayList<>();
     }
+    
+    
+    public List<Telefone> mostrarTelefone() {
+        return listaTelefones;
+    }
 
     public void addTelefone (Telefone telefone){
         listaTelefones.add(telefone);
