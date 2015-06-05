@@ -1,7 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 /**
  *
@@ -9,24 +8,41 @@ import java.util.List;
  */
 public class Agenda {
 
-    private List<DataHora> agendamento;
+    private Pessoa pessoa;
+    private Date data;
+    private Date hora;
+    private String descricao;
 
-    public List<DataHora> getAgendamento() {
-        return agendamento;
+    public Pessoa getPessoa() {
+        return pessoa;
     }
 
-    public void setAgendamento(List<DataHora> agendamento) {
-        this.agendamento = agendamento;
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
-    public Agenda() {
+    public Date getData() {
+        return data;
+    }
 
-        agendamento = new ArrayList<>();
+    public void setData(Date data) {
+        this.data = data;
+    }
 
+    public Date getHora() {
+        return hora;
+    }
+
+    public void setHora(Date hora) {
+        this.hora = hora;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
     
-     public void dataHora(DataHora dtHora) {
-        agendamento.add(dtHora);
-    }
-
 }
