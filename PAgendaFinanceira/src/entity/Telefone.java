@@ -12,7 +12,7 @@ public class Telefone {
 
     @Override
     public String toString(){
-        return numero + " - " +tipoTelefone.getTipo();
+        return numero; //+ " - " +tipoTelefone.getTipo();
     }
     public int getIdTelefone() {
         return idTelefone;

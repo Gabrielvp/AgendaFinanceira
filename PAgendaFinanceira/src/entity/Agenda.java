@@ -10,26 +10,60 @@ import java.util.List;
  */
 public class Agenda {
 
+    private int idAgenda;
+    private int idPessoa;
     private Pessoa pessoa;
     private Date data;
     private Date hora;
     private String descricao;
+    private String dia;
     private List<Telefone> listaTelefones;
-    
-    public Agenda(){
-        
+
+    public int getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(int idPessoa) {
+        this.idPessoa = idPessoa;
+    }
+
+    public String getDia() {
+        return dia;
+    }
+
+    public void setDia(String dia) {
+        this.dia = dia;
+    }
+
+    public int getIdAgenda() {
+        return idAgenda;
+    }
+
+    public void setIdAgenda(int idAgenda) {
+        this.idAgenda = idAgenda;
+    }
+
+    public List<Telefone> getListaTelefones() {
+        return listaTelefones;
+    }
+
+    public void setListaTelefones(List<Telefone> listaTelefones) {
+        this.listaTelefones = listaTelefones;
+    }
+
+    public Agenda() {
+
         listaTelefones = new ArrayList<>();
     }
-    
-    
+
     public List<Telefone> mostrarTelefone() {
         return listaTelefones;
     }
 
-    public void addTelefone (Telefone telefone){
+    public void addTelefone(Telefone telefone) {
         listaTelefones.add(telefone);
     }
-    
+
     public Pessoa getPessoa() {
         return pessoa;
     }
@@ -61,5 +95,5 @@ public class Agenda {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
+
 }

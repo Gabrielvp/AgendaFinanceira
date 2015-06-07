@@ -5,6 +5,8 @@
  */
 package view;
 
+import dao.agendamentoDAO;
+import dao.pessoaAgendamentoDAO;
 import entity.Agenda;
 import entity.DataHora;
 import entity.Pessoa;
@@ -37,6 +39,8 @@ public class Agendamento extends javax.swing.JDialog {
     SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
     DataHora dtHora;
+    pessoaAgendamentoDAO pADAO = new pessoaAgendamentoDAO();
+    agendamentoDAO aDAO = new agendamentoDAO();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -166,8 +170,8 @@ public class Agendamento extends javax.swing.JDialog {
         Pessoa p = new Pessoa();
         Agenda a = new Agenda();
         p.setNome(txtNome.getText());
-        a.setPessoa(p);
         a.setDescricao(txtaDescricao.getText());
+        a.setDia(lblDia.getText());
         try {
             a.setData(sdfD.parse(lblData.getText()));
         } catch (ParseException ex) {
@@ -178,8 +182,10 @@ public class Agendamento extends javax.swing.JDialog {
         } catch (ParseException ex) {
             Logger.getLogger(Agendamento.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+        pADAO.insert(p);
+        a.setIdPessoa(p.getIdPessoa());
+        aDAO.insert(a);
+
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
