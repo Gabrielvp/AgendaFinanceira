@@ -5,8 +5,8 @@
  */
 package view;
 
-import dao.agendamentoDAO;
-import dao.pessoaAgendamentoDAO;
+import dao.AgendamentoDAO;
+import dao.PessoaAgendamentoDAO;
 import entity.Agenda;
 import entity.DataHora;
 import entity.Pessoa;
@@ -39,8 +39,8 @@ public class Agendamento extends javax.swing.JDialog {
     SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
     DataHora dtHora;
-    pessoaAgendamentoDAO pADAO = new pessoaAgendamentoDAO();
-    agendamentoDAO aDAO = new agendamentoDAO();
+    PessoaAgendamentoDAO pADAO = new PessoaAgendamentoDAO();
+    AgendamentoDAO aDAO = new AgendamentoDAO();
 
     /**
      * This method is called from within the constructor to initialize the form.
