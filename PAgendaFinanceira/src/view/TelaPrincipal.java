@@ -13,6 +13,9 @@ import entity.DataHora;
 import entity.Pessoa;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,21 +42,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal() {
         initComponents();
         setLocationRelativeTo(null);
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            String data = formatter.format(new Date());
-            txtData.setText(data);
-            lblDiaSemana.setText(formatter.format(Calendar.DAY_OF_WEEK));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        tabelaPrincipal();
-        Calendar c = Calendar.getInstance();
-        int dia = c.get(Calendar.DAY_OF_WEEK);
-        diaDaSemana(dia);
-
+        dataTela();
+        iconeTela();
     }
-    Agenda agenda = new Agenda();
+
     agendamentoDAO aDAO = new agendamentoDAO();
 
     /**
@@ -431,6 +423,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Caixa c = new Caixa(this, rootPaneCheckingEnabled);
         c.setVisible(true);
     }//GEN-LAST:event_btnCaixaActionPerformed
+
+    public void dataTela() {
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            String data = formatter.format(new Date());
+            txtData.setText(data);
+            lblDiaSemana.setText(formatter.format(Calendar.DAY_OF_WEEK));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        tabelaPrincipal();
+        Calendar c = Calendar.getInstance();
+        int dia = c.get(Calendar.DAY_OF_WEEK);
+        diaDaSemana(dia);
+    }
+
+    public void iconeTela() {
+        URL url = this.getClass().getResource("agendaFinanceira.png");
+        Image iconeTitulo = Toolkit.getDefaultToolkit().getImage("C:\\imagens\\agendaFinanceira.png");
+        this.setIconImage(iconeTitulo);
+        Agenda agenda = new Agenda();
+    }
 
     public void diaDaSemana(int dia) {
         String diaDaSemana[] = {"Domingo", "Segunda-Feira", "Terça-Feira",
