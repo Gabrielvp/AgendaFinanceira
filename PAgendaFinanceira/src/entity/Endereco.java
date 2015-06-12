@@ -7,12 +7,30 @@ package entity;
 public class Endereco {
     
     private int idEndereco;
+    private int idPessoa;
     private String rua;
     private int numero;
     private String cep;
+    private String bairro;
     private String cidade;
     private String uf;
     private String pReferencia;
+
+    public int getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(int idPessoa) {
+        this.idPessoa = idPessoa;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
 
     public int getIdEndereco() {
         return idEndereco;

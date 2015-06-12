@@ -5,17 +5,27 @@
  */
 package view;
 
+import com.sun.scenario.effect.impl.Renderer;
+import com.sun.scenario.effect.impl.sw.RendererDelegate;
+import dao.agendamentoDAO;
 import entity.Agenda;
 import entity.DataHora;
 import entity.Pessoa;
+import java.awt.Component;
+import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -44,6 +54,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     }
     Agenda agenda = new Agenda();
+    agendamentoDAO aDAO = new agendamentoDAO();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -435,6 +446,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Agenda a = new Agenda();
 
         ArrayList<String> listaPeriodo = new ArrayList<String>();
+        SimpleDateFormat sdfD = new SimpleDateFormat("dd-MM-yyyy");
 
         //Seta a hora inicial  
         Calendar inicial = Calendar.getInstance();
@@ -454,7 +466,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Final.set(Calendar.MINUTE, 0);
 
         //Periodo a ser somado  
-        int minute = 45;
+        int minute = 30;
 
         //Guarda o dia inicial  e final
         int diaInicial = inicial.get(Calendar.DAY_OF_MONTH);
@@ -474,7 +486,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         DefaultTableModel model
                 = (DefaultTableModel) this.tblPrincipal.getModel();
 
-        /* tblPrincipal.getColumn("Horário").setCellRenderer(new TableCellRenderer() {
+        //laço para inserir o número de linhas igual ao da lista
+        for (int i = 0; i < listaPeriodo.size(); i++) {
+            model.addRow(new Object[]{});
+        }
+        //laço para inserir os dados dos objetos na Tabela
+        for (int i = 0; i < listaPeriodo.size(); i++) {
+            model.setValueAt(listaPeriodo.get(i), i, 0);
+
+        }
+
+        /*tblPrincipal.getColumn("Horário").setCellRenderer(new TableCellRenderer() {
 
          public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
          JLabel renderer = new JLabel();
@@ -483,15 +505,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
          }
 
          });*/
-        //laço para inserir o número de linhas igual ao da lista
-        for (int i = 0; i < listaPeriodo.size(); i++) {
-            model.addRow(new Object[]{});
-        }
-        //laço para inserir os dados dos objetos na Tabela
-        for (int i = 0; i < listaPeriodo.size(); i++) {
-            model.setValueAt(listaPeriodo.get(i), i, 0);
-           
-        }
     }
 
     /**
@@ -524,7 +537,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipal().setVisible(true);
+                new TelaLogin().setVisible(true);
             }
         });
     }

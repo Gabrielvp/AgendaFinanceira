@@ -15,10 +15,20 @@ public class Agenda {
     private Pessoa pessoa;
     private Date data;
     private Date hora;
+    private Date date;
     private String descricao;
     private String dia;
     private List<Telefone> listaTelefones;
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    
     public int getIdPessoa() {
         return idPessoa;
     }

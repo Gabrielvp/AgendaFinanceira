@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Agenda;
+import entity.Endereco;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -23,18 +24,21 @@ public class EnderecoDAO extends MySQL {
     java.util.Date d = new java.util.Date();
     java.sql.Date dt = new java.sql.Date(d.getTime());
         
-    public boolean insert(Agenda agenda) {
+    public boolean insert(Endereco endereco) {
         Connection c = this.getConnection();
         try {
             PreparedStatement ps
-                    = c.prepareStatement("INSERT INTO agendamento "
-                            + "(data, hora, descricao, idPessoa, dia)  "
-                            + "VALUES ( ?, ?, ?, ?, ? )");
-            ps.setString(1, sdfD.format(agenda.getData()));
-            ps.setString(2, sdfH.format(agenda.getHora()));
-            ps.setString(3, agenda.getDescricao());
-            ps.setInt(4, agenda.getIdPessoa());
-            ps.setString(5, agenda.getDia());
+                    = c.prepareStatement("INSERT INTO endereco "
+                            + "(rua, numero, cep, cidade, uf, ponto_referencia, idPessoa, baiRro)  "
+                            + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )");
+            ps.setString(1, endereco.getRua());
+            ps.setInt(2, endereco.getNumero());
+            ps.setString(3, endereco.getCep());
+            ps.setString(4, endereco.getCidade());
+            ps.setString(5, endereco.getUf());
+            ps.setString(6, endereco.getpReferencia());
+            ps.setInt(7, endereco.getIdPessoa());
+            ps.setString(8, endereco.getBairro());
 
             ps.execute();
             ps.close();
