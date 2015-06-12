@@ -5,14 +5,10 @@
  */
 package view;
 
-import com.sun.scenario.effect.impl.Renderer;
-import com.sun.scenario.effect.impl.sw.RendererDelegate;
 import dao.agendamentoDAO;
 import entity.Agenda;
 import entity.DataHora;
 import entity.Pessoa;
-import java.awt.Component;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
@@ -21,14 +17,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.JLabel;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 /**
  *
