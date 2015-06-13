@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Agenda;
+import entity.Pessoa;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -113,35 +114,26 @@ public class agendamentoDAO extends MySQL {
      }
      }
      return false;
-     }
+     }*/
 
-     public List<Funcionario> listarFuncionarios() {
-     List<Funcionario> lista = new ArrayList<Funcionario>();
+     public List<Agenda> listarAgendamentos(String data) {
+     List<Agenda> lista = new ArrayList<Agenda>();
      Connection c = this.getConnection();
      try {
      PreparedStatement ps
-     = c.prepareStatement("SELECT id_funcionario, matricula, nome, rua, numero, bairro,"
-     + " cep, uf, fone_residencial, fone_celular, salario, setor, funcao "
-     + "FROM funcionario WHERE tipo = 1");
+     = c.prepareStatement("SELECT pessoa.nome, agendamento.descricao"
+    + "FROM agendamento INNER JOIN pessoa on agendamento.idPessoa = pessoa.idPessoa WHERE data = ?");
+     ps.setString(1, data);
      ResultSet rs = ps.executeQuery();
      while (rs.next()) {
 
-     FContratado funcionario = new FContratado();
-     funcionario.setId_funcionario(rs.getInt("id_funcionario"));
-     funcionario.setMatricula(rs.getInt("Matricula"));
-     funcionario.setNome(rs.getString("Nome"));
-     funcionario.setRua(rs.getString("Rua"));
-     funcionario.setNumero(rs.getInt("Numero"));
-     funcionario.setBairro(rs.getString("Bairro"));
-     funcionario.setCep(rs.getString("Cep"));
-     funcionario.setUf(rs.getString("Uf"));
-     funcionario.setResidencial(rs.getString("fone_residencial"));
-     funcionario.setCelular(rs.getString("fone_celular"));
-     funcionario.setSalario(rs.getDouble("salario"));
-     funcionario.setSetor(EnumSetor.ADMINISTRATIVO.getEnumSetorPorCodigo(rs.getInt("setor")));
-     funcionario.setFuncao(EnumFuncao.ANALISTA.getEnumPorCodigo(rs.getInt("funcao")));
-
-     lista.add(funcionario);
+     //FContratado funcionario = new FContratado();
+     Agenda agenda = new Agenda();
+     Pessoa pessoa = new Pessoa();
+     agenda.setDescricao(rs.getString("Descricao"));
+     pessoa.setNome(rs.getString("Nome"));
+     
+     lista.add(agenda);
      }
      rs.close();
      ps.close();
@@ -157,7 +149,7 @@ public class agendamentoDAO extends MySQL {
      return lista;
      }
 
-     public FContratado getFuncionarioById(int id) {
+    /* public FContratado getFuncionarioById(int id) {
      Connection c = this.getConnection();
      FContratado funcionario = null;
      try {

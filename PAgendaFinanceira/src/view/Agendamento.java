@@ -74,20 +74,15 @@ public class Agendamento extends javax.swing.JDialog {
         setTitle("Agendamento");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Nome:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+        jLabel1.setText("Nome");
 
         txtNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
-        jPanel1.add(txtNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 330, -1));
 
         txtaDescricao.setColumns(20);
         txtaDescricao.setRows(5);
         txtaDescricao.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 51, 153)), "Descrição", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 10), new java.awt.Color(0, 51, 153))); // NOI18N
         jScrollPane1.setViewportView(txtaDescricao);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 128, 493, -1));
 
         btnFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Cifrão.png"))); // NOI18N
         btnFinanceiro.addActionListener(new java.awt.event.ActionListener() {
@@ -95,40 +90,30 @@ public class Agendamento extends javax.swing.JDialog {
                 btnFinanceiroActionPerformed(evt);
             }
         });
-        jPanel1.add(btnFinanceiro, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Modify.png"))); // NOI18N
         btnAlterar.setText("Alterar");
-        jPanel1.add(btnAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(331, 253, -1, -1));
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete.png"))); // NOI18N
         btnExcluir.setText("Excluir");
-        jPanel1.add(btnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(422, 253, -1, -1));
 
         jLabel2.setText("Data:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
 
         lblData.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblData.setForeground(new java.awt.Color(255, 0, 0));
         lblData.setText("Data");
-        jPanel1.add(lblData, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, -1, -1));
 
         jLabel4.setText("Horário:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
 
         lblHorario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblHorario.setForeground(new java.awt.Color(255, 0, 0));
         lblHorario.setText("Horário");
-        jPanel1.add(lblHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, -1, -1));
 
-        jLabel6.setText("Orçamento:");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 70, -1, -1));
+        jLabel6.setText("Orçamento");
 
         txtOrcamento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
-        jPanel1.add(txtOrcamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 85, -1));
 
         btnPesquisaOrcamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Find.png"))); // NOI18N
-        jPanel1.add(btnPesquisaOrcamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, -1, -1));
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Apply.png"))); // NOI18N
         btnSalvar.setText("Salvar");
@@ -137,25 +122,101 @@ public class Agendamento extends javax.swing.JDialog {
                 btnSalvarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSalvar, new org.netbeans.lib.awtextra.AbsoluteConstraints(238, 253, -1, -1));
 
         jLabel5.setText("Dia:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, -1, -1));
 
         lblDia.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblDia.setForeground(new java.awt.Color(255, 0, 0));
         lblDia.setText("dia");
-        jPanel1.add(lblDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, -1, -1));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(13, 13, 13)
+                .addComponent(lblData)
+                .addGap(68, 68, 68)
+                .addComponent(jLabel4)
+                .addGap(11, 11, 11)
+                .addComponent(lblHorario)
+                .addGap(8, 8, 8)
+                .addComponent(jLabel5)
+                .addGap(11, 11, 11)
+                .addComponent(lblDia))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(btnFinanceiro)
+                .addGap(173, 173, 173)
+                .addComponent(btnSalvar)
+                .addGap(10, 10, 10)
+                .addComponent(btnAlterar)
+                .addGap(6, 6, 6)
+                .addComponent(btnExcluir))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtOrcamento, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPesquisaOrcamento))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(jLabel1)
+                .addGap(0, 0, 0)
+                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabel6)
+                .addGap(0, 0, 0)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtOrcamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(lblData)
+                            .addComponent(jLabel4)
+                            .addComponent(lblHorario)
+                            .addComponent(jLabel5)
+                            .addComponent(lblDia))
+                        .addGap(1, 1, 1)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnFinanceiro)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnSalvar)
+                                    .addComponent(btnAlterar)
+                                    .addComponent(btnExcluir)))))
+                    .addComponent(btnPesquisaOrcamento)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();

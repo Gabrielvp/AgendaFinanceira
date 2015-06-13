@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -223,7 +224,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 51, 153)));
 
         btnCadCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user_add.png"))); // NOI18N
-        btnCadCliente.setText("Cad. Cliente");
+        btnCadCliente.setText("Cad. Pessoa");
         btnCadCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadClienteActionPerformed(evt);
@@ -357,8 +358,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadClienteActionPerformed
-        CadastroCliente CC = new CadastroCliente(this, rootPaneCheckingEnabled);
-        CC.setVisible(true);
+        TelaCadastroPessoa Cp = new TelaCadastroPessoa(this, rootPaneCheckingEnabled);
+        Cp.setVisible(true);
     }//GEN-LAST:event_btnCadClienteActionPerformed
 
     private void btnFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanceiroActionPerformed
@@ -449,9 +450,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         Pessoa p = new Pessoa();
         Agenda a = new Agenda();
+        agendamentoDAO aDAO = new agendamentoDAO();
 
         ArrayList<String> listaPeriodo = new ArrayList<String>();
         SimpleDateFormat sdfD = new SimpleDateFormat("dd-MM-yyyy");
+        List<Agenda> listaAgendamentos = aDAO.listarAgendamentos(txtData.getText());
 
         //Seta a hora inicial  
         Calendar inicial = Calendar.getInstance();
@@ -498,6 +501,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //laço para inserir os dados dos objetos na Tabela
         for (int i = 0; i < listaPeriodo.size(); i++) {
             model.setValueAt(listaPeriodo.get(i), i, 0);
+
+        }
+        for (int i = 0; i < listaAgendamentos.size(); i++) {
+            model.setValueAt(listaAgendamentos.get(i), i, 0);
 
         }
 
