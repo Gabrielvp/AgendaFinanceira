@@ -26,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Gabriel1
  */
-public class TelaPrincipal extends javax.swing.JFrame {
+public final class TelaPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form TelaPrincipal
@@ -36,6 +36,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         dataTela();
         iconeTela();
+        atualizaTabela();
+
     }
 
     agendamentoDAO aDAO = new agendamentoDAO();
@@ -452,29 +454,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Pessoa p = new Pessoa();
         Agenda a = new Agenda();
         agendamentoDAO aDAO = new agendamentoDAO();
-        ArrayList<String> listaPeriodo = new ArrayList<String>();
-        SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
-        String dt = txtData.getText();
-        java.sql.Date data;
-        try {
-            data = new java.sql.Date(sdfD.parse(dt).getTime());
-            listaAgendamentos = aDAO.listarAgendamentos(data);
-        } catch (ParseException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ArrayList<String> listaPeriodo = new ArrayList<>();
 
         //Seta a hora inicial  
         Calendar inicial = Calendar.getInstance();
         inicial.set(Calendar.HOUR_OF_DAY, 8);
         inicial.set(Calendar.MINUTE, 0);
 
-        /*Calendar almocoInicio = Calendar.getInstance();
-         almocoInicio.set(Calendar.HOUR_OF_DAY, 12);
-         almocoInicio.set(Calendar.MINUTE, 0);
-
-         Calendar almocoFim = Calendar.getInstance();
-         almocoFim.set(Calendar.HOUR_OF_DAY, 12);
-         almocoFim.set(Calendar.MINUTE, 0);*/
         //Seta hora final
         Calendar Final = Calendar.getInstance();
         Final.set(Calendar.HOUR_OF_DAY, 18);
@@ -510,20 +496,25 @@ public class TelaPrincipal extends javax.swing.JFrame {
             model.setValueAt(listaPeriodo.get(i), i, 0);
 
         }
-        for (int i = 0; i < listaAgendamentos.size(); i++) {
-            model.setValueAt(listaAgendamentos.get(i), i, 0);
+    }
 
+    public void atualizaTabela() {
+        DefaultTableModel model
+                = (DefaultTableModel) this.tblPrincipal.getModel();
+
+        SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
+        String dt = txtData.getText();
+        java.sql.Date data;
+        try {
+            data = new java.sql.Date(sdfD.parse(dt).getTime());
+            listaAgendamentos = aDAO.listarAgendamentos(data);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        /*tblPrincipal.getColumn("Horário").setCellRenderer(new TableCellRenderer() {
-
-         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-         JLabel renderer = new JLabel();
-         renderer.setFont(renderer.getFont().deriveFont(Font.BOLD));
-         return renderer;
-         }
-
-         });*/
+        for (int i = 0; i < listaAgendamentos.size(); i++) {
+            model.setValueAt(listaAgendamentos.get(i), i, 2);
+        }
     }
 
     /**

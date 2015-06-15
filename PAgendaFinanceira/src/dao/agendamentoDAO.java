@@ -116,24 +116,26 @@ public class agendamentoDAO extends MySQL {
      return false;
      }*/
 
-     public List<Agenda> listarAgendamentos(String data) {
-     List<Agenda> lista = new ArrayList<Agenda>();
+     public List<Agenda> listarAgendamentos(Date data) {
+     List<Agenda> lista = new ArrayList<>();
+     List<Pessoa> lPessoa = new ArrayList<>();
      Connection c = this.getConnection();
      try {
      PreparedStatement ps
-     = c.prepareStatement("SELECT pessoa.nome, agendamento.descricao"
-    + "FROM agendamento INNER JOIN pessoa on agendamento.idPessoa = pessoa.idPessoa WHERE data = ?");
-     ps.setString(1, data);
+     = c.prepareStatement("SELECT agendamento.descricao, pessoa.nome"
+             + " FROM agendamento INNER JOIN pessoa on"
+             + " pessoa.idPessoa = agendamento.idPessoa WHERE data = ?");
+     ps.setDate(1, data);
      ResultSet rs = ps.executeQuery();
      while (rs.next()) {
 
-     //FContratado funcionario = new FContratado();
      Agenda agenda = new Agenda();
      Pessoa pessoa = new Pessoa();
      agenda.setDescricao(rs.getString("Descricao"));
      pessoa.setNome(rs.getString("Nome"));
      
      lista.add(agenda);
+     lPessoa.add(pessoa);
      }
      rs.close();
      ps.close();

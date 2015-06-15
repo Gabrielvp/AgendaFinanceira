@@ -20,6 +20,11 @@ public class Agenda {
     private String dia;
     private List<Telefone> listaTelefones;
 
+    @Override
+    public String toString(){
+        return descricao;
+    }
+    
     public Date getDate() {
         return date;
     }
