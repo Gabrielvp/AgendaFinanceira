@@ -23,7 +23,7 @@ public class agendamentoDAO extends MySQL {
     SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
     java.util.Date d = new java.util.Date();
     java.sql.Date dt = new java.sql.Date(d.getTime());
-        
+
     public boolean insert(Agenda agenda) {
         Connection c = this.getConnection();
         try {
@@ -115,41 +115,40 @@ public class agendamentoDAO extends MySQL {
      }
      return false;
      }*/
+    public List<Agenda> listarAgendamentos(Date data) {
+        List<Agenda> lista = new ArrayList<>();
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps
+                    = c.prepareStatement("SELECT agendamento.descricao, pessoa.nome"
+                            + " FROM agendamento INNER JOIN pessoa on"
+                            + " pessoa.idPessoa = agendamento.idPessoa WHERE data = ?");
+            ps.setDate(1, data);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
 
-     public List<Agenda> listarAgendamentos(Date data) {
-     List<Agenda> lista = new ArrayList<>();
-     List<Pessoa> lPessoa = new ArrayList<>();
-     Connection c = this.getConnection();
-     try {
-     PreparedStatement ps
-     = c.prepareStatement("SELECT agendamento.descricao, pessoa.nome"
-             + " FROM agendamento INNER JOIN pessoa on"
-             + " pessoa.idPessoa = agendamento.idPessoa WHERE data = ?");
-     ps.setDate(1, data);
-     ResultSet rs = ps.executeQuery();
-     while (rs.next()) {
+                Agenda agenda = new Agenda();
+                Pessoa pessoa = new Pessoa();
+                agenda.setDescricao(rs.getString("Descricao"));
+                pessoa.setNome(rs.getString("Nome"));
 
-     Agenda agenda = new Agenda();
-     Pessoa pessoa = new Pessoa();
-     agenda.setDescricao(rs.getString("Descricao"));
-     pessoa.setNome(rs.getString("Nome"));
-     
-     lista.add(agenda);
-     lPessoa.add(pessoa);
-     }
-     rs.close();
-     ps.close();
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     } finally {
-     try {
-     c.close();
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     }
-     }
-     return lista;
-     }
+                agenda.setPessoa(pessoa);
+                lista.add(agenda);
+
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return lista;
+    }
 
     /* public FContratado getFuncionarioById(int id) {
      Connection c = this.getConnection();

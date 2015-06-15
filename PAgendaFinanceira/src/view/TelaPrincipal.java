@@ -503,8 +503,11 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 = (DefaultTableModel) this.tblPrincipal.getModel();
 
         SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
+
         String dt = txtData.getText();
         java.sql.Date data;
+        java.sql.Date h;
+
         try {
             data = new java.sql.Date(sdfD.parse(dt).getTime());
             listaAgendamentos = aDAO.listarAgendamentos(data);
@@ -514,6 +517,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
         for (int i = 0; i < listaAgendamentos.size(); i++) {
             model.setValueAt(listaAgendamentos.get(i), i, 2);
+            model.setValueAt(listaAgendamentos.get(i).getPessoa().getNome(), i, 1);
         }
     }
 
