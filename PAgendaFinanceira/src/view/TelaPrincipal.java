@@ -12,6 +12,7 @@ import entity.Pessoa;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -63,7 +65,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnProximoHorario = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
-        btnAlterar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPrincipal = new javax.swing.JTable();
         lblDiaSemana = new javax.swing.JLabel();
@@ -145,9 +146,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete.png"))); // NOI18N
         btnExcluir.setText("Excluir");
 
-        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Modify.png"))); // NOI18N
-        btnAlterar.setText("Alterar");
-
         tblPrincipal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
         tblPrincipal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -184,8 +182,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAlterar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnExcluir)
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -218,9 +214,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -409,8 +403,15 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
             dt.setDia(lblDiaSemana.getText());
-            Agendamento a = new Agendamento(this, rootPaneCheckingEnabled, dt);
+            String testeNovo = tblPrincipal.getValueAt(linha, 1).toString();
+            boolean testeNovo2 = false;
+            if (testeNovo.equalsIgnoreCase(null)) {
+                testeNovo2 = true;
+            }
+            Agendamento a = new Agendamento(this, rootPaneCheckingEnabled, dt, testeNovo2);
             a.setVisible(true);
+            
+
         }
     }//GEN-LAST:event_tblPrincipalMousePressed
 
@@ -562,7 +563,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnCadCliente;
     private javax.swing.JButton btnCaixa;
     private javax.swing.JButton btnConfiguracao;
