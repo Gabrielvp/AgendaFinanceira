@@ -39,6 +39,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     agendamentoDAO aDAO = new agendamentoDAO();
+    List<Agenda> listaAgendamentos;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -451,10 +452,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         Pessoa p = new Pessoa();
         Agenda a = new Agenda();
         agendamentoDAO aDAO = new agendamentoDAO();
-
         ArrayList<String> listaPeriodo = new ArrayList<String>();
-        SimpleDateFormat sdfD = new SimpleDateFormat("dd-MM-yyyy");
-        List<Agenda> listaAgendamentos = aDAO.listarAgendamentos(txtData.getText());
+        SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
+        String dt = txtData.getText();
+        java.sql.Date data;
+        try {
+            data = new java.sql.Date(sdfD.parse(dt).getTime());
+            listaAgendamentos = aDAO.listarAgendamentos(data);
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         //Seta a hora inicial  
         Calendar inicial = Calendar.getInstance();
@@ -533,16 +540,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
