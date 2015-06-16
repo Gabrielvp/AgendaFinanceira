@@ -12,7 +12,6 @@ import entity.Pessoa;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -417,15 +415,17 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             }
             dt.setDia(lblDiaSemana.getText());
 
-            /*String testeNovo = tblPrincipal.getValueAt(linha, 1).toString();
-             boolean testeNovo2 = false;
-             if (testeNovo.equalsIgnoreCase(null)) {
-             testeNovo2 = true;
-             }*/
+//            String testeNovo = tblPrincipal.getValueAt(linha, 1).toString();
+//            System.out.println("testenovo = " + testeNovo);
+//            boolean testeNovo2 = false;
+//            if (testeNovo.equalsIgnoreCase(null)) {
+//                testeNovo2 = true;
+//            }
             Agendamento a = new Agendamento(this, rootPaneCheckingEnabled, dt);
             a.setVisible(true);
 
         }
+        limparTabela();
         atualizaTabela();
     }//GEN-LAST:event_tblPrincipalMousePressed
 
@@ -529,27 +529,24 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 = (DefaultTableModel) this.tblPrincipal.getModel();
 
         SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
-
+        SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm:ss");
+        String verificaHora;
         String dt = txtData.getText();
         java.sql.Date data;
-        int linha = tblPrincipal.getColumnCount();
-        String h = tblPrincipal.getValueAt(linha, 0).toString();
-
         try {
             data = new java.sql.Date(sdfD.parse(dt).getTime());
             listaAgendamentos = aDAO.listarAgendamentos(data);
         } catch (ParseException ex) {
             Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        for (int i = 0; i < listaAgendamentos.size(); i++) {
-            //if (listaAgendamentos.get(i).getHora().equals(h)) {
-            model.setValueAt(listaAgendamentos.get(i), i, 2);
-            model.setValueAt(listaAgendamentos.get(i).getPessoa().getNome(), i, 1);
-
-            // }
-            //System.out.println(h);
+        for (int j = 0; j < 20; j++) {
+            verificaHora = tblPrincipal.getValueAt(j, 0).toString() + ":00";
+            for (int i = 0; i < listaAgendamentos.size(); i++) {
+                if (listaAgendamentos.get(i).getHora().toString().equals(verificaHora)) {
+                    model.setValueAt(listaAgendamentos.get(i), j, 2);
+                    model.setValueAt(listaAgendamentos.get(i).getPessoa().getNome(), j, 1);
+                }
+            }
         }
     }
 
