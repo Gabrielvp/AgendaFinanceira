@@ -438,6 +438,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         Calendar c = Calendar.getInstance();
         int dia = c.get(Calendar.DAY_OF_WEEK);
         diaDaSemana(dia);
+
     }
 
     public void iconeTela() {
@@ -511,12 +512,13 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
         SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm:ss");
+        
         String verificaHora;
         Date dt = txtData.getDate();
         java.sql.Date data;
         data = new java.sql.Date(dt.getTime());
         listaAgendamentos = aDAO.listarAgendamentos(data);
-        for (int j = 0; j < 20; j++) {
+        for (int j = 0; j < tblPrincipal.getRowCount(); j++) {
             verificaHora = tblPrincipal.getValueAt(j, 0).toString() + ":00";
             for (int i = 0; i < listaAgendamentos.size(); i++) {
                 if (listaAgendamentos.get(i).getHora().toString().equals(verificaHora)) {
