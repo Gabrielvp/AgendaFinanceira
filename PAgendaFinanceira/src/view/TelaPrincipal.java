@@ -162,8 +162,11 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblPrincipal);
         if (tblPrincipal.getColumnModel().getColumnCount() > 0) {
-            tblPrincipal.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblPrincipal.getColumnModel().getColumn(0).setResizable(false);
+            tblPrincipal.getColumnModel().getColumn(0).setPreferredWidth(25);
+            tblPrincipal.getColumnModel().getColumn(1).setResizable(false);
             tblPrincipal.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tblPrincipal.getColumnModel().getColumn(2).setResizable(false);
             tblPrincipal.getColumnModel().getColumn(2).setPreferredWidth(300);
         }
 
@@ -403,16 +406,17 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
             dt.setDia(lblDiaSemana.getText());
-            String testeNovo = tblPrincipal.getValueAt(linha, 1).toString();
-            boolean testeNovo2 = false;
-            if (testeNovo.equalsIgnoreCase(null)) {
-                testeNovo2 = true;
-            }
-            Agendamento a = new Agendamento(this, rootPaneCheckingEnabled, dt, testeNovo2);
+
+            /*String testeNovo = tblPrincipal.getValueAt(linha, 1).toString();
+             boolean testeNovo2 = false;
+             if (testeNovo.equalsIgnoreCase(null)) {
+             testeNovo2 = true;
+             }*/
+            Agendamento a = new Agendamento(this, rootPaneCheckingEnabled, dt);
             a.setVisible(true);
-            
 
         }
+        atualizaTabela();
     }//GEN-LAST:event_tblPrincipalMousePressed
 
     private void btnCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCaixaActionPerformed
@@ -500,15 +504,18 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }
 
     public void atualizaTabela() {
+        Agenda a = new Agenda();
         DefaultTableModel model
                 = (DefaultTableModel) this.tblPrincipal.getModel();
 
         SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
 
         String dt = txtData.getText();
         java.sql.Date data;
-        java.sql.Date h;
-
+        int linha = tblPrincipal.getColumnCount();
+        String h = tblPrincipal.getValueAt(linha, 0).toString();
+        
         try {
             data = new java.sql.Date(sdfD.parse(dt).getTime());
             listaAgendamentos = aDAO.listarAgendamentos(data);
@@ -517,8 +524,12 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < listaAgendamentos.size(); i++) {
-            model.setValueAt(listaAgendamentos.get(i), i, 2);
-            model.setValueAt(listaAgendamentos.get(i).getPessoa().getNome(), i, 1);
+            if (listaAgendamentos.get(i).getHora().equals(h)) {
+                model.setValueAt(listaAgendamentos.get(i), i, 2);
+                model.setValueAt(listaAgendamentos.get(i).getPessoa().getNome(), i, 1);
+                
+            }
+            System.out.println(h);
         }
     }
 

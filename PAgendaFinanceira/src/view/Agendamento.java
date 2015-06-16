@@ -246,8 +246,9 @@ public class Agendamento extends javax.swing.JDialog {
         pADAO.insert(p);
         a.setIdPessoa(p.getIdPessoa());
         aDAO.insert(a);
-        
+         
         this.dispose();
+       
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
