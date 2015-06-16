@@ -58,7 +58,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         txtNome = new javax.swing.JTextField();
         btnPesquisaHoraMarcada = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        txtData = new javax.swing.JFormattedTextField();
         txtHorario = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
         btnProximoHorario = new javax.swing.JButton();
@@ -66,6 +65,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPrincipal = new javax.swing.JTable();
         lblDiaSemana = new javax.swing.JLabel();
+        txtData = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
         btnCadCliente = new javax.swing.JButton();
         btnOrcamento = new javax.swing.JButton();
@@ -118,19 +118,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Data:");
-
-        txtData.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
-        try {
-            txtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtData.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txtData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDataActionPerformed(evt);
-            }
-        });
 
         txtHorario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
         try {
@@ -198,10 +185,10 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblDiaSemana)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(41, 41, 41)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,14 +202,18 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnProximoHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblDiaSemana))
-                .addGap(4, 4, 4)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnProximoHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDiaSemana))
+                        .addGap(4, 4, 4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -403,11 +394,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         int linha = tblPrincipal.getSelectedRow();
 
         if (evt.getClickCount() == 2) {
-            try {
-                dt.setData(sdfD.parse(txtData.getText()));
-            } catch (ParseException ex) {
-                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            dt.setData(txtData.getDate());
             try {
                 dt.setHorario(sdfH.parse(tblPrincipal.getValueAt(linha, 0).toString()));
             } catch (ParseException ex) {
@@ -415,13 +402,13 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             }
             dt.setDia(lblDiaSemana.getText());
 
-//            String testeNovo = tblPrincipal.getValueAt(linha, 1).toString();
-//            System.out.println("testenovo = " + testeNovo);
-//            boolean testeNovo2 = false;
-//            if (testeNovo.equalsIgnoreCase(null)) {
-//                testeNovo2 = true;
-//            }
-            Agendamento a = new Agendamento(this, rootPaneCheckingEnabled, dt);
+            String testeNovo = tblPrincipal.getValueAt(linha, 1).toString();
+            System.out.println("testenovo = " + testeNovo);
+            boolean testeNovo2 = false;
+            if (testeNovo.equalsIgnoreCase(null)) {
+                testeNovo2 = true;
+            }
+            Agendamento a = new Agendamento(this, rootPaneCheckingEnabled, dt, testeNovo2);
             a.setVisible(true);
 
         }
@@ -434,12 +421,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         c.setVisible(true);
     }//GEN-LAST:event_btnCaixaActionPerformed
 
-    private void txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataActionPerformed
-        limparTabela();
-        tabelaPrincipal();
-        atualizaTabela();
-    }//GEN-LAST:event_txtDataActionPerformed
-
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
 
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -447,8 +428,8 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     public void dataTela() {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            String data = formatter.format(new Date());
-            txtData.setText(data);
+            Date data = new Date();
+            txtData.setDate(data);
             lblDiaSemana.setText(formatter.format(Calendar.DAY_OF_WEEK));
         } catch (Exception e) {
             e.printStackTrace();
@@ -531,14 +512,10 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm:ss");
         String verificaHora;
-        String dt = txtData.getText();
+        Date dt = txtData.getDate();
         java.sql.Date data;
-        try {
-            data = new java.sql.Date(sdfD.parse(dt).getTime());
-            listaAgendamentos = aDAO.listarAgendamentos(data);
-        } catch (ParseException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        data = new java.sql.Date(dt.getTime());
+        listaAgendamentos = aDAO.listarAgendamentos(data);
         for (int j = 0; j < 20; j++) {
             verificaHora = tblPrincipal.getValueAt(j, 0).toString() + ":00";
             for (int i = 0; i < listaAgendamentos.size(); i++) {
@@ -553,8 +530,8 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     public void limparTabela() {
         DefaultTableModel model
                 = (DefaultTableModel) this.tblPrincipal.getModel();
-        String text = null;
-        for (int i = 0; i < listaAgendamentos.size(); i++) {
+        String text = "";
+        for (int i = 0; i < tblPrincipal.getRowCount(); i++) {
             model.setValueAt(text, i, 2);
             model.setValueAt(text, i, 1);
         }
@@ -624,7 +601,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDiaSemana;
     private javax.swing.JTable tblPrincipal;
-    private javax.swing.JFormattedTextField txtData;
+    private com.toedter.calendar.JDateChooser txtData;
     private javax.swing.JFormattedTextField txtHorario;
     private javax.swing.JTextField txtNome;
     // End of variables declaration//GEN-END:variables
