@@ -128,6 +128,11 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txtData.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDataActionPerformed(evt);
+            }
+        });
 
         txtHorario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
         try {
@@ -145,6 +150,11 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete.png"))); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         tblPrincipal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
         tblPrincipal.setModel(new javax.swing.table.DefaultTableModel(
@@ -424,6 +434,16 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         c.setVisible(true);
     }//GEN-LAST:event_btnCaixaActionPerformed
 
+    private void txtDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataActionPerformed
+        limparTabela();
+        tabelaPrincipal();
+        atualizaTabela();
+    }//GEN-LAST:event_txtDataActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
     public void dataTela() {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -515,7 +535,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         java.sql.Date data;
         int linha = tblPrincipal.getColumnCount();
         String h = tblPrincipal.getValueAt(linha, 0).toString();
-        
+
         try {
             data = new java.sql.Date(sdfD.parse(dt).getTime());
             listaAgendamentos = aDAO.listarAgendamentos(data);
@@ -524,13 +544,24 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < listaAgendamentos.size(); i++) {
-            if (listaAgendamentos.get(i).getHora().equals(h)) {
-                model.setValueAt(listaAgendamentos.get(i), i, 2);
-                model.setValueAt(listaAgendamentos.get(i).getPessoa().getNome(), i, 1);
-                
-            }
-            System.out.println(h);
+            //if (listaAgendamentos.get(i).getHora().equals(h)) {
+            model.setValueAt(listaAgendamentos.get(i), i, 2);
+            model.setValueAt(listaAgendamentos.get(i).getPessoa().getNome(), i, 1);
+
+            // }
+            //System.out.println(h);
         }
+    }
+
+    public void limparTabela() {
+        DefaultTableModel model
+                = (DefaultTableModel) this.tblPrincipal.getModel();
+        String text = null;
+        for (int i = 0; i < listaAgendamentos.size(); i++) {
+            model.setValueAt(text, i, 2);
+            model.setValueAt(text, i, 1);
+        }
+
     }
 
     /**
