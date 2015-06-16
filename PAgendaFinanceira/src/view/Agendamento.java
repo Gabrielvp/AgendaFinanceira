@@ -25,7 +25,7 @@ public class Agendamento extends javax.swing.JDialog {
     /**
      * Creates new form Agendamento
      */
-    public Agendamento(java.awt.Frame parent, boolean modal, DataHora a) {
+    public Agendamento(java.awt.Frame parent, boolean modal, DataHora a, boolean novo) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
@@ -34,14 +34,14 @@ public class Agendamento extends javax.swing.JDialog {
         lblData.setText(sdfD.format(dtHora.getData()));
         lblHorario.setText(sdfH.format(dtHora.getHorario()));
         lblDia.setText(dtHora.getDia());
-
+        this.novo = novo;
     }
     SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
     DataHora dtHora;
     pessoaAgendamentoDAO pADAO = new pessoaAgendamentoDAO();
     agendamentoDAO aDAO = new agendamentoDAO();
-
+    boolean novo;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -281,7 +281,7 @@ public class Agendamento extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Agendamento dialog = new Agendamento(new javax.swing.JFrame(), true, null);
+                Agendamento dialog = new Agendamento(new javax.swing.JFrame(), true, null, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
