@@ -89,6 +89,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastro de Pessoas - Agenda Financeira");
 
         jTabbedPane1.setBackground(new java.awt.Color(204, 204, 204));
         jTabbedPane1.setName("Pessoa"); // NOI18N

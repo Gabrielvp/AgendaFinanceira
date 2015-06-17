@@ -71,7 +71,7 @@ public class Agendamento extends javax.swing.JDialog {
         lblDia = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Agendamento");
+        setTitle("Agendamento - Agenda Financeira");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153), 2));
 
