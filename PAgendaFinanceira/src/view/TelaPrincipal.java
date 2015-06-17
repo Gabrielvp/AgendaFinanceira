@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -126,7 +127,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Data");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 173, -1, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
 
         txtHorario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
         try {
@@ -135,11 +136,11 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txtHorario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel2.add(txtHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 42, -1));
+        jPanel2.add(txtHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 42, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Horário");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, -1, -1));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 160, -1, -1));
 
         btnProximoHorario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Find.png"))); // NOI18N
         btnProximoHorario.setText("Próximo Horário");
@@ -189,8 +190,8 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         lblDiaSemana.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblDiaSemana.setForeground(new java.awt.Color(255, 51, 51));
         lblDiaSemana.setText("diaSemana");
-        jPanel2.add(lblDiaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, -1, -1));
-        jPanel2.add(txtData, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 173, 147, -1));
+        jPanel2.add(lblDiaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, -1, -1));
+        jPanel2.add(txtData, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 147, -1));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 51, 153)));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -287,7 +288,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 345, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -365,7 +366,22 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCaixaActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-
+        Agenda a =  new Agenda();
+        int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja Excluir o  Agendamento?", "Exclusão", 0);
+        if (confirmacao == 0) {
+            //pega a linha da Tabela que foi selecionada pelo usuário
+            int linha = tblPrincipal.getSelectedRow();
+            String hora = tblPrincipal.getValueAt(linha, 0).toString();
+            Date dt = txtData.getDate();
+            java.sql.Date data;
+            data = new java.sql.Date(dt.getTime());
+            agendamentoDAO aDAO = new agendamentoDAO();
+            
+            aDAO.delete(hora, data);
+            this.limparTabela();
+            this.atualizaTabela();
+            
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void tblPrincipalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPrincipalMouseEntered

@@ -10,8 +10,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.management.Query;
-import view.Agendamento;
 
 /**
  *
@@ -89,15 +87,16 @@ public class agendamentoDAO extends MySQL {
      }
      }
      return false;
-     }
+     }*/
 
-     public boolean delete(int id) {
+     public boolean delete(String hora, Date data) {
      Connection c = this.getConnection();
      try {
      PreparedStatement ps
-     = c.prepareStatement("DELETE FROM funcionario "
-     + "WHERE id_funcionario = ?");
-     ps.setInt(1, id);
+     = c.prepareStatement("DELETE FROM agendamento "
+     + "WHERE hora = ? and data = ?");
+     ps.setString(1, hora);
+     ps.setDate(2, data);
 
      ps.execute();
 
@@ -114,7 +113,7 @@ public class agendamentoDAO extends MySQL {
      }
      }
      return false;
-     }*/
+     }
     public List<Agenda> listarAgendamentos(Date data) {
         List<Agenda> lista = new ArrayList<>();
         Connection c = this.getConnection();
