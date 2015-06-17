@@ -163,7 +163,15 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             new String [] {
                 "Horário", "Cliente", "Serviço"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 tblPrincipalMouseEntered(evt);
@@ -345,15 +353,12 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             }
             dt.setDia(lblDiaSemana.getText());
 
-            String testeNovo = tblPrincipal.getValueAt(linha, 1).toString();
-            System.out.println("testenovo = " + testeNovo);
-            boolean testeNovo2 = false;
-            if (testeNovo.equalsIgnoreCase(null)) {
-                testeNovo2 = true;
+            if (tblPrincipal.getValueAt(linha, 1).toString().equals("")) {
+                Agendamento a = new Agendamento(this, rootPaneCheckingEnabled, dt);
+                a.setVisible(true);
+            } else {                
+               
             }
-            Agendamento a = new Agendamento(this, rootPaneCheckingEnabled, dt, testeNovo2);
-            a.setVisible(true);
-
         }
         limparTabela();
         atualizaTabela();
@@ -366,7 +371,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCaixaActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        Agenda a =  new Agenda();
+        Agenda a = new Agenda();
         int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja Excluir o  Agendamento?", "Exclusão", 0);
         if (confirmacao == 0) {
             //pega a linha da Tabela que foi selecionada pelo usuário
@@ -376,11 +381,11 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             java.sql.Date data;
             data = new java.sql.Date(dt.getTime());
             agendamentoDAO aDAO = new agendamentoDAO();
-            
+
             aDAO.delete(hora, data);
             this.limparTabela();
             this.atualizaTabela();
-            
+
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
@@ -503,8 +508,8 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
         String diaTela = sdfD.format(txtData.getDate());
         Date data = new Date(txtData.getDate().getTime());
-        Calendar c = new GregorianCalendar();  
-        c.setTime(data);  
+        Calendar c = new GregorianCalendar();
+        c.setTime(data);
         int dia = c.get(c.DAY_OF_WEEK);
         diaDaSemana(dia);
     }

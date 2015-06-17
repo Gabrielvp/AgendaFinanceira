@@ -25,7 +25,7 @@ public class Agendamento extends javax.swing.JDialog {
     /**
      * Creates new form Agendamento
      */
-    public Agendamento(java.awt.Frame parent, boolean modal, DataHora a, boolean novo) {
+    public Agendamento(java.awt.Frame parent, boolean modal, DataHora a) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
@@ -281,7 +281,7 @@ public class Agendamento extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Agendamento dialog = new Agendamento(new javax.swing.JFrame(), true, null, true);
+                Agendamento dialog = new Agendamento(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
