@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +39,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         iconeTela();
         tabelaPrincipal();
         atualizaTabela();
-
+        atualizaDiaSemanaTela();
     }
 
     agendamentoDAO aDAO = new agendamentoDAO();
@@ -84,6 +85,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         setTitle("Agenda Financeira");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 51, 153)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(0, 51, 153)), "Consulta Horário Paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
 
@@ -118,8 +120,11 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 13, 630, -1));
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("Data:");
+        jLabel1.setText("Data");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 173, -1, -1));
 
         txtHorario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
         try {
@@ -128,12 +133,15 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txtHorario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanel2.add(txtHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 42, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Horário:");
+        jLabel2.setText("Horário");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, -1, -1));
 
         btnProximoHorario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Find.png"))); // NOI18N
         btnProximoHorario.setText("Próximo Horário");
+        jPanel2.add(btnProximoHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(475, 161, -1, 46));
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete.png"))); // NOI18N
         btnExcluir.setText("Excluir");
@@ -142,6 +150,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 btnExcluirActionPerformed(evt);
             }
         });
+        jPanel2.add(btnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(544, 599, -1, -1));
 
         tblPrincipal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
         tblPrincipal.setModel(new javax.swing.table.DefaultTableModel(
@@ -173,60 +182,13 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             tblPrincipal.getColumnModel().getColumn(2).setPreferredWidth(300);
         }
 
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 211, 637, 382));
+
         lblDiaSemana.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblDiaSemana.setForeground(new java.awt.Color(255, 51, 51));
         lblDiaSemana.setText("diaSemana");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnExcluir)
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblDiaSemana)
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(btnProximoHorario)
-                        .addGap(33, 33, 33))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnProximoHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDiaSemana))
-                        .addGap(4, 4, 4))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 382, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        jPanel2.add(lblDiaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, -1, -1));
+        jPanel2.add(txtData, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 173, 147, -1));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 51, 153)));
 
@@ -344,7 +306,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -428,6 +390,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         }
         limparTabela();
         atualizaTabela();
+        atualizaDiaSemanaTela();
     }//GEN-LAST:event_tblPrincipalMousePressed
 
     private void btnCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCaixaActionPerformed
@@ -442,11 +405,13 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     private void tblPrincipalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPrincipalMouseEntered
         limparTabela();
         atualizaTabela();
+        atualizaDiaSemanaTela();
     }//GEN-LAST:event_tblPrincipalMouseEntered
 
     private void tblPrincipalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPrincipalMouseExited
         limparTabela();
         atualizaTabela();
+        atualizaDiaSemanaTela();
     }//GEN-LAST:event_tblPrincipalMouseExited
 
     public void dataTela() {
@@ -552,6 +517,16 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         }
     }
 
+    public void atualizaDiaSemanaTela() {
+        SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
+        String diaTela = sdfD.format(txtData.getDate());
+        Date data = new Date(txtData.getDate().getTime());
+        Calendar c = new GregorianCalendar();  
+        c.setTime(data);  
+        int dia = c.get(c.DAY_OF_WEEK);
+        diaDaSemana(dia);
+    }
+
     public void limparTabela() {
         DefaultTableModel model
                 = (DefaultTableModel) this.tblPrincipal.getModel();
@@ -560,7 +535,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             model.setValueAt(text, i, 2);
             model.setValueAt(text, i, 1);
         }
-
     }
 
     /**
