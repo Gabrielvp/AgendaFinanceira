@@ -153,6 +153,12 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             }
         ));
         tblPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tblPrincipalMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                tblPrincipalMouseExited(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tblPrincipalMousePressed(evt);
             }
@@ -188,9 +194,9 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(lblDiaSemana)
-                        .addGap(41, 41, 41)
+                        .addGap(33, 33, 33)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -432,6 +438,16 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
 
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void tblPrincipalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPrincipalMouseEntered
+        limparTabela();
+        atualizaTabela();
+    }//GEN-LAST:event_tblPrincipalMouseEntered
+
+    private void tblPrincipalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPrincipalMouseExited
+        limparTabela();
+        atualizaTabela();
+    }//GEN-LAST:event_tblPrincipalMouseExited
 
     public void dataTela() {
         try {
