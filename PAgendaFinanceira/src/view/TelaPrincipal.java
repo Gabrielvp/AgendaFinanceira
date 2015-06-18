@@ -281,8 +281,9 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
+                .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -356,8 +357,8 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             if (tblPrincipal.getValueAt(linha, 1).toString().equals("")) {
                 Agendamento a = new Agendamento(this, rootPaneCheckingEnabled, dt);
                 a.setVisible(true);
-            } else {                
-               
+            } else {
+
             }
         }
         limparTabela();
@@ -371,21 +372,26 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCaixaActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        Agenda a = new Agenda();
-        int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja Excluir o  Agendamento?", "Exclusão", 0);
-        if (confirmacao == 0) {
-            //pega a linha da Tabela que foi selecionada pelo usuário
-            int linha = tblPrincipal.getSelectedRow();
-            String hora = tblPrincipal.getValueAt(linha, 0).toString();
-            Date dt = txtData.getDate();
-            java.sql.Date data;
-            data = new java.sql.Date(dt.getTime());
-            agendamentoDAO aDAO = new agendamentoDAO();
 
-            aDAO.delete(hora, data);
-            this.limparTabela();
-            this.atualizaTabela();
+        int linha = tblPrincipal.getSelectedRow();
+        String tbl = tblPrincipal.getValueAt(linha, 1).toString();
+        if (tbl.equals("")) {
+            JOptionPane.showMessageDialog(this, "Selecione um Agendamento para Exclusão");
+        } else {
+            int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja Excluir o  Agendamento?", "Exclusão", 0, 0);
+            if (confirmacao == 0) {
+                //pega a linha da Tabela que foi selecionada pelo usuário
+                int line = tblPrincipal.getSelectedRow();
+                String hora = tblPrincipal.getValueAt(linha, 0).toString();
+                Date dt = txtData.getDate();
+                java.sql.Date data;
+                data = new java.sql.Date(dt.getTime());
+                agendamentoDAO aDAO = new agendamentoDAO();
 
+                aDAO.delete(hora, data);
+                this.limparTabela();
+                this.atualizaTabela();
+            }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
