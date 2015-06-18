@@ -376,7 +376,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         int linha = tblPrincipal.getSelectedRow();
         String tbl = tblPrincipal.getValueAt(linha, 1).toString();
         int select = tblPrincipal.getSelectedRow();
-        if ( (select == -1)) {
+        if ( (tbl.equals(""))) {
             JOptionPane.showMessageDialog(this, "Selecione um Agendamento para Exclusão");
         } else {
             int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja Excluir o  Agendamento?", "Exclusão", 0, 0);
