@@ -9,8 +9,17 @@ public class Pessoa {
     private int idPessoa;
     private String nome;
     private String email;
+    private boolean completo;
     private Endereco endereco;
     private Telefone telefone;
+
+    public boolean isCompleto() {
+        return completo;
+    }
+
+    public void setCompleto(boolean completo) {
+        this.completo = completo;
+    }
 
     public Endereco getEndereco() {
         return endereco;

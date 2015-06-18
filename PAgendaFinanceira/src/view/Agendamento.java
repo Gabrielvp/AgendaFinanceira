@@ -231,6 +231,7 @@ public class Agendamento extends javax.swing.JDialog {
         Pessoa p = new Pessoa();
         Agenda a = new Agenda();
         p.setNome(txtNome.getText());
+        p.setCompleto(false);
         a.setDescricao(txtaDescricao.getText());
         a.setDia(lblDia.getText());
         try {

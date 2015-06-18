@@ -375,7 +375,8 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
         int linha = tblPrincipal.getSelectedRow();
         String tbl = tblPrincipal.getValueAt(linha, 1).toString();
-        if (tbl.equals("")) {
+        int select = tblPrincipal.getSelectedRow();
+        if ( (select == -1)) {
             JOptionPane.showMessageDialog(this, "Selecione um Agendamento para Exclusão");
         } else {
             int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja Excluir o  Agendamento?", "Exclusão", 0, 0);
@@ -391,6 +392,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 aDAO.delete(hora, data);
                 this.limparTabela();
                 this.atualizaTabela();
+
             }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
