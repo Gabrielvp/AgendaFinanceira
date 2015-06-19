@@ -487,6 +487,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <AccessibilityProperties>
+                    <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="tblPessoa"/>
+                  </AccessibilityProperties>
                 </Component>
               </SubComponents>
             </Container>

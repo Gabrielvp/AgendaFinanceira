@@ -282,6 +282,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             tblPessoa.getColumnModel().getColumn(4).setPreferredWidth(50);
             tblPessoa.getColumnModel().getColumn(5).setPreferredWidth(20);
         }
+        tblPessoa.getAccessibleContext().setAccessibleName("tblPessoa");
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Apply.png"))); // NOI18N
         btnSalvar.setText("Salvar");
@@ -597,7 +598,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     public void atualizaTabelaPessoa() {
        
         CadastroClienteDAO cDAO = new CadastroClienteDAO();
-        List<Pessoa> listaPessoaIncompleto = cDAO.listarPessoasIncompletos(0);
+        List<Pessoa> listaPessoaIncompleto = cDAO.listarPessoasIncompletos(0,1);
 
         //pega o modelo da Tabela e coloca na variavel "model"
         DefaultTableModel model
