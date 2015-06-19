@@ -125,6 +125,16 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         jLabel1.setText("Nome");
 
         txtNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
+        txtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeActionPerformed(evt);
+            }
+        });
+        txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNomeKeyPressed(evt);
+            }
+        });
 
         jLabel15.setText("e-mail");
 
@@ -615,6 +625,16 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         atualizaTabelaPessoa();
     }//GEN-LAST:event_ckbCadastroIncompletoActionPerformed
 
+    private void txtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeActionPerformed
+        
+    }//GEN-LAST:event_txtNomeActionPerformed
+
+    private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
+        limparTabela();
+        String nome = txtNome.getText();
+        buscaNome(nome);
+    }//GEN-LAST:event_txtNomeKeyPressed
+
     public void atualizaTabelaPessoa() {
         if (ckbCadastroIncompleto.isSelected()) {
             CadastroClienteDAO cDAO = new CadastroClienteDAO();
@@ -646,6 +666,18 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         }
     }
 
+    public void buscaNome(String nome) {
+        
+            CadastroClienteDAO cDAO = new CadastroClienteDAO();
+            List<Pessoa> listaBuscaNome = cDAO.buscarNome(nome);
+
+            DefaultTableModel model = (DefaultTableModel) this.tblPessoa.getModel();
+            
+            for (int i = 0; i < listaBuscaNome.size(); i++) {
+                model.setValueAt(listaBuscaNome.get(i).getIdPessoa(), i, 0);
+                model.setValueAt(listaBuscaNome.get(i).getNome(), i, 1);
+            }
+    }
     public void limparTabela() {
 
         int linha = tblPessoa.getRowCount();
@@ -660,9 +692,9 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             model.setValueAt(text, i, 4);
             model.setValueAt(text, i, 5);
         }
-        for (linha = 0; linha < tblPessoa.getRowCount(); linha++) {
+        /*for (linha = 0; linha < tblPessoa.getRowCount(); linha++) {
             model.removeRow(linha);
-        }
+        }*/
     }
 
     /**
