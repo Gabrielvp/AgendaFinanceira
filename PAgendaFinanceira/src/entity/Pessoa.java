@@ -10,8 +10,22 @@ public class Pessoa {
     private String nome;
     private String email;
     private boolean completo;
+    private Documento documento;
     private Endereco endereco;
     private Telefone telefone;
+
+    @Override
+    public String toString(){
+        return idPessoa + nome;
+    }
+    
+    public Documento getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(Documento documento) {
+        this.documento = documento;
+    }
 
     public boolean isCompleto() {
         return completo;

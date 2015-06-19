@@ -5,12 +5,19 @@
  */
 package view;
 
+import dao.CadastroClienteDAO;
 import entity.Agenda;
 import entity.Documento;
 import entity.Endereco;
+import entity.EnumTipoEndereco;
+import entity.EnumTipoFone;
 import entity.Pessoa;
 import entity.Telefone;
 import entity.TipoTelefone;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -26,6 +33,14 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
+        atualizaTabelaPessoa();
+        cbTipoFone.setModel(new DefaultComboBoxModel<>(EnumTipoFone.values()));
+        cbTipoEndereco.setModel(new DefaultComboBoxModel<>(EnumTipoEndereco.values()));
+        atualizaTabelaPessoa();
+    }
+
+    public TelaCadastroPessoa() {
+        atualizaTabelaPessoa();
     }
 
     /**
@@ -60,7 +75,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         lstTelefone = new javax.swing.JList();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblPessoa = new javax.swing.JTable();
         btnSalvar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
@@ -86,7 +101,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         btnExcuirEndereco = new javax.swing.JButton();
         ckbEnderecoPrincipal = new javax.swing.JCheckBox();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblEndereco = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Pessoas - Agenda Financeira");
@@ -250,21 +265,22 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblPessoa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "CPF", "RG", "e-mail", "Fone"
+                "Cod.", "Nome", "CPF", "RG", "e-mail", "Fone"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(20);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(15);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(20);
+        jScrollPane2.setViewportView(tblPessoa);
+        if (tblPessoa.getColumnModel().getColumnCount() > 0) {
+            tblPessoa.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tblPessoa.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblPessoa.getColumnModel().getColumn(2).setPreferredWidth(20);
+            tblPessoa.getColumnModel().getColumn(3).setPreferredWidth(15);
+            tblPessoa.getColumnModel().getColumn(4).setPreferredWidth(50);
+            tblPessoa.getColumnModel().getColumn(5).setPreferredWidth(20);
         }
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Apply.png"))); // NOI18N
@@ -277,6 +293,11 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Modify.png"))); // NOI18N
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete.png"))); // NOI18N
         btnExcluir.setText("Excluir");
@@ -464,7 +485,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblEndereco.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -472,15 +493,15 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
                 "Rua", "Número", "Cep", "Cidade", "Bairro", "UF", "P. Referência"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setPreferredWidth(300);
-            jTable2.getColumnModel().getColumn(1).setPreferredWidth(20);
-            jTable2.getColumnModel().getColumn(2).setPreferredWidth(20);
-            jTable2.getColumnModel().getColumn(3).setPreferredWidth(50);
-            jTable2.getColumnModel().getColumn(4).setPreferredWidth(50);
-            jTable2.getColumnModel().getColumn(5).setPreferredWidth(10);
-            jTable2.getColumnModel().getColumn(6).setPreferredWidth(40);
+        jScrollPane3.setViewportView(tblEndereco);
+        if (tblEndereco.getColumnModel().getColumnCount() > 0) {
+            tblEndereco.getColumnModel().getColumn(0).setPreferredWidth(300);
+            tblEndereco.getColumnModel().getColumn(1).setPreferredWidth(20);
+            tblEndereco.getColumnModel().getColumn(2).setPreferredWidth(20);
+            tblEndereco.getColumnModel().getColumn(3).setPreferredWidth(50);
+            tblEndereco.getColumnModel().getColumn(4).setPreferredWidth(50);
+            tblEndereco.getColumnModel().getColumn(5).setPreferredWidth(10);
+            tblEndereco.getColumnModel().getColumn(6).setPreferredWidth(40);
         }
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -535,6 +556,8 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         Pessoa p = new Pessoa();
         Endereco e = new Endereco();
         Documento d = new Documento();
+        Telefone t = new Telefone();
+        TipoTelefone tt = new TipoTelefone();
 
         p.setNome(txtNome.getText());
         p.setEmail(txtEmail.getText());
@@ -547,9 +570,11 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         e.setBairro(txtBairro.getText());
         d.setCpf(txtCpf.getText());
         d.setRg(txtRg.getText());
+        t.getNumero();
+        tt.getTipo();
         /*pADAO.insert(p);
-        e.setIdPessoa(p.getIdPessoa());
-        eDAO.insert(e);*/
+         e.setIdPessoa(p.getIdPessoa());
+         eDAO.insert(e);*/
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -564,6 +589,32 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     private void ckbEnderecoPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbEnderecoPrincipalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ckbEnderecoPrincipalActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        atualizaTabelaPessoa();
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    public void atualizaTabelaPessoa() {
+       
+        CadastroClienteDAO cDAO = new CadastroClienteDAO();
+        List<Pessoa> listaPessoaIncompleto = cDAO.listarPessoasIncompletos(0);
+
+        //pega o modelo da Tabela e coloca na variavel "model"
+        DefaultTableModel model
+                = (DefaultTableModel) this.tblPessoa.getModel();
+        //insere na tabela o número de linhas que a lista tem
+        // model.setRowCount(listaNormal.size());
+
+        for (int i = 0; i < listaPessoaIncompleto.size(); i++) {
+            model.addRow(new Object[]{});
+        }
+
+        //laço para inserir os dados dos objetos na Tabela
+        for (int i = 0; i < listaPessoaIncompleto.size(); i++) {
+            model.setValueAt(listaPessoaIncompleto.get(i).getIdPessoa(), i, 0);
+            model.setValueAt(listaPessoaIncompleto.get(i).getNome(), i, 1);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -643,9 +694,9 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JList lstTelefone;
+    private javax.swing.JTable tblEndereco;
+    private javax.swing.JTable tblPessoa;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JFormattedTextField txtCep;
     private javax.swing.JTextField txtCidade;

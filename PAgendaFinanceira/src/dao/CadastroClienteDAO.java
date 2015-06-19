@@ -21,7 +21,7 @@ public class CadastroClienteDAO extends MySQL {
     java.sql.Date dt = new java.sql.Date(d.getTime());
 
     public boolean insert(Pessoa pessoa) {
-        
+
         Connection c = this.getConnection();
         try {
             PreparedStatement ps
@@ -42,6 +42,32 @@ public class CadastroClienteDAO extends MySQL {
             ps.setString(12, pessoa.getEndereco().getpReferencia());
 
             ps.execute();
+            ps.close();
+            return true;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public boolean updateEmailCadCompleto(Pessoa pessoa) {
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps = c.prepareStatement("UPDATE pessoa "
+                    + " SET email "
+                    + " WHERE idPessoa = ?");
+            ps.setString(1, pessoa.getEmail());
+            ps.setBoolean(2, true);
+
+            ps.execute();
+
             ps.close();
             return true;
 
@@ -110,15 +136,25 @@ public class CadastroClienteDAO extends MySQL {
         }
     }
 
-    public List<Pessoa> listarPessoas() {
-        List<Pessoa> listaPessoas = new ArrayList<Pessoa>();
+    public List<Pessoa> listarPessoasIncompletos(int completo) {
+        List<Pessoa> listaPessoasIncompleto = new ArrayList<Pessoa>();
         Connection c = this.getConnection();
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT idPessoa,nome, ");
+            PreparedStatement ps = c.prepareStatement("SELECT pessoa.idPessoa, pessoa.nome FROM pessoa WHERE completo = ?");
+            ps.setInt(1, completo);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 
+                Pessoa pessoa = new Pessoa();
+
+                pessoa.setIdPessoa(rs.getInt("idPessoa"));
+                pessoa.setNome(rs.getString("Nome"));
+                
             }
+
+            ps.execute();
+            ps.close();
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
@@ -128,7 +164,7 @@ public class CadastroClienteDAO extends MySQL {
                 ex.printStackTrace();
             }
         }
-        return listaPessoas;
+        return listaPessoasIncompleto;
     }
 }
 
@@ -271,4 +307,3 @@ public class CadastroClienteDAO extends MySQL {
  return null;
  }
  */
-
