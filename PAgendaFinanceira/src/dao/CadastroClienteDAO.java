@@ -1,6 +1,8 @@
 package dao;
 
+import entity.Documento;
 import entity.Pessoa;
+import entity.Telefone;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -136,21 +138,22 @@ public class CadastroClienteDAO extends MySQL {
         }
     }
 
-    public List<Pessoa> listarPessoasIncompletos(int completo, int inconpleto) {
+    public List<Pessoa> listarPessoasIncompletos(int completo) {
         List<Pessoa> listaPessoasIncompleto = new ArrayList<Pessoa>();
         Connection c = this.getConnection();
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT pessoa.idPessoa, pessoa.nome FROM pessoa WHERE completo = ? and completo = ?");
+            PreparedStatement ps = c.prepareStatement("SELECT pessoa.idPessoa, pessoa.nome FROM pessoa WHERE completo = ?");
             ps.setInt(1, completo);
-            ps.setInt(2, completo);
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 
                 Pessoa pessoa = new Pessoa();
-
                 pessoa.setIdPessoa(rs.getInt("idPessoa"));
                 pessoa.setNome(rs.getString("Nome"));
-                
+
+                listaPessoasIncompleto.add(pessoa);
+
             }
 
             ps.execute();
@@ -167,7 +170,52 @@ public class CadastroClienteDAO extends MySQL {
         }
         return listaPessoasIncompleto;
     }
+
+    public List<Pessoa> listarPessoasCompleto() {
+        List<Pessoa> listaPessoasCompleto = new ArrayList<Pessoa>();
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT pessoa.idPessoa, pessoa.nome, pessoa.email, documento.cpf, documento.rg, telefone.numero"
+                    + " FROM pessoa LEFT JOIN documento ON pessoa.idpessoa = documento.idpessoa"
+                    + " LEFT JOIN telefone ON pessoa.idpessoa = telefone.idpessoa");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Pessoa pessoa = new Pessoa();
+                Documento documento = new Documento();
+                Telefone telefone = new Telefone();
+
+                pessoa.setIdPessoa(rs.getInt("idPessoa"));
+                pessoa.setNome(rs.getString("Nome"));
+                documento.setCpf(rs.getString("CPF"));
+                documento.setRg(rs.getString("Rg"));
+                pessoa.setEmail(rs.getString("email"));
+                telefone.setNumero(rs.getString("numero"));
+
+                pessoa.setDocumento(documento);
+                pessoa.setTelefone(telefone);
+
+                listaPessoasCompleto.add(pessoa);
+
+            }
+
+            ps.execute();
+            ps.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return listaPessoasCompleto;
+    }
 }
+
 
 /*public boolean update(FContratado funcionario) {
  Connection c = this.getConnection();

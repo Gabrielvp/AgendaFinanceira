@@ -14,7 +14,6 @@ import entity.EnumTipoFone;
 import entity.Pessoa;
 import entity.Telefone;
 import entity.TipoTelefone;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -36,11 +35,6 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         atualizaTabelaPessoa();
         cbTipoFone.setModel(new DefaultComboBoxModel<>(EnumTipoFone.values()));
         cbTipoEndereco.setModel(new DefaultComboBoxModel<>(EnumTipoEndereco.values()));
-        atualizaTabelaPessoa();
-    }
-
-    public TelaCadastroPessoa() {
-        atualizaTabelaPessoa();
     }
 
     /**
@@ -135,6 +129,11 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
 
         ckbCadastroIncompleto.setText("Cadastro Incompleto");
+        ckbCadastroIncompleto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckbCadastroIncompletoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -275,7 +274,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         ));
         jScrollPane2.setViewportView(tblPessoa);
         if (tblPessoa.getColumnModel().getColumnCount() > 0) {
-            tblPessoa.getColumnModel().getColumn(0).setPreferredWidth(10);
+            tblPessoa.getColumnModel().getColumn(0).setPreferredWidth(5);
             tblPessoa.getColumnModel().getColumn(1).setPreferredWidth(100);
             tblPessoa.getColumnModel().getColumn(2).setPreferredWidth(20);
             tblPessoa.getColumnModel().getColumn(3).setPreferredWidth(15);
@@ -595,25 +594,58 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         atualizaTabelaPessoa();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
-    public void atualizaTabelaPessoa() {
-       
-        CadastroClienteDAO cDAO = new CadastroClienteDAO();
-        List<Pessoa> listaPessoaIncompleto = cDAO.listarPessoasIncompletos(0,1);
+    private void ckbCadastroIncompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbCadastroIncompletoActionPerformed
+        limparTabela();
+        atualizaTabelaPessoa();
+    }//GEN-LAST:event_ckbCadastroIncompletoActionPerformed
 
-        //pega o modelo da Tabela e coloca na variavel "model"
+    public void atualizaTabelaPessoa() {
+        if (ckbCadastroIncompleto.isSelected()) {
+            CadastroClienteDAO cDAO = new CadastroClienteDAO();
+            List<Pessoa> listaPessoaIncompleto = cDAO.listarPessoasIncompletos(0);
+
+            DefaultTableModel model = (DefaultTableModel) this.tblPessoa.getModel();
+            for (int i = 0; i < listaPessoaIncompleto.size(); i++) {
+                model.addRow(new Object[]{});
+            }
+            for (int i = 0; i < listaPessoaIncompleto.size(); i++) {
+                model.setValueAt(listaPessoaIncompleto.get(i).getIdPessoa(), i, 0);
+                model.setValueAt(listaPessoaIncompleto.get(i).getNome(), i, 1);
+            }
+        } else {
+            CadastroClienteDAO cDAO = new CadastroClienteDAO();
+            List<Pessoa> listaPessoaCompleto = cDAO.listarPessoasCompleto();
+            DefaultTableModel model = (DefaultTableModel) this.tblPessoa.getModel();
+            for (int i = 0; i < listaPessoaCompleto.size(); i++) {
+                model.addRow(new Object[]{});
+            }
+            for (int i = 0; i < listaPessoaCompleto.size(); i++) {
+                model.setValueAt(listaPessoaCompleto.get(i).getIdPessoa(), i, 0);
+                model.setValueAt(listaPessoaCompleto.get(i).getNome(), i, 1);
+                model.setValueAt(listaPessoaCompleto.get(i).getDocumento().getCpf(), i, 2);
+                model.setValueAt(listaPessoaCompleto.get(i).getDocumento().getRg(), i, 3);
+                model.setValueAt(listaPessoaCompleto.get(i).getEmail(), i, 4);
+                model.setValueAt(listaPessoaCompleto.get(i).getTelefone().getNumero(), i, 5);
+            }
+        }
+    }
+
+    public void limparTabela() {
+
+        int linha = tblPessoa.getRowCount();
         DefaultTableModel model
                 = (DefaultTableModel) this.tblPessoa.getModel();
-        //insere na tabela o número de linhas que a lista tem
-        // model.setRowCount(listaNormal.size());
-
-        for (int i = 0; i < listaPessoaIncompleto.size(); i++) {
-            model.addRow(new Object[]{});
+        String text = "";
+        for (int i = 0; i < tblPessoa.getRowCount(); i++) {
+            model.setValueAt(text, i, 0);
+            model.setValueAt(text, i, 1);
+            model.setValueAt(text, i, 2);
+            model.setValueAt(text, i, 3);
+            model.setValueAt(text, i, 4);
+            model.setValueAt(text, i, 5);
         }
-
-        //laço para inserir os dados dos objetos na Tabela
-        for (int i = 0; i < listaPessoaIncompleto.size(); i++) {
-            model.setValueAt(listaPessoaIncompleto.get(i).getIdPessoa(), i, 0);
-            model.setValueAt(listaPessoaIncompleto.get(i).getNome(), i, 1);
+        for (linha = 0; linha < tblPessoa.getRowCount(); linha++) {
+            model.removeRow(linha);
         }
     }
 
