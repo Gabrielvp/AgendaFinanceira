@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.List;
+
 /**
  *
  * @author Homologação
@@ -13,12 +15,40 @@ public class Pessoa {
     private Documento documento;
     private Endereco endereco;
     private Telefone telefone;
+    private List<Telefone> listaTelefone;
+
+    public Telefone getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(Telefone telefone) {
+        this.telefone = telefone;
+    }
+
+    public List<Telefone> getListaTelefone() {
+        return listaTelefone;
+    }
+
+    public void setListaTelefone(List<Telefone> listaTelefone) {
+        this.listaTelefone = listaTelefone;
+    }
 
     @Override
     public String toString(){
         return idPessoa + nome;
     }
     
+    public void addTelefone (Telefone telefone){
+        listaTelefone.add(telefone);
+    }
+    
+    public List<Telefone> mostrarTelefone(Telefone telefone){
+        return listaTelefone;
+    }
+    
+    public void excluirTelefone(Telefone telefone){
+        listaTelefone.remove(telefone);
+    }
     public Documento getDocumento() {
         return documento;
     }
@@ -43,14 +73,7 @@ public class Pessoa {
         this.endereco = endereco;
     }
 
-    public Telefone getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(Telefone telefone) {
-        this.telefone = telefone;
-    }
-
+   
     public String getEmail() {
         return email;
     }

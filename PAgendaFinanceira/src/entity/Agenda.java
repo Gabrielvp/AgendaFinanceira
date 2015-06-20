@@ -18,8 +18,7 @@ public class Agenda {
     private Date date;
     private String descricao;
     private String dia;
-    private List<Telefone> listaTelefones;
-
+   
     @Override
     public String toString(){
         return descricao;
@@ -58,28 +57,12 @@ public class Agenda {
         this.idAgenda = idAgenda;
     }
 
-    public List<Telefone> getListaTelefones() {
-        return listaTelefones;
-    }
-
-    public void setListaTelefones(List<Telefone> listaTelefones) {
-        this.listaTelefones = listaTelefones;
-    }
-
     public Agenda() {
 
-        listaTelefones = new ArrayList<>();
+        
     }
 
-    public List<Telefone> mostrarTelefone() {
-        return listaTelefones;
-    }
-
-    public void addTelefone(Telefone telefone) {
-        listaTelefones.add(telefone);
-    }
-
-    public Pessoa getPessoa() {
+       public Pessoa getPessoa() {
         return pessoa;
     }
 

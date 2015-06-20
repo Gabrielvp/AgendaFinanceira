@@ -17,6 +17,7 @@ import entity.Telefone;
 import entity.TipoTelefone;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -573,7 +574,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
 
         t.setNumero(txtNumero.getText());
 
-        a.addTelefone(t);
+       // a.addTelefone(t);
         //mostrarTelefone(a.mostrarTelefone());
 
     }//GEN-LAST:event_btnAddTelefoneActionPerformed
@@ -630,7 +631,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
-        limparTabela();
+        limparTabelaBusca();
         String nome = txtNome.getText();
         buscaNome(nome);
     }//GEN-LAST:event_txtNomeKeyPressed
@@ -692,6 +693,21 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         }
     }
 
+    public void limparTabelaBusca() {
+
+        DefaultTableModel model
+                = (DefaultTableModel) this.tblPessoa.getModel();
+        String text = null;
+        for (int i = 0; i < tblPessoa.getRowCount(); i++) {
+            model.setValueAt(text, i, 0);
+            model.setValueAt(text, i, 1);
+            model.setValueAt(text, i, 2);
+            model.setValueAt(text, i, 3);
+            model.setValueAt(text, i, 4);
+            model.setValueAt(text, i, 5);
+        }
+    }
+
     public void limparTabela() {
 
         DefaultTableModel model
@@ -704,7 +720,6 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             model.setValueAt(text, i, 3);
             model.setValueAt(text, i, 4);
             model.setValueAt(text, i, 5);
-
             model.removeRow(i);
         }
     }
