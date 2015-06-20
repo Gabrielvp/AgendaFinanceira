@@ -21,9 +21,10 @@ public class pessoaAgendamentoDAO extends MySQL {
         try {
             PreparedStatement ps
                     = c.prepareStatement("INSERT INTO pessoa "
-                            + "(Nome)  "
-                            + "VALUES ( ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+                            + "(Nome, Completo)  "
+                            + "VALUES ( ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, pessoa.getNome());
+            ps.setBoolean(2, pessoa.isCompleto());
 
             ps.execute();
             ResultSet rs = ps.getGeneratedKeys();

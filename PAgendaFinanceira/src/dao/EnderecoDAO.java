@@ -23,7 +23,7 @@ public class EnderecoDAO extends MySQL {
     SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
     java.util.Date d = new java.util.Date();
     java.sql.Date dt = new java.sql.Date(d.getTime());
-        
+
     public boolean insert(Endereco endereco) {
         Connection c = this.getConnection();
         try {
@@ -117,51 +117,45 @@ public class EnderecoDAO extends MySQL {
      }
      }
      return false;
-     }
+     }*/
+    public List<Endereco> listarEndereco(int id) {
+        List<Endereco> listaEndereco = new ArrayList<>();
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps
+                    = c.prepareStatement("SELECT endereco.rua, endereco.numero, endereco.cep, endereco.cidade, "
+                            + " endereco.bairro, endereco.uf, endereco.ponto_referencia"
+                            + " FROM endereco where idpessoa = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
 
-     public List<Funcionario> listarFuncionarios() {
-     List<Funcionario> lista = new ArrayList<Funcionario>();
-     Connection c = this.getConnection();
-     try {
-     PreparedStatement ps
-     = c.prepareStatement("SELECT id_funcionario, matricula, nome, rua, numero, bairro,"
-     + " cep, uf, fone_residencial, fone_celular, salario, setor, funcao "
-     + "FROM funcionario WHERE tipo = 1");
-     ResultSet rs = ps.executeQuery();
-     while (rs.next()) {
+                Endereco endereco = new Endereco();
+                endereco.setRua(rs.getString("Rua"));
+                endereco.setNumero(rs.getInt("Numero"));
+                endereco.setCep(rs.getString("Cep"));
+                endereco.setCidade(rs.getString("Cidade"));
+                endereco.setBairro(rs.getString("Bairro"));
+                endereco.setUf(rs.getString("UF"));
+                endereco.setpReferencia(rs.getString("Ponto_referencia"));
 
-     FContratado funcionario = new FContratado();
-     funcionario.setId_funcionario(rs.getInt("id_funcionario"));
-     funcionario.setMatricula(rs.getInt("Matricula"));
-     funcionario.setNome(rs.getString("Nome"));
-     funcionario.setRua(rs.getString("Rua"));
-     funcionario.setNumero(rs.getInt("Numero"));
-     funcionario.setBairro(rs.getString("Bairro"));
-     funcionario.setCep(rs.getString("Cep"));
-     funcionario.setUf(rs.getString("Uf"));
-     funcionario.setResidencial(rs.getString("fone_residencial"));
-     funcionario.setCelular(rs.getString("fone_celular"));
-     funcionario.setSalario(rs.getDouble("salario"));
-     funcionario.setSetor(EnumSetor.ADMINISTRATIVO.getEnumSetorPorCodigo(rs.getInt("setor")));
-     funcionario.setFuncao(EnumFuncao.ANALISTA.getEnumPorCodigo(rs.getInt("funcao")));
+                listaEndereco.add(endereco);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return listaEndereco;
+    }
 
-     lista.add(funcionario);
-     }
-     rs.close();
-     ps.close();
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     } finally {
-     try {
-     c.close();
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     }
-     }
-     return lista;
-     }
-
-     public FContratado getFuncionarioById(int id) {
+    /*public FContratado getFuncionarioById(int id) {
      Connection c = this.getConnection();
      FContratado funcionario = null;
      try {

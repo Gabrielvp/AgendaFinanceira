@@ -114,6 +114,7 @@ public class agendamentoDAO extends MySQL {
      }
      return false;
      }
+     
     public List<Agenda> listarAgendamentos(Date data) {
         List<Agenda> lista = new ArrayList<>();
         Connection c = this.getConnection();

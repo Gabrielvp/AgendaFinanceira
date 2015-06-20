@@ -480,9 +480,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         //laço para inserir o número de linhas igual ao da lista
         for (int i = 0; i < listaPeriodo.size(); i++) {
             model.addRow(new Object[]{});
-        }
-        //laço para inserir os dados dos objetos na Tabela
-        for (int i = 0; i < listaPeriodo.size(); i++) {
             model.setValueAt(listaPeriodo.get(i), i, 0);
 
         }
