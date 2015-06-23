@@ -17,6 +17,15 @@ public enum EnumDiaSemana {
     final String descricao;
     final int codigo;
 
+    public EnumDiaSemana getEnumDiaPorCodigo(int codigo) {
+        for (EnumDiaSemana enumDia : EnumDiaSemana.values()) {
+            if (enumDia.getCodigo() == codigo) {
+                return enumDia;
+            }
+        }
+        return null;
+    }
+    
     private EnumDiaSemana(int codigo, String descricao) {
         this.descricao = descricao;
         this.codigo = codigo;

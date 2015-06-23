@@ -6,13 +6,18 @@
 package view;
 
 import dao.ConfiguracaoDAO;
+import dao.EnderecoDAO;
 import entity.Configuracao;
+import entity.Endereco;
 import entity.EnumDiaSemana;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,8 +34,9 @@ public class Configuracoes extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         setResizable(false);
         cbDia.setModel(new DefaultComboBoxModel<>(EnumDiaSemana.values()));
+        atualizaTabelaConfiguracao();
     }
-    
+
     SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
 
     /**
@@ -139,6 +145,11 @@ public class Configuracoes extends javax.swing.JDialog {
 
         cbDia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbDia.setBorder(null);
+        cbDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbDiaActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Dia:");
 
@@ -266,7 +277,7 @@ public class Configuracoes extends javax.swing.JDialog {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Configuracao c = new Configuracao();
         ConfiguracaoDAO cDAO = new ConfiguracaoDAO();
-        
+
         try {
             c.setHoraInicial(sdfH.parse(txtHoraInicio.getText()));
         } catch (ParseException ex) {
@@ -288,14 +299,53 @@ public class Configuracoes extends javax.swing.JDialog {
         } catch (ParseException ex) {
             Logger.getLogger(Configuracoes.class.getName()).log(Level.SEVERE, null, ex);
         }
-        c.setDia((EnumDiaSemana)cbDia.getSelectedItem());
-        
+        c.setDia((EnumDiaSemana) cbDia.getSelectedItem());
+        String dia = cbDia.getSelectedItem().toString();
+        //verificaConfiguracao(dia);
         cDAO.insert(c);
+        limparTela();
+        JOptionPane.showMessageDialog(this, "Configuração salva com sucesso!");
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void cbDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDiaActionPerformed
+
+    }//GEN-LAST:event_cbDiaActionPerformed
 
     /**
      * @param args the command line arguments
      */
+    public void atualizaTabelaConfiguracao() {
+        ConfiguracaoDAO cDAO = new ConfiguracaoDAO();
+        List<Configuracao> listaConfiguracoes = cDAO.listarConfiguracao();
+        DefaultTableModel model = (DefaultTableModel) this.tblConfiguracao.getModel();
+        for (int i = 0; i < listaConfiguracoes.size(); i++) {
+            model.setValueAt(listaConfiguracoes.get(i).getDia(), i, 0);
+            model.setValueAt(listaConfiguracoes.get(i).getHoraInicial(), i, 1);
+            model.setValueAt(listaConfiguracoes.get(i).getHoraFinal(), i, 2);
+            model.setValueAt(listaConfiguracoes.get(i).getIntervalo(), i, 3);
+        }
+    }
+
+    public void limparTela() {
+        txtAlmocoFim.setText("");
+        txtAlmocoInicio.setText("");
+        txtHoraInicio.setText("");
+        txtHoraFim.setText("");
+        txtIntervalo.setText("");
+        cbDia.setSelectedIndex(0);
+    }
+
+    public void verificaConfiguracao(String dia) {
+        int linha = tblConfiguracao.getRowHeight();
+        String tbl = tblConfiguracao.getValueAt(linha, 0).toString();
+        for (int i = 0; i < tblConfiguracao.getRowCount(); i++) {
+            if (tbl.equals(dia)) {
+                JOptionPane.showMessageDialog(null, "Dia já configurado!"
+                        + "Para reconfigurar exclua o dia da tabela e refaça a configuração!");
+            }
+        }
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
