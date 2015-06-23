@@ -5,7 +5,13 @@
  */
 package view;
 
+import dao.ConfiguracaoDAO;
+import entity.Configuracao;
 import entity.EnumDiaSemana;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 
 /**
@@ -24,6 +30,8 @@ public class Configuracoes extends javax.swing.JDialog {
         setResizable(false);
         cbDia.setModel(new DefaultComboBoxModel<>(EnumDiaSemana.values()));
     }
+    
+    SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,7 +57,6 @@ public class Configuracoes extends javax.swing.JDialog {
         cbDia = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
-        btnAlterar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblConfiguracao = new javax.swing.JTable();
         btnExcluir = new javax.swing.JButton();
@@ -183,9 +190,11 @@ public class Configuracoes extends javax.swing.JDialog {
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Apply.png"))); // NOI18N
         btnSalvar.setText("Salvar");
-
-        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Modify.png"))); // NOI18N
-        btnAlterar.setText("Alterar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         tblConfiguracao.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
         tblConfiguracao.setModel(new javax.swing.table.DefaultTableModel(
@@ -229,8 +238,6 @@ public class Configuracoes extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAlterar)
-                        .addGap(14, 14, 14)
                         .addComponent(btnExcluir)
                         .addGap(32, 32, 32))))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -249,13 +256,42 @@ public class Configuracoes extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
-                    .addComponent(btnAlterar)
                     .addComponent(btnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        Configuracao c = new Configuracao();
+        ConfiguracaoDAO cDAO = new ConfiguracaoDAO();
+        
+        try {
+            c.setHoraInicial(sdfH.parse(txtHoraInicio.getText()));
+        } catch (ParseException ex) {
+            Logger.getLogger(Configuracoes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            c.setHoraFinal(sdfH.parse(txtHoraFim.getText()));
+        } catch (ParseException ex) {
+            Logger.getLogger(Configuracoes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        c.setIntervalo(Integer.parseInt(txtIntervalo.getText()));
+        try {
+            c.setAlmocoInicio(sdfH.parse(txtAlmocoInicio.getText()));
+        } catch (ParseException ex) {
+            Logger.getLogger(Configuracoes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            c.setAlmocoFim(sdfH.parse(txtAlmocoFim.getText()));
+        } catch (ParseException ex) {
+            Logger.getLogger(Configuracoes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        c.setDia((EnumDiaSemana)cbDia.getSelectedItem());
+        
+        cDAO.insert(c);
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -300,7 +336,6 @@ public class Configuracoes extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox cbDia;
