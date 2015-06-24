@@ -6,9 +6,7 @@
 package view;
 
 import dao.ConfiguracaoDAO;
-import dao.EnderecoDAO;
 import entity.Configuracao;
-import entity.Endereco;
 import entity.EnumDiaSemana;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,6 +36,7 @@ public class Configuracoes extends javax.swing.JDialog {
     }
 
     SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
+    int dia;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -232,6 +231,11 @@ public class Configuracoes extends javax.swing.JDialog {
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Delete.png"))); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -304,12 +308,36 @@ public class Configuracoes extends javax.swing.JDialog {
         //verificaConfiguracao(dia);
         cDAO.insert(c);
         limparTela();
+        atualizaTabelaConfiguracao();
         JOptionPane.showMessageDialog(this, "Configuração salva com sucesso!");
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void cbDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbDiaActionPerformed
 
     }//GEN-LAST:event_cbDiaActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int sel = tblConfiguracao.getSelectedRow();
+        if (sel == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione a configuração a ser excluída");
+        } else {
+            int linha = tblConfiguracao.getSelectedRow();
+            String tbl = tblConfiguracao.getValueAt(linha, 0).toString();
+            if (tbl.equals("")) {
+                JOptionPane.showMessageDialog(this, "Configuração vazia");
+            } else {
+                ConfiguracaoDAO cDAO = new ConfiguracaoDAO();
+                int line = tblConfiguracao.getSelectedRow();
+                String tb = tblConfiguracao.getValueAt(line, 0).toString();
+                diaDaSemana(tb);
+                int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja Excluir a configuração?", "Exclusão", 0, 0);
+                if (confirmacao == 0) {
+                    cDAO.delete(dia);
+                }
+            }
+        }
+        this.atualizaTabelaConfiguracao();
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -333,6 +361,32 @@ public class Configuracoes extends javax.swing.JDialog {
         txtHoraFim.setText("");
         txtIntervalo.setText("");
         cbDia.setSelectedIndex(0);
+    }
+
+    public void diaDaSemana(String diaSemana) {
+        switch (diaSemana) {
+            case ("Domingo"):
+                dia = 1;
+                break;
+            case ("Segunda-Feira"):
+                dia = 2;
+                break;
+            case ("Terça-Feira"):
+                dia = 3;
+                break;
+            case ("Quarta-Feira"):
+                dia = 4;
+                break;
+            case ("Quinta-Feira"):
+                dia = 5;
+                break;
+            case ("Sexta-Feira"):
+                dia = 6;
+                break;
+            case ("Sábado"):
+                dia = 7;
+                break;
+        }
     }
 
     public void verificaConfiguracao(String dia) {

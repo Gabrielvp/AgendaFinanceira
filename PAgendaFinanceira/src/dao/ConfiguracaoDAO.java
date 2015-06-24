@@ -1,10 +1,7 @@
 package dao;
 
 import entity.Configuracao;
-import entity.Documento;
 import entity.EnumDiaSemana;
-import entity.Pessoa;
-import entity.Telefone;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -110,47 +107,13 @@ public class ConfiguracaoDAO extends MySQL {
      ex.printStackTrace();
      }
      }
-     }
-
-     public void delete(int id) {
-     Connection c = this.getConnection();
-     try {
-     PreparedStatement ps = c.prepareStatement("DELETE FROM pessoas "
-     + "WHERE idPessoas");
-     ps.setInt(1, id);
-
-     ps.execute();
-     ps.close();
-
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     } finally {
-     try {
-     c.close();
-
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     }
-     }
      }*/
-    public List<Configuracao> listarConfiguracao() {
-        List<Configuracao> listaConfiguracoes = new ArrayList<>();
+    public void delete(int dia) {
         Connection c = this.getConnection();
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT horaInicial, horaFinal, intervalo, dia FROM configuracoes");
-
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-
-                Configuracao configuracao = new Configuracao();
-                configuracao.setHoraInicial(rs.getTime("HoraInicial"));
-                configuracao.setHoraFinal(rs.getTime("HoraFinal"));
-                configuracao.setIntervalo(rs.getInt("Intervalo"));
-                configuracao.setDia(EnumDiaSemana.DOMINGO.getEnumDiaPorCodigo(rs.getInt("Dia")));
-
-                listaConfiguracoes.add(configuracao);
-
-            }
+            PreparedStatement ps = c.prepareStatement("DELETE FROM configuracoes "
+                    + "WHERE dia = ?");
+            ps.setInt(1, dia);
 
             ps.execute();
             ps.close();
@@ -160,14 +123,48 @@ public class ConfiguracaoDAO extends MySQL {
         } finally {
             try {
                 c.close();
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
-        return listaConfiguracoes;
     }
+    
+     public List<Configuracao> listarConfiguracao() {
+     List<Configuracao> listaConfiguracoes = new ArrayList<>();
+     Connection c = this.getConnection();
+     try {
+     PreparedStatement ps = c.prepareStatement("SELECT horaInicial, horaFinal, intervalo, dia FROM configuracoes");
 
-    /* public List<Pessoa> buscarNome(String nome) {
+     ResultSet rs = ps.executeQuery();
+     while (rs.next()) {
+
+     Configuracao configuracao = new Configuracao();
+     configuracao.setHoraInicial(rs.getTime("HoraInicial"));
+     configuracao.setHoraFinal(rs.getTime("HoraFinal"));
+     configuracao.setIntervalo(rs.getInt("Intervalo"));
+     configuracao.setDia(EnumDiaSemana.DOMINGO.getEnumDiaPorCodigo(rs.getInt("Dia")));
+
+     listaConfiguracoes.add(configuracao);
+
+     }
+
+     ps.execute();
+     ps.close();
+
+     } catch (SQLException ex) {
+     ex.printStackTrace();
+     } finally {
+     try {
+     c.close();
+     } catch (SQLException ex) {
+     ex.printStackTrace();
+     }
+     }
+     return listaConfiguracoes;
+     }
+
+     /* public List<Pessoa> buscarNome(String nome) {
      List<Pessoa> listaBuscaNome = new ArrayList<Pessoa>();
      Connection c = this.getConnection();
      try {

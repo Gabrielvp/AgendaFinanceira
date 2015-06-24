@@ -372,27 +372,29 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCaixaActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-
-        int linha = tblPrincipal.getSelectedRow();
-        String tbl = tblPrincipal.getValueAt(linha, 1).toString();
-        int select = tblPrincipal.getSelectedRow();
-        if ( (tbl.equals(""))) {
-            JOptionPane.showMessageDialog(this, "Selecione um Agendamento para Exclusão");
+        int sel = tblPrincipal.getSelectedRow();
+        if (sel == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione o agendamento a ser excluído");
         } else {
-            int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja Excluir o  Agendamento?", "Exclusão", 0, 0);
-            if (confirmacao == 0) {
-                //pega a linha da Tabela que foi selecionada pelo usuário
-                int line = tblPrincipal.getSelectedRow();
-                String hora = tblPrincipal.getValueAt(linha, 0).toString();
-                Date dt = txtData.getDate();
-                java.sql.Date data;
-                data = new java.sql.Date(dt.getTime());
-                agendamentoDAO aDAO = new agendamentoDAO();
+            int linha = tblPrincipal.getSelectedRow();
+            String tbl = tblPrincipal.getValueAt(linha, 1).toString();
+            if ((tbl.equals(""))) {
+                JOptionPane.showMessageDialog(this, "Selecione um Agendamento para Exclusão");
+            } else {
+                int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja Excluir o  Agendamento?", "Exclusão", 0, 0);
+                if (confirmacao == 0) {
+                    //pega a linha da Tabela que foi selecionada pelo usuário
+                    int line = tblPrincipal.getSelectedRow();
+                    String hora = tblPrincipal.getValueAt(linha, 0).toString();
+                    Date dt = txtData.getDate();
+                    java.sql.Date data;
+                    data = new java.sql.Date(dt.getTime());
+                    agendamentoDAO aDAO = new agendamentoDAO();
 
-                aDAO.delete(hora, data);
-                this.limparTabela();
-                this.atualizaTabela();
-
+                    aDAO.delete(hora, data);
+                    this.limparTabela();
+                    this.atualizaTabela();
+                }
             }
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -434,8 +436,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     public void diaDaSemana(int dia) {
         String diaDaSemana[] = {"Domingo", "Segunda-Feira", "Terça-Feira",
             "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"};
-        for (int i = 0; i < 6; i++) {
-        }
         lblDiaSemana.setText(diaDaSemana[dia - 1]);
     }
 
