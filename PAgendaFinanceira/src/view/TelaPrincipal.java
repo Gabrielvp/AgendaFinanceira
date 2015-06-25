@@ -9,6 +9,7 @@ import dao.agendamentoDAO;
 import entity.Agenda;
 import entity.DataHora;
 import entity.Pessoa;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
@@ -422,7 +423,9 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tblPrincipalMouseExited
 
     private void btnPesquisaHoraMarcadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaHoraMarcadaActionPerformed
-        
+        String nome = txtNome.getText();
+        TelaPesquisaAgendamento tela = new TelaPesquisaAgendamento(this, rootPaneCheckingEnabled, nome);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnPesquisaHoraMarcadaActionPerformed
 
     private void btnProximoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoHorarioActionPerformed
@@ -516,6 +519,13 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         Date dt = txtData.getDate();
         java.sql.Date data;
         data = new java.sql.Date(dt.getTime());
+        String dataAtual = sdfD.format(new Date());
+        String dat = sdfD.format(txtData.getDate());
+        if (!dat.equals(dataAtual)) {
+            tblPrincipal.setBackground(Color.pink);
+        }else{
+            tblPrincipal.setBackground(null);
+        }
         listaAgendamentos = aDAO.listarAgendamentos(data);
         for (int j = 0; j < tblPrincipal.getRowCount(); j++) {
             verificaHora = tblPrincipal.getValueAt(j, 0).toString() + ":00";

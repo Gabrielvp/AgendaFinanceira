@@ -150,6 +150,42 @@ public class agendamentoDAO extends MySQL {
         }
         return lista;
     }
+    
+    public List<Agenda> listarAgendamentosPessoa(String nome) {
+        List<Agenda> lista = new ArrayList<>();
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps
+                    = c.prepareStatement("SELECT pessoa.nome, agendamento.data, agendamento.hora"
+                            + " FROM pessoa INNER JOIN agendamento on"
+                            + " pessoa.idPessoa = agendamento.idPessoa WHERE nome like ? and data >= current_date");
+            ps.setString(1, nome + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Agenda agenda = new Agenda();
+                Pessoa pessoa = new Pessoa();
+                agenda.setData(rs.getDate("Data"));
+                agenda.setHora(rs.getTime("Hora"));
+                pessoa.setNome(rs.getString("Nome"));
+
+                agenda.setPessoa(pessoa);
+                lista.add(agenda);
+
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return lista;
+    }
 
     /* public FContratado getFuncionarioById(int id) {
      Connection c = this.getConnection();
