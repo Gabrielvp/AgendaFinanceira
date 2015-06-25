@@ -281,7 +281,7 @@ public class Configuracoes extends javax.swing.JDialog {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Configuracao c = new Configuracao();
         ConfiguracaoDAO cDAO = new ConfiguracaoDAO();
-
+       
         try {
             c.setHoraInicial(sdfH.parse(txtHoraInicio.getText()));
         } catch (ParseException ex) {
@@ -293,6 +293,7 @@ public class Configuracoes extends javax.swing.JDialog {
             Logger.getLogger(Configuracoes.class.getName()).log(Level.SEVERE, null, ex);
         }
         c.setIntervalo(Integer.parseInt(txtIntervalo.getText()));
+        c.setDia((EnumDiaSemana) cbDia.getSelectedItem());
         try {
             c.setAlmocoInicio(sdfH.parse(txtAlmocoInicio.getText()));
         } catch (ParseException ex) {
@@ -303,7 +304,7 @@ public class Configuracoes extends javax.swing.JDialog {
         } catch (ParseException ex) {
             Logger.getLogger(Configuracoes.class.getName()).log(Level.SEVERE, null, ex);
         }
-        c.setDia((EnumDiaSemana) cbDia.getSelectedItem());
+        
         String dia = cbDia.getSelectedItem().toString();
         //verificaConfiguracao(dia);
         cDAO.insert(c);

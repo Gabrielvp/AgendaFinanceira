@@ -52,62 +52,6 @@ public class ConfiguracaoDAO extends MySQL {
         return false;
     }
 
-    /*public boolean updateEmailCadCompleto(Pessoa pessoa) {
-     Connection c = this.getConnection();
-     try {
-     PreparedStatement ps = c.prepareStatement("UPDATE pessoa "
-     + " SET email "
-     + " WHERE idPessoa = ?");
-     ps.setString(1, pessoa.getEmail());
-     ps.setBoolean(2, true);
-
-     ps.execute();
-
-     ps.close();
-     return true;
-
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     } finally {
-     try {
-     c.close();
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     }
-     }
-     return false;
-     }
-
-     public void update(Pessoa pessoa) {
-     Connection c = this.getConnection();
-     try {
-     PreparedStatement ps = c.prepareStatement("UPDATE pessoa "
-     + "SET nome = ?, email = ?, cpf= ?, rg = ? , telefone = ?, rua = ?, numero = ?, cep = ?, cidade = ?, bairro = ? "
-     + "uf = ?, referencia = ? ");
-
-     ps.setString(1, pessoa.getNome());
-     ps.setString(2, pessoa.getEmail());
-     ps.setString(3, pessoa.getDocumento().getCpf());
-     ps.setString(4, pessoa.getDocumento().getRg());
-     ps.setString(5, pessoa.getTelefone().getNumero());
-     ps.setString(6, pessoa.getEndereco().getRua());
-     ps.setInt(7, pessoa.getEndereco().getNumero());
-     ps.setString(8, pessoa.getEndereco().getCep());
-     ps.setString(9, pessoa.getEndereco().getCidade());
-     ps.setString(10, pessoa.getEndereco().getBairro());
-     ps.setString(11, pessoa.getEndereco().getUf());
-     ps.setString(12, pessoa.getEndereco().getpReferencia());
-
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     } finally {
-     try {
-     c.close();
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     }
-     }
-     }*/
     public void delete(int dia) {
         Connection c = this.getConnection();
         try {
@@ -129,42 +73,42 @@ public class ConfiguracaoDAO extends MySQL {
             }
         }
     }
-    
-     public List<Configuracao> listarConfiguracao() {
-     List<Configuracao> listaConfiguracoes = new ArrayList<>();
-     Connection c = this.getConnection();
-     try {
-     PreparedStatement ps = c.prepareStatement("SELECT horaInicial, horaFinal, intervalo, dia FROM configuracoes");
 
-     ResultSet rs = ps.executeQuery();
-     while (rs.next()) {
+    public List<Configuracao> listarConfiguracao() {
+        List<Configuracao> listaConfiguracoes = new ArrayList<>();
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT horaInicial, horaFinal, intervalo, dia FROM configuracoes");
 
-     Configuracao configuracao = new Configuracao();
-     configuracao.setHoraInicial(rs.getTime("HoraInicial"));
-     configuracao.setHoraFinal(rs.getTime("HoraFinal"));
-     configuracao.setIntervalo(rs.getInt("Intervalo"));
-     configuracao.setDia(EnumDiaSemana.DOMINGO.getEnumDiaPorCodigo(rs.getInt("Dia")));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
 
-     listaConfiguracoes.add(configuracao);
+                Configuracao configuracao = new Configuracao();
+                configuracao.setHoraInicial(rs.getTime("HoraInicial"));
+                configuracao.setHoraFinal(rs.getTime("HoraFinal"));
+                configuracao.setIntervalo(rs.getInt("Intervalo"));
+                configuracao.setDia(EnumDiaSemana.DOMINGO.getEnumDiaPorCodigo(rs.getInt("Dia")));
 
-     }
+                listaConfiguracoes.add(configuracao);
 
-     ps.execute();
-     ps.close();
+            }
 
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     } finally {
-     try {
-     c.close();
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     }
-     }
-     return listaConfiguracoes;
-     }
+            ps.execute();
+            ps.close();
 
-     /* public List<Pessoa> buscarNome(String nome) {
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return listaConfiguracoes;
+    }
+
+    /* public List<Pessoa> buscarNome(String nome) {
      List<Pessoa> listaBuscaNome = new ArrayList<Pessoa>();
      Connection c = this.getConnection();
      try {
