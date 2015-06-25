@@ -437,9 +437,13 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tblPrincipalMouseExited
 
     private void btnPesquisaHoraMarcadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaHoraMarcadaActionPerformed
+        if(txtNome.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Insira um nome ou parte dele para fazer a pesquisa!");
+        }else{
         String nome = txtNome.getText();
         TelaPesquisaAgendamento tela = new TelaPesquisaAgendamento(this, rootPaneCheckingEnabled, nome, antigas);
         tela.setVisible(true);
+        }
     }//GEN-LAST:event_btnPesquisaHoraMarcadaActionPerformed
 
     private void btnProximoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoHorarioActionPerformed
