@@ -22,16 +22,18 @@ public class TelaPesquisaAgendamento extends javax.swing.JDialog {
     /**
      * Creates new form TelaPesquisaAgendamento
      */
-    public TelaPesquisaAgendamento(java.awt.Frame parent, boolean modal, String nome) {
+    public TelaPesquisaAgendamento(java.awt.Frame parent, boolean modal, String nome, boolean antigas) {
         super(parent, modal);
         initComponents();
         this.name = nome;
         setLocationRelativeTo(null);
         setResizable(false);
+        this.teste = antigas;
         tabelaAgendamento(nome);
     }
     String name;
     agendamentoDAO aDAO = new agendamentoDAO();
+    boolean teste;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -87,13 +89,11 @@ public class TelaPesquisaAgendamento extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
         );
 
         pack();
@@ -103,15 +103,23 @@ public class TelaPesquisaAgendamento extends javax.swing.JDialog {
 
     public void tabelaAgendamento(String nome) {
         EnderecoDAO eDAO = new EnderecoDAO();
-        List<Agenda> lista = aDAO.listarAgendamentosPessoa(nome);
         DefaultTableModel model = (DefaultTableModel) this.tblAgendamento.getModel();
-        for (int i = 0; i < lista.size(); i++) {
-            model.addRow(new Object[]{});
-            model.setValueAt(lista.get(i).getPessoa().getNome(), i, 0);
-            model.setValueAt(sdfD.format(lista.get(i).getData()), i, 1);
-            model.setValueAt(lista.get(i).getHora(), i, 2);
-        }
 
+        if (teste) {
+            List<Agenda> listaAntiga = aDAO.listarAgendamentosPessoaRealizadas(nome);
+            for (int i = 0; i < listaAntiga.size(); i++) {
+                model.setValueAt(listaAntiga.get(i).getPessoa().getNome(), i, 0);
+                model.setValueAt(sdfD.format(listaAntiga.get(i).getData()), i, 1);
+                model.setValueAt(listaAntiga.get(i).getHora(), i, 2);
+            }
+        } else {
+            List<Agenda> lista = aDAO.listarAgendamentosPessoa(nome);
+            for (int i = 0; i < lista.size(); i++) {
+                model.setValueAt(lista.get(i).getPessoa().getNome(), i, 0);
+                model.setValueAt(sdfD.format(lista.get(i).getData()), i, 1);
+                model.setValueAt(lista.get(i).getHora(), i, 2);
+            }
+        }
     }
 
     /**
@@ -145,7 +153,7 @@ public class TelaPesquisaAgendamento extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TelaPesquisaAgendamento dialog = new TelaPesquisaAgendamento(new javax.swing.JFrame(), true, null);
+                TelaPesquisaAgendamento dialog = new TelaPesquisaAgendamento(new javax.swing.JFrame(), true, null, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

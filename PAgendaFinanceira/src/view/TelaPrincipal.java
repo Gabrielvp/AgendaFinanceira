@@ -48,6 +48,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
     agendamentoDAO aDAO = new agendamentoDAO();
     List<Agenda> listaAgendamentos;
+    boolean antigas = false;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,6 +64,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         btnPesquisaHoraMarcada = new javax.swing.JButton();
+        ckbConsultasRealizadas = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         txtHorario = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -105,6 +107,13 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        ckbConsultasRealizadas.setText("Consultas Realizadas");
+        ckbConsultasRealizadas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ckbConsultasRealizadasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -117,11 +126,16 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnPesquisaHoraMarcada, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ckbConsultasRealizadas)
+                .addGap(159, 159, 159))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addComponent(ckbConsultasRealizadas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
@@ -424,7 +438,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnPesquisaHoraMarcadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaHoraMarcadaActionPerformed
         String nome = txtNome.getText();
-        TelaPesquisaAgendamento tela = new TelaPesquisaAgendamento(this, rootPaneCheckingEnabled, nome);
+        TelaPesquisaAgendamento tela = new TelaPesquisaAgendamento(this, rootPaneCheckingEnabled, nome, antigas);
         tela.setVisible(true);
     }//GEN-LAST:event_btnPesquisaHoraMarcadaActionPerformed
 
@@ -432,6 +446,14 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled);
         tela.setVisible(true);
     }//GEN-LAST:event_btnProximoHorarioActionPerformed
+
+    private void ckbConsultasRealizadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbConsultasRealizadasActionPerformed
+        if (ckbConsultasRealizadas.isSelected()) {
+            antigas = true;
+        } else {
+            antigas = false;
+        }
+    }//GEN-LAST:event_ckbConsultasRealizadasActionPerformed
 
     public void dataTela() {
         try {
@@ -523,7 +545,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         String dat = sdfD.format(txtData.getDate());
         if (!dat.equals(dataAtual)) {
             tblPrincipal.setBackground(Color.pink);
-        }else{
+        } else {
             tblPrincipal.setBackground(null);
         }
         listaAgendamentos = aDAO.listarAgendamentos(data);
@@ -609,6 +631,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnProduto;
     private javax.swing.JButton btnProximoHorario;
     private javax.swing.JButton btnServico;
+    private javax.swing.JCheckBox ckbConsultasRealizadas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
