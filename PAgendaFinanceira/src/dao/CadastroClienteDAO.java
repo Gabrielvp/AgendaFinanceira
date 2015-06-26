@@ -28,7 +28,7 @@ public class CadastroClienteDAO extends MySQL {
             ps.setString(2, pessoa.getEmail());
             ps.setString(3, pessoa.getDocumento().getCpf());
             ps.setString(4, pessoa.getDocumento().getRg());
-            ps.setString(5, pessoa.getTelefone().getNumero());
+           // ps.setString(5, pessoa.getTelefone().getNumero());
             ps.setString(6, pessoa.getEndereco().getRua());
             ps.setInt(7, pessoa.getEndereco().getNumero());
             ps.setString(8, pessoa.getEndereco().getCep());
@@ -90,7 +90,7 @@ public class CadastroClienteDAO extends MySQL {
             ps.setString(2, pessoa.getEmail());
             ps.setString(3, pessoa.getDocumento().getCpf());
             ps.setString(4, pessoa.getDocumento().getRg());
-            ps.setString(5, pessoa.getTelefone().getNumero());
+          //  ps.setString(5, pessoa.getTelefone().getNumero());
             ps.setString(6, pessoa.getEndereco().getRua());
             ps.setInt(7, pessoa.getEndereco().getNumero());
             ps.setString(8, pessoa.getEndereco().getCep());
@@ -221,7 +221,7 @@ public class CadastroClienteDAO extends MySQL {
                 telefone.setNumero(rs.getString("numero"));
 
                 pessoa.setDocumento(documento);
-                pessoa.setTelefone(telefone);
+//                pessoa.setTelefone(telefone);
 
                 listaPessoasCompleto.add(pessoa);
 

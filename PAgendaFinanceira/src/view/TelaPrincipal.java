@@ -437,12 +437,12 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tblPrincipalMouseExited
 
     private void btnPesquisaHoraMarcadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaHoraMarcadaActionPerformed
-        if(txtNome.getText().equals("")){
+        if (txtNome.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Insira um nome ou parte dele para fazer a pesquisa!");
-        }else{
-        String nome = txtNome.getText();
-        TelaPesquisaAgendamento tela = new TelaPesquisaAgendamento(this, rootPaneCheckingEnabled, nome, antigas);
-        tela.setVisible(true);
+        } else {
+            String nome = txtNome.getText();
+            TelaPesquisaAgendamento tela = new TelaPesquisaAgendamento(this, rootPaneCheckingEnabled, nome, antigas);
+            tela.setVisible(true);
         }
     }//GEN-LAST:event_btnPesquisaHoraMarcadaActionPerformed
 
@@ -534,6 +534,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }
 
     public void atualizaTabela() {
+
         Agenda a = new Agenda();
         DefaultTableModel model
                 = (DefaultTableModel) this.tblPrincipal.getModel();
@@ -547,8 +548,10 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         data = new java.sql.Date(dt.getTime());
         String dataAtual = sdfD.format(new Date());
         String dat = sdfD.format(txtData.getDate());
+
         if (!dat.equals(dataAtual)) {
             tblPrincipal.setBackground(Color.pink);
+
         } else {
             tblPrincipal.setBackground(null);
         }

@@ -18,12 +18,12 @@ public class Agenda {
     private Date date;
     private String descricao;
     private String dia;
-   
+
     @Override
-    public String toString(){
+    public String toString() {
         return descricao;
     }
-    
+
     public Date getDate() {
         return date;
     }
@@ -32,7 +32,6 @@ public class Agenda {
         this.date = date;
     }
 
-    
     public int getIdPessoa() {
         return idPessoa;
     }
@@ -59,10 +58,9 @@ public class Agenda {
 
     public Agenda() {
 
-        
     }
 
-       public Pessoa getPessoa() {
+    public Pessoa getPessoa() {
         return pessoa;
     }
 

@@ -8,12 +8,21 @@ public class Telefone {
 
     private int idTelefone;
     private String numero;
-    private TipoTelefone tipoTelefone;
+    private EnumTipoFone tipoFone;
 
     @Override
-    public String toString(){
-        return numero; //+ " - " +tipoTelefone.getTipo();
+    public String toString() {
+        return numero + " - " + tipoFone.getDescricao();
     }
+
+    public EnumTipoFone getTipoFone() {
+        return tipoFone;
+    }
+
+    public void setTipoFone(EnumTipoFone tipoFone) {
+        this.tipoFone = tipoFone;
+    }
+
     public int getIdTelefone() {
         return idTelefone;
     }
@@ -28,13 +37,5 @@ public class Telefone {
 
     public void setNumero(String numero) {
         this.numero = numero;
-    }
-
-    public TipoTelefone getTipoTelefone() {
-        return tipoTelefone;
-    }
-
-    public void setTipoTelefone(TipoTelefone tipoTelefone) {
-        this.tipoTelefone = tipoTelefone;
     }
 }

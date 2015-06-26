@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,15 +15,10 @@ public class Pessoa {
     private boolean completo;
     private Documento documento;
     private Endereco endereco;
-    private Telefone telefone;
     private List<Telefone> listaTelefone;
 
-    public Telefone getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(Telefone telefone) {
-        this.telefone = telefone;
+    public Pessoa() {
+        listaTelefone = new ArrayList<>();
     }
 
     public List<Telefone> getListaTelefone() {
@@ -34,21 +30,22 @@ public class Pessoa {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return idPessoa + nome;
     }
-    
-    public void addTelefone (Telefone telefone){
-        listaTelefone.add(telefone);
+
+    public void addTelefone(Telefone telefone) {
+        this.listaTelefone.add(telefone);
     }
-    
-    public List<Telefone> mostrarTelefone(Telefone telefone){
+
+    public List<Telefone> mostrarTelefone() {
         return listaTelefone;
     }
-    
-    public void excluirTelefone(Telefone telefone){
+
+    public void excluirTelefone(Telefone telefone) {
         listaTelefone.remove(telefone);
     }
+
     public Documento getDocumento() {
         return documento;
     }
@@ -73,7 +70,6 @@ public class Pessoa {
         this.endereco = endereco;
     }
 
-   
     public String getEmail() {
         return email;
     }
@@ -97,5 +93,5 @@ public class Pessoa {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
 }
