@@ -69,7 +69,7 @@ public class Configuracoes extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configurações - Agenda Financeira");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)), "Almoço:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)), "Almoço:", 0, 2, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
 
         jLabel4.setText("Início:");
 
@@ -118,7 +118,7 @@ public class Configuracoes extends javax.swing.JDialog {
                 .addGap(33, 33, 33))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)), "Horas:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)), "Horas:", 0, 2, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
 
         jLabel1.setText("Horário Inicial:");
 
@@ -334,12 +334,27 @@ public class Configuracoes extends javax.swing.JDialog {
                 int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja Excluir a configuração?", "Exclusão", 0, 0);
                 if (confirmacao == 0) {
                     cDAO.delete(dia);
+                     this.limparTabela();
                 }
             }
         }
+        
         this.atualizaTabelaConfiguracao();
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    public void limparTabela() {
+        DefaultTableModel model
+                = (DefaultTableModel) this.tblConfiguracao.getModel();
+        String text = "";
+        for (int i = 0; i < tblConfiguracao.getRowCount(); i++) {
+            model.setValueAt(text, i, 0);
+            model.setValueAt(text, i, 1);
+            model.setValueAt(text, i, 2);
+            model.setValueAt(text, i, 3);
+            
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
