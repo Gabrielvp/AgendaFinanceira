@@ -51,70 +51,32 @@ public class agendamentoDAO extends MySQL {
         return false;
     }
 
-    /*public boolean update(FContratado funcionario) {
-     Connection c = this.getConnection();
-     try {
-     PreparedStatement ps = c.prepareStatement("UPDATE funcionario "
-     + " SET matricula = ?, nome = ?, rua = ?, numero = ?, bairro = ?, cep = ?, uf = ?, "
-     + " fone_residencial = ?, fone_celular = ?, salario = ?, funcao = ?, setor = ? "
-     + " WHERE id_funcionario = ?");
-     ps.setInt(1, funcionario.getMatricula());
-     ps.setString(2, funcionario.getNome());
-     ps.setString(3, funcionario.getRua());
-     ps.setInt(4, funcionario.getNumero());
-     ps.setString(5, funcionario.getBairro());
-     ps.setString(6, funcionario.getCep());
-     ps.setString(7, funcionario.getUf());
-     ps.setString(8, funcionario.getResidencial());
-     ps.setString(9, funcionario.getCelular());
-     ps.setDouble(10, funcionario.getSalario());
-     ps.setInt(11, funcionario.getFuncao().getCodigo());
-     ps.setInt(12, funcionario.getSetor().getCodigo());
-     ps.setInt(13, funcionario.getId_funcionario());
+    public boolean delete(String hora, Date data) {
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps
+                    = c.prepareStatement("DELETE FROM agendamento "
+                            + "WHERE hora = ? and data = ?");
+            ps.setString(1, hora);
+            ps.setDate(2, data);
 
-     ps.execute();
+            ps.execute();
 
-     ps.close();
-     return true;
+            ps.close();
+            return true;
 
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     } finally {
-     try {
-     c.close();
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     }
-     }
-     return false;
-     }*/
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return false;
+    }
 
-     public boolean delete(String hora, Date data) {
-     Connection c = this.getConnection();
-     try {
-     PreparedStatement ps
-     = c.prepareStatement("DELETE FROM agendamento "
-     + "WHERE hora = ? and data = ?");
-     ps.setString(1, hora);
-     ps.setDate(2, data);
-
-     ps.execute();
-
-     ps.close();
-     return true;
-
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     } finally {
-     try {
-     c.close();
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     }
-     }
-     return false;
-     }
-     
     public List<Agenda> listarAgendamentos(Date data) {
         List<Agenda> lista = new ArrayList<>();
         Connection c = this.getConnection();
@@ -150,7 +112,7 @@ public class agendamentoDAO extends MySQL {
         }
         return lista;
     }
-    
+
     public List<Agenda> listarAgendamentosPessoa(String nome) {
         List<Agenda> lista = new ArrayList<>();
         Connection c = this.getConnection();
@@ -186,7 +148,7 @@ public class agendamentoDAO extends MySQL {
         }
         return lista;
     }
-    
+
     public List<Agenda> listarAgendamentosPessoaRealizadas(String nome) {
         List<Agenda> lista = new ArrayList<>();
         Connection c = this.getConnection();
@@ -194,7 +156,8 @@ public class agendamentoDAO extends MySQL {
             PreparedStatement ps
                     = c.prepareStatement("SELECT pessoa.nome, agendamento.data, agendamento.hora"
                             + " FROM pessoa INNER JOIN agendamento on"
-                            + " pessoa.idPessoa = agendamento.idPessoa WHERE nome like ? and data < current_date order by data desc LIMIT 10 ");
+                            + " pessoa.idPessoa = agendamento.idPessoa WHERE nome like ? "
+                            + "and data < current_date order by data desc LIMIT 10 ");
             ps.setString(1, nome + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -222,39 +185,4 @@ public class agendamentoDAO extends MySQL {
         }
         return lista;
     }
-
-    /* public FContratado getFuncionarioById(int id) {
-     Connection c = this.getConnection();
-     FContratado funcionario = null;
-     try {
-     PreparedStatement ps = c.prepareStatement("SELECT id_funcionario, "
-     + "matricula, nome "
-     + "FROM funcionario WHERE id_funcionario = ?");
-     ps.setInt(1, id);
-     ResultSet rs = ps.executeQuery();
-     while (rs.next()) {
-
-     funcionario = new FContratado();
-     funcionario.setId_funcionario(rs.getInt("id_funcionario"));
-     funcionario.setMatricula(rs.getInt("matricula"));
-     funcionario.setNome(rs.getString("nome"));
-     funcionario.setRua(rs.getString("rua"));
-     funcionario.setNumero(rs.getInt("numero"));
-
-     }
-     rs.close();
-     ps.close();
-     return funcionario;
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     } finally {
-     try {
-     c.close();
-     } catch (SQLException ex) {
-     ex.printStackTrace();
-     }
-     }
-     return null;
-     }
-     */
 }

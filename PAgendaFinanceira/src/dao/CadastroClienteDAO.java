@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +15,7 @@ import java.util.List;
  * @author ricardonene
  */
 public class CadastroClienteDAO extends MySQL {
-
-    SimpleDateFormat sdfD = new SimpleDateFormat("yyyy-MM-dd");
-    SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
-    java.util.Date d = new java.util.Date();
-    java.sql.Date dt = new java.sql.Date(d.getTime());
-
+   
     public boolean insert(Pessoa pessoa) {
 
         Connection c = this.getConnection();
