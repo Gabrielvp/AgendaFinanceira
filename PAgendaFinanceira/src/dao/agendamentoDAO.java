@@ -120,7 +120,7 @@ public class agendamentoDAO extends MySQL {
             PreparedStatement ps
                     = c.prepareStatement("SELECT pessoa.nome, agendamento.data, agendamento.hora"
                             + " FROM pessoa INNER JOIN agendamento on"
-                            + " pessoa.idPessoa = agendamento.idPessoa WHERE nome like ? and data >= current_date");
+                            + " pessoa.idPessoa = agendamento.idPessoa WHERE nome like ? and data >= current_date ORDER BY data asc");
             ps.setString(1, nome + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
