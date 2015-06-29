@@ -5,6 +5,22 @@
  */
 package view;
 
+import dao.agendamentoDAO;
+import entity.Agenda;
+import entity.DataHora;
+import entity.Pessoa;
+import java.awt.Color;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Gabriel1
@@ -14,12 +30,18 @@ public class TelaProximoHorario extends javax.swing.JDialog {
     /**
      * Creates new form TelaProximoHorario
      */
-    public TelaProximoHorario(java.awt.Frame parent, boolean modal) {
+    public TelaProximoHorario(java.awt.Frame parent, boolean modal, Date data) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
+        tabelaHorarioLivre();
+        this.dt = data;
+        diaPesquisa(dt);
     }
+
+    Date dt;
+    List<Agenda> listaOcupados;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,58 +52,108 @@ public class TelaProximoHorario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblHorarioLivre = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Próximo Horário - Agenda Financeira");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblHorarioLivre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tblHorarioLivre.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Data", "Horário"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(20);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(20);
-        }
+        tblHorarioLivre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tblHorarioLivreMousePressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblHorarioLivre);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblHorarioLivreMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHorarioLivreMousePressed
+        
+    }//GEN-LAST:event_tblHorarioLivreMousePressed
+
+    private void tabelaHorarioLivre() {
+
+        Pessoa p = new Pessoa();
+        Agenda a = new Agenda();
+        agendamentoDAO aDAO = new agendamentoDAO();
+        ArrayList<String> listaPeriodo = new ArrayList<>();
+
+        Calendar inicial = Calendar.getInstance();
+        inicial.set(Calendar.HOUR_OF_DAY, 8);
+        inicial.set(Calendar.MINUTE, 0);
+
+        Calendar Final = Calendar.getInstance();
+        Final.set(Calendar.HOUR_OF_DAY, 18);
+        Final.set(Calendar.MINUTE, 0);
+
+        int minute = 30;
+
+        int diaInicial = inicial.get(Calendar.DAY_OF_MONTH);
+        int diaFinal = Final.get(Calendar.DAY_OF_MONTH);
+
+        while (inicial.before(Final)) {
+            listaPeriodo.add(String.format("%02d", inicial.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", inicial.get(Calendar.MINUTE)));
+            inicial.add(Calendar.MINUTE, minute);
+        }
+
+        //pega o modelo da Tabela e coloca na variavel "model"
+        DefaultTableModel model
+                = (DefaultTableModel) this.tblHorarioLivre.getModel();
+
+        //laço para inserir o número de linhas igual ao da lista
+        for (int i = 0; i < listaPeriodo.size(); i++) {
+            model.addRow(new Object[]{});
+            model.setValueAt(listaPeriodo.get(i), i, 1);
+
+        }
+    }
+
+    public void diaPesquisa(Date data) {
+        SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm:ss");
+        GregorianCalendar calInicio = new GregorianCalendar();
+        calInicio.add(GregorianCalendar.DAY_OF_MONTH, 1);
+        dt = calInicio.getTime();
+        Agenda a = new Agenda();
+        java.sql.Date dia;
+        dia = new java.sql.Date(dt.getTime());
+        String verificaHora;
+        DefaultTableModel model
+                = (DefaultTableModel) this.tblHorarioLivre.getModel();
+        agendamentoDAO aDAO = new agendamentoDAO();
+        listaOcupados = aDAO.listarOcupados(dia);
+
+        for (int j = 0; j < tblHorarioLivre.getRowCount(); j++) {
+            verificaHora = tblHorarioLivre.getValueAt(j, 1).toString() + ":00";
+            for (int i = 0; i < listaOcupados.size(); i++) {
+                //if (listaOcupados.get(i).getHora().toString().equals(verificaHora)) {
+                model.setValueAt(listaOcupados.get(i), i, 1);
+                model.setValueAt(dia, i, 0);
+                // }
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -113,7 +185,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TelaProximoHorario dialog = new TelaProximoHorario(new javax.swing.JFrame(), true);
+                TelaProximoHorario dialog = new TelaProximoHorario(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -126,7 +198,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblHorarioLivre;
     // End of variables declaration//GEN-END:variables
 }

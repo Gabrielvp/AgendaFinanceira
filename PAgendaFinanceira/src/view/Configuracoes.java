@@ -306,10 +306,10 @@ public class Configuracoes extends javax.swing.JDialog {
         }
         
         String dia = cbDia.getSelectedItem().toString();
-        //verificaConfiguracao(dia);
         cDAO.insert(c);
         limparTela();
         atualizaTabelaConfiguracao();
+        limparTela();
         JOptionPane.showMessageDialog(this, "Configuração salva com sucesso!");
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -355,9 +355,14 @@ public class Configuracoes extends javax.swing.JDialog {
         }
     }
     
-    /**
-     * @param args the command line arguments
-     */
+    public void limparTela(){
+        txtHoraInicio.setText("");
+        txtHoraFim.setText("");
+        txtIntervalo.setText("");
+        txtAlmocoInicio.setText("");
+        txtAlmocoFim.setText("");
+    }
+    
     public void atualizaTabelaConfiguracao() {
         ConfiguracaoDAO cDAO = new ConfiguracaoDAO();
         List<Configuracao> listaConfiguracoes = cDAO.listarConfiguracao();
@@ -368,15 +373,6 @@ public class Configuracoes extends javax.swing.JDialog {
             model.setValueAt(listaConfiguracoes.get(i).getHoraFinal(), i, 2);
             model.setValueAt(listaConfiguracoes.get(i).getIntervalo(), i, 3);
         }
-    }
-
-    public void limparTela() {
-        txtAlmocoFim.setText("");
-        txtAlmocoInicio.setText("");
-        txtHoraInicio.setText("");
-        txtHoraFim.setText("");
-        txtIntervalo.setText("");
-        cbDia.setSelectedIndex(0);
     }
 
     public void diaDaSemana(String diaSemana) {

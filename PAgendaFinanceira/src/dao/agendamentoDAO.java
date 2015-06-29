@@ -185,4 +185,33 @@ public class agendamentoDAO extends MySQL {
         }
         return lista;
     }
+
+    public List<Agenda> listarOcupados(Date data) {
+        List<Agenda> lista = new ArrayList<>();
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps
+                    = c.prepareStatement("SELECT data, hora FROM agendamento WHERE data = ?");
+            ps.setDate(1, data);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Agenda agenda = new Agenda();
+                agenda.setData(rs.getDate("Data"));
+                agenda.setHora(rs.getTime("Hora"));
+
+                lista.add(agenda);
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return lista;
+    }
 }

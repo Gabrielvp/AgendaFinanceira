@@ -444,11 +444,14 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             TelaPesquisaAgendamento tela = new TelaPesquisaAgendamento(this, rootPaneCheckingEnabled, nome, antigas);
             tela.setVisible(true);
         }
+        limparTela();
     }//GEN-LAST:event_btnPesquisaHoraMarcadaActionPerformed
 
     private void btnProximoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoHorarioActionPerformed
-        TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled);
+        Date data = txtData.getDate();
+        TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data);
         tela.setVisible(true);
+        limparTela();
     }//GEN-LAST:event_btnProximoHorarioActionPerformed
 
     private void ckbConsultasRealizadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbConsultasRealizadasActionPerformed
@@ -577,6 +580,10 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         diaDaSemana(dia);
     }
 
+    public void limparTela(){
+        txtNome.setText("");
+        txtHorario.setText("");
+    }
     public void limparTabela() {
         DefaultTableModel model
                 = (DefaultTableModel) this.tblPrincipal.getModel();
