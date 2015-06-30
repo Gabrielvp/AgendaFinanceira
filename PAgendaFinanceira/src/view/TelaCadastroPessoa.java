@@ -652,7 +652,9 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
 
             DefaultTableModel model = (DefaultTableModel) this.tblPessoa.getModel();
             for (int i = 0; i < listaPessoaIncompleto.size(); i++) {
-                model.addRow(new Object[]{});
+                if (tblPessoa.getRowCount() < listaPessoaIncompleto.size()) {
+                    model.addRow(new Object[]{});
+                }
                 model.setValueAt(listaPessoaIncompleto.get(i).getIdPessoa(), i, 0);
                 model.setValueAt(listaPessoaIncompleto.get(i).getNome(), i, 1);
             }
@@ -661,7 +663,9 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             List<Pessoa> listaPessoaCompleto = cDAO.listarPessoasCompleto();
             DefaultTableModel model = (DefaultTableModel) this.tblPessoa.getModel();
             for (int i = 0; i < listaPessoaCompleto.size(); i++) {
+                if(tblPessoa.getRowCount() < listaPessoaCompleto.size()){
                 model.addRow(new Object[]{});
+            }
                 model.setValueAt(listaPessoaCompleto.get(i).getIdPessoa(), i, 0);
                 model.setValueAt(listaPessoaCompleto.get(i).getNome(), i, 1);
                 model.setValueAt(listaPessoaCompleto.get(i).getDocumento().getCpf(), i, 2);
@@ -714,6 +718,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             model.setValueAt(text, i, 3);
             model.setValueAt(text, i, 4);
             model.setValueAt(text, i, 5);
+            model.removeRow(i);
         }
     }
 
