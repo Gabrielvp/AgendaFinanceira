@@ -19,6 +19,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -37,11 +39,12 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         setResizable(false);
         tabelaHorarioLivre();
         this.dt = data;
-        diaPesquisa(dt);
+        // diaPesquisa(dt);
     }
 
     Date dt;
     List<Agenda> listaOcupados;
+    SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -73,12 +76,18 @@ public class TelaProximoHorario extends javax.swing.JDialog {
             }
         });
         jScrollPane2.setViewportView(tblHorarioLivre);
+        if (tblHorarioLivre.getColumnModel().getColumnCount() > 0) {
+            tblHorarioLivre.getColumnModel().getColumn(0).setPreferredWidth(20);
+            tblHorarioLivre.getColumnModel().getColumn(1).setPreferredWidth(20);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,11 +98,12 @@ public class TelaProximoHorario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblHorarioLivreMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHorarioLivreMousePressed
-        
+
     }//GEN-LAST:event_tblHorarioLivreMousePressed
 
     private void tabelaHorarioLivre() {
-
+        DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
+        direita.setHorizontalAlignment(SwingConstants.RIGHT);
         Pessoa p = new Pessoa();
         Agenda a = new Agenda();
         agendamentoDAO aDAO = new agendamentoDAO();
@@ -113,45 +123,40 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         int diaFinal = Final.get(Calendar.DAY_OF_MONTH);
 
         while (inicial.before(Final)) {
-            listaPeriodo.add(String.format("%02d", inicial.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", inicial.get(Calendar.MINUTE)));
+            listaPeriodo.add(String.format("%02d",
+                    inicial.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", inicial.get(Calendar.MINUTE)));
             inicial.add(Calendar.MINUTE, minute);
         }
+
+        GregorianCalendar calInicio = new GregorianCalendar();
+        calInicio.add(GregorianCalendar.DAY_OF_MONTH, 1);
+        dt = calInicio.getTime();
+        java.sql.Date dia;
+        dia = new java.sql.Date(dt.getTime());
 
         //pega o modelo da Tabela e coloca na variavel "model"
         DefaultTableModel model
                 = (DefaultTableModel) this.tblHorarioLivre.getModel();
-
+        tblHorarioLivre.getColumnModel().getColumn(0).setCellRenderer(direita);
         //laço para inserir o número de linhas igual ao da lista
         for (int i = 0; i < listaPeriodo.size(); i++) {
             model.addRow(new Object[]{});
+            model.setValueAt(sdfD.format(dia), i, 0);
             model.setValueAt(listaPeriodo.get(i), i, 1);
 
         }
     }
 
-    public void diaPesquisa(Date data) {
-        SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm:ss");
-        GregorianCalendar calInicio = new GregorianCalendar();
-        calInicio.add(GregorianCalendar.DAY_OF_MONTH, 1);
-        dt = calInicio.getTime();
-        Agenda a = new Agenda();
-        java.sql.Date dia;
-        dia = new java.sql.Date(dt.getTime());
-        String verificaHora;
-        DefaultTableModel model
-                = (DefaultTableModel) this.tblHorarioLivre.getModel();
-        agendamentoDAO aDAO = new agendamentoDAO();
-        listaOcupados = aDAO.listarOcupados(dia);
+    public void retiraHorarioTabela() {
 
-        for (int j = 0; j < tblHorarioLivre.getRowCount(); j++) {
-            verificaHora = tblHorarioLivre.getValueAt(j, 1).toString() + ":00";
-            for (int i = 0; i < listaOcupados.size(); i++) {
-                //if (listaOcupados.get(i).getHora().toString().equals(verificaHora)) {
-                model.setValueAt(listaOcupados.get(i), i, 1);
-                model.setValueAt(dia, i, 0);
-                // }
-            }
+        int linha = tblHorarioLivre.getRowCount();
+        String tbl = tblHorarioLivre.getValueAt(linha, 0).toString();
+        String tb = tblHorarioLivre.getColumn(0).toString();
+                
+        agendamentoDAO aDAO = new agendamentoDAO();
+        List<Agenda> lista = aDAO.listarAgendamentosString(tb);
+        for (Agenda hora : lista) {
+            
         }
     }
 

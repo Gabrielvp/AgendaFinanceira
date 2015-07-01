@@ -632,7 +632,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
-        limparTabelaBusca();
+        limparTabela();
         String nome = txtNome.getText();
         buscaNome(nome);
     }//GEN-LAST:event_txtNomeKeyPressed
@@ -663,9 +663,9 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             List<Pessoa> listaPessoaCompleto = cDAO.listarPessoasCompleto();
             DefaultTableModel model = (DefaultTableModel) this.tblPessoa.getModel();
             for (int i = 0; i < listaPessoaCompleto.size(); i++) {
-                if(tblPessoa.getRowCount() < listaPessoaCompleto.size()){
-                model.addRow(new Object[]{});
-            }
+                if (tblPessoa.getRowCount() < listaPessoaCompleto.size()) {
+                    model.addRow(new Object[]{});
+                }
                 model.setValueAt(listaPessoaCompleto.get(i).getIdPessoa(), i, 0);
                 model.setValueAt(listaPessoaCompleto.get(i).getNome(), i, 1);
                 model.setValueAt(listaPessoaCompleto.get(i).getDocumento().getCpf(), i, 2);
@@ -694,46 +694,19 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     }
 
     public void buscaNome(String nome) {
-
         CadastroClienteDAO cDAO = new CadastroClienteDAO();
         List<Pessoa> listaBuscaNome = cDAO.buscarNome(nome);
-
         DefaultTableModel model = (DefaultTableModel) this.tblPessoa.getModel();
-
         for (int i = 0; i < listaBuscaNome.size(); i++) {
             model.setValueAt(listaBuscaNome.get(i).getIdPessoa(), i, 0);
             model.setValueAt(listaBuscaNome.get(i).getNome(), i, 1);
         }
     }
 
-    public void limparTabelaBusca() {
-
-        DefaultTableModel model
-                = (DefaultTableModel) this.tblPessoa.getModel();
-        String text = null;
-        for (int i = 0; i < tblPessoa.getRowCount(); i++) {
-            model.setValueAt(text, i, 0);
-            model.setValueAt(text, i, 1);
-            model.setValueAt(text, i, 2);
-            model.setValueAt(text, i, 3);
-            model.setValueAt(text, i, 4);
-            model.setValueAt(text, i, 5);
-            model.removeRow(i);
-        }
-    }
-
     public void limparTabela() {
-
         DefaultTableModel model
                 = (DefaultTableModel) this.tblPessoa.getModel();
-        String text = null;
         for (int i = 0; i < tblPessoa.getRowCount(); i++) {
-            model.setValueAt(text, i, 0);
-            model.setValueAt(text, i, 1);
-            model.setValueAt(text, i, 2);
-            model.setValueAt(text, i, 3);
-            model.setValueAt(text, i, 4);
-            model.setValueAt(text, i, 5);
             model.removeRow(i);
         }
     }

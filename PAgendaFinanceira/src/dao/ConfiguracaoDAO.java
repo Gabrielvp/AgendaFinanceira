@@ -78,8 +78,42 @@ public class ConfiguracaoDAO extends MySQL {
         List<Configuracao> listaConfiguracoes = new ArrayList<>();
         Connection c = this.getConnection();
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT horaInicial, horaFinal, intervalo, dia FROM configuracoes");
+            PreparedStatement ps = c.prepareStatement("SELECT horaInicial, horaFinal, intervalo, dia FROM configuracoes ORDER BY dia asc");
 
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Configuracao configuracao = new Configuracao();
+                configuracao.setHoraInicial(rs.getTime("HoraInicial"));
+                configuracao.setHoraFinal(rs.getTime("HoraFinal"));
+                configuracao.setIntervalo(rs.getInt("Intervalo"));
+                configuracao.setDia(EnumDiaSemana.DOMINGO.getEnumDiaPorCodigo(rs.getInt("Dia")));
+
+                listaConfiguracoes.add(configuracao);
+
+            }
+
+            ps.execute();
+            ps.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return listaConfiguracoes;
+    }
+    
+    public List<Configuracao> listarConfiguracaoTela(String dia) {
+        List<Configuracao> listaConfiguracoes = new ArrayList<>();
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps = c.prepareStatement("SELECT horaInicial, horaFinal, intervalo, dia FROM configuracoes WHERE dia = ?");
+            ps.setString(1, dia);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 

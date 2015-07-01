@@ -15,7 +15,7 @@ import java.util.List;
  * @author ricardonene
  */
 public class CadastroClienteDAO extends MySQL {
-   
+
     public boolean insert(Pessoa pessoa) {
 
         Connection c = this.getConnection();
@@ -28,7 +28,7 @@ public class CadastroClienteDAO extends MySQL {
             ps.setString(2, pessoa.getEmail());
             ps.setString(3, pessoa.getDocumento().getCpf());
             ps.setString(4, pessoa.getDocumento().getRg());
-           // ps.setString(5, pessoa.getTelefone().getNumero());
+            // ps.setString(5, pessoa.getTelefone().getNumero());
             ps.setString(6, pessoa.getEndereco().getRua());
             ps.setInt(7, pessoa.getEndereco().getNumero());
             ps.setString(8, pessoa.getEndereco().getCep());
@@ -90,7 +90,7 @@ public class CadastroClienteDAO extends MySQL {
             ps.setString(2, pessoa.getEmail());
             ps.setString(3, pessoa.getDocumento().getCpf());
             ps.setString(4, pessoa.getDocumento().getRg());
-          //  ps.setString(5, pessoa.getTelefone().getNumero());
+            //  ps.setString(5, pessoa.getTelefone().getNumero());
             ps.setString(6, pessoa.getEndereco().getRua());
             ps.setInt(7, pessoa.getEndereco().getNumero());
             ps.setString(8, pessoa.getEndereco().getCep());
@@ -136,7 +136,7 @@ public class CadastroClienteDAO extends MySQL {
         List<Pessoa> listaPessoasIncompleto = new ArrayList<Pessoa>();
         Connection c = this.getConnection();
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT pessoa.idPessoa, pessoa.nome FROM pessoa WHERE completo = ?");
+            PreparedStatement ps = c.prepareStatement("SELECT pessoa.idPessoa, pessoa.nome, pessoa.email FROM pessoa WHERE completo = ?");
             ps.setInt(1, completo);
 
             ResultSet rs = ps.executeQuery();
@@ -164,7 +164,7 @@ public class CadastroClienteDAO extends MySQL {
         }
         return listaPessoasIncompleto;
     }
-    
+
     public List<Pessoa> buscarNome(String nome) {
         List<Pessoa> listaBuscaNome = new ArrayList<Pessoa>();
         Connection c = this.getConnection();
@@ -204,7 +204,7 @@ public class CadastroClienteDAO extends MySQL {
         try {
             PreparedStatement ps = c.prepareStatement("SELECT pessoa.idPessoa, pessoa.nome, pessoa.email, documento.cpf, documento.rg, telefone.numero"
                     + " FROM pessoa LEFT JOIN documento ON pessoa.idpessoa = documento.idpessoa"
-                    + " LEFT JOIN telefone ON pessoa.idpessoa = telefone.idpessoa");
+                    + " LEFT JOIN telefone ON pessoa.idpessoa = telefone.idpessoa ");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -221,7 +221,7 @@ public class CadastroClienteDAO extends MySQL {
                 telefone.setNumero(rs.getString("numero"));
 
                 pessoa.setDocumento(documento);
-//                pessoa.setTelefone(telefone);
+                // pessoa.setTelefone(telefone);
 
                 listaPessoasCompleto.add(pessoa);
 

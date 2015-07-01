@@ -5,8 +5,10 @@
  */
 package view;
 
+import dao.ConfiguracaoDAO;
 import dao.agendamentoDAO;
 import entity.Agenda;
+import entity.Configuracao;
 import entity.DataHora;
 import entity.Pessoa;
 import java.awt.Color;
@@ -40,15 +42,19 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         dataTela();
         iconeTela();
+        //configuracao();
         tabelaPrincipal();
         atualizaTabela();
         atualizaDiaSemanaTela();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //String dia = lblDiaSemana.getText();
+        //configuracaoHora(dia);
     }
 
     agendamentoDAO aDAO = new agendamentoDAO();
     List<Agenda> listaAgendamentos;
     boolean antigas = false;
+    Configuracao c = new Configuracao();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -489,14 +495,14 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"};
         lblDiaSemana.setText(diaDaSemana[dia - 1]);
     }
-
+    
     private void tabelaPrincipal() {
 
         Pessoa p = new Pessoa();
         Agenda a = new Agenda();
         agendamentoDAO aDAO = new agendamentoDAO();
         ArrayList<String> listaPeriodo = new ArrayList<>();
-
+                
         //Seta a hora inicial  
         Calendar inicial = Calendar.getInstance();
         inicial.set(Calendar.HOUR_OF_DAY, 8);
@@ -580,10 +586,11 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         diaDaSemana(dia);
     }
 
-    public void limparTela(){
+    public void limparTela() {
         txtNome.setText("");
         txtHorario.setText("");
     }
+
     public void limparTabela() {
         DefaultTableModel model
                 = (DefaultTableModel) this.tblPrincipal.getModel();
