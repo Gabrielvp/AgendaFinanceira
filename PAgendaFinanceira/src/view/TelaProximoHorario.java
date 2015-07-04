@@ -67,7 +67,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Data", "Horário"
+                "Dia", "Data", "Horário"
             }
         ));
         tblHorarioLivre.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -79,6 +79,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         if (tblHorarioLivre.getColumnModel().getColumnCount() > 0) {
             tblHorarioLivre.getColumnModel().getColumn(0).setPreferredWidth(20);
             tblHorarioLivre.getColumnModel().getColumn(1).setPreferredWidth(20);
+            tblHorarioLivre.getColumnModel().getColumn(2).setPreferredWidth(20);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -86,7 +87,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -141,8 +142,8 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         //laço para inserir o número de linhas igual ao da lista
         for (int i = 0; i < listaPeriodo.size(); i++) {
             model.addRow(new Object[]{});
-            model.setValueAt(sdfD.format(dia), i, 0);
-            model.setValueAt(listaPeriodo.get(i), i, 1);
+            model.setValueAt(sdfD.format(dia), i, 1);
+            model.setValueAt(listaPeriodo.get(i), i, 2);
 
         }
     }

@@ -233,7 +233,7 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_lblEsqueceuSenhaMouseClicked
 
     private void lblConfiguracaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblConfiguracaoMouseClicked
-        TelaPrincipal t = new TelaPrincipal();
+        TelaConfiguracaoConexao t = new TelaConfiguracaoConexao(this, rootPaneCheckingEnabled);
         t.setVisible(true);
     }//GEN-LAST:event_lblConfiguracaoMouseClicked
 

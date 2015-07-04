@@ -21,12 +21,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Gabriel1
  */
-public class Configuracoes extends javax.swing.JDialog {
+public class TelaConfiguracoes extends javax.swing.JDialog {
 
     /**
      * Creates new form Configuracoes
      */
-    public Configuracoes(java.awt.Frame parent, boolean modal) {
+    public TelaConfiguracoes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
@@ -69,7 +69,7 @@ public class Configuracoes extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configurações - Agenda Financeira");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)), "Almoço:", 0, 2, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)), "Almoço:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
 
         jLabel4.setText("Início:");
 
@@ -118,7 +118,7 @@ public class Configuracoes extends javax.swing.JDialog {
                 .addGap(33, 33, 33))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)), "Horas:", 0, 2, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)), "Horas:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
 
         jLabel1.setText("Horário Inicial:");
 
@@ -285,24 +285,24 @@ public class Configuracoes extends javax.swing.JDialog {
         try {
             c.setHoraInicial(sdfH.parse(txtHoraInicio.getText()));
         } catch (ParseException ex) {
-            Logger.getLogger(Configuracoes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaConfiguracoes.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             c.setHoraFinal(sdfH.parse(txtHoraFim.getText()));
         } catch (ParseException ex) {
-            Logger.getLogger(Configuracoes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaConfiguracoes.class.getName()).log(Level.SEVERE, null, ex);
         }
         c.setIntervalo(Integer.parseInt(txtIntervalo.getText()));
         c.setDia((EnumDiaSemana) cbDia.getSelectedItem());
         try {
             c.setAlmocoInicio(sdfH.parse(txtAlmocoInicio.getText()));
         } catch (ParseException ex) {
-            Logger.getLogger(Configuracoes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaConfiguracoes.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             c.setAlmocoFim(sdfH.parse(txtAlmocoFim.getText()));
         } catch (ParseException ex) {
-            Logger.getLogger(Configuracoes.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaConfiguracoes.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         String dia = cbDia.getSelectedItem().toString();
@@ -426,20 +426,21 @@ public class Configuracoes extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Configuracoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConfiguracoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Configuracoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConfiguracoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Configuracoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConfiguracoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Configuracoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaConfiguracoes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Configuracoes dialog = new Configuracoes(new javax.swing.JFrame(), true);
+                TelaConfiguracoes dialog = new TelaConfiguracoes(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

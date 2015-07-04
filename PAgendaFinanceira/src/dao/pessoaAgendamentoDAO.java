@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 import java.util.ArrayList;
 import java.util.List;
-import view.Agendamento;
+import view.TelaAgendamento;
 
 /**
  *

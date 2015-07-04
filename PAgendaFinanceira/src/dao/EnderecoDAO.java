@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.management.Query;
-import view.Agendamento;
+import view.TelaAgendamento;
 
 /**
  *

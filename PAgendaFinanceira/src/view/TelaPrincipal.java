@@ -55,6 +55,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     List<Agenda> listaAgendamentos;
     boolean antigas = false;
     Configuracao c = new Configuracao();
+    boolean novo;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -99,7 +100,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 51, 153)), "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(0, 51, 153)), "Consulta Horário Paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(0, 51, 153)), "Consulta Horário Agendado", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
 
         jLabel3.setText("Nome:");
 
@@ -328,7 +329,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 345, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 342, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -345,22 +346,22 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadClienteActionPerformed
 
     private void btnFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanceiroActionPerformed
-        Financeiro f = new Financeiro(this, rootPaneCheckingEnabled);
+        TelaFinanceiro f = new TelaFinanceiro(this, rootPaneCheckingEnabled);
         f.setVisible(true);
     }//GEN-LAST:event_btnFinanceiroActionPerformed
 
     private void btnOrcamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrcamentoActionPerformed
-        Orcamento o = new Orcamento(this, rootPaneCheckingEnabled);
+        TelaOrcamento o = new TelaOrcamento(this, rootPaneCheckingEnabled);
         o.setVisible(true);
     }//GEN-LAST:event_btnOrcamentoActionPerformed
 
     private void btnConfiguracaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfiguracaoActionPerformed
-        Configuracoes c = new Configuracoes(this, rootPaneCheckingEnabled);
+        TelaConfiguracoes c = new TelaConfiguracoes(this, rootPaneCheckingEnabled);
         c.setVisible(true);
     }//GEN-LAST:event_btnConfiguracaoActionPerformed
 
     private void btnProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutoActionPerformed
-        Produtos p = new Produtos(this, rootPaneCheckingEnabled);
+        TelaProdutos p = new TelaProdutos(this, rootPaneCheckingEnabled);
         p.setVisible(true);
         setResizable(false);
     }//GEN-LAST:event_btnProdutoActionPerformed
@@ -386,10 +387,13 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             dt.setDia(lblDiaSemana.getText());
 
             if (tblPrincipal.getValueAt(linha, 1).toString().equals("")) {
-                Agendamento a = new Agendamento(this, rootPaneCheckingEnabled, dt);
+                novo = true;
+                TelaAgendamento a = new TelaAgendamento(this, rootPaneCheckingEnabled, dt, novo);
                 a.setVisible(true);
             } else {
-
+                novo = false;
+                TelaAgendamento a = new TelaAgendamento(this, rootPaneCheckingEnabled, dt, novo);
+                a.setVisible(true);
             }
         }
         limparTabela();
@@ -398,7 +402,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_tblPrincipalMousePressed
 
     private void btnCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCaixaActionPerformed
-        Caixa c = new Caixa(this, rootPaneCheckingEnabled);
+        TelaCaixa c = new TelaCaixa(this, rootPaneCheckingEnabled);
         c.setVisible(true);
     }//GEN-LAST:event_btnCaixaActionPerformed
 
@@ -495,14 +499,14 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"};
         lblDiaSemana.setText(diaDaSemana[dia - 1]);
     }
-    
+
     private void tabelaPrincipal() {
 
         Pessoa p = new Pessoa();
         Agenda a = new Agenda();
         agendamentoDAO aDAO = new agendamentoDAO();
         ArrayList<String> listaPeriodo = new ArrayList<>();
-                
+
         //Seta a hora inicial  
         Calendar inicial = Calendar.getInstance();
         inicial.set(Calendar.HOUR_OF_DAY, 8);

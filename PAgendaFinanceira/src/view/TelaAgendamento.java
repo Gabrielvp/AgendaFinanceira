@@ -25,12 +25,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Gabriel1
  */
-public class Agendamento extends javax.swing.JDialog {
+public class TelaAgendamento extends javax.swing.JDialog {
 
     /**
      * Creates new form Agendamento
      */
-    public Agendamento(java.awt.Frame parent, boolean modal, DataHora a) {
+    public TelaAgendamento(java.awt.Frame parent, boolean modal, DataHora a, boolean novo) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
@@ -40,6 +40,9 @@ public class Agendamento extends javax.swing.JDialog {
         lblHorario.setText(sdfH.format(dtHora.getHorario()));
         lblDia.setText(dtHora.getDia());
         this.novo = novo;
+        if(!novo){
+            btnSalvar.setEnabled(false);
+        }
     }
 
     SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
@@ -245,12 +248,12 @@ public class Agendamento extends javax.swing.JDialog {
         try {
             a.setData(sdfD.parse(lblData.getText()));
         } catch (ParseException ex) {
-            Logger.getLogger(Agendamento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             a.setHora(sdfH.parse(lblHorario.getText()));
         } catch (ParseException ex) {
-            Logger.getLogger(Agendamento.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TelaAgendamento.class.getName()).log(Level.SEVERE, null, ex);
         }
         pADAO.insert(p);
         a.setIdPessoa(p.getIdPessoa());
@@ -260,7 +263,7 @@ public class Agendamento extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnFinanceiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinanceiroActionPerformed
-        Financeiro f = new Financeiro(null, rootPaneCheckingEnabled);
+        TelaFinanceiro f = new TelaFinanceiro(null, rootPaneCheckingEnabled);
         f.setVisible(true);
     }//GEN-LAST:event_btnFinanceiroActionPerformed
 
@@ -285,20 +288,21 @@ public class Agendamento extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Agendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Agendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Agendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Agendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Agendamento dialog = new Agendamento(new javax.swing.JFrame(), true, null);
+                TelaAgendamento dialog = new TelaAgendamento(new javax.swing.JFrame(), true, null, true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
