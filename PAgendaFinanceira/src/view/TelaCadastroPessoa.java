@@ -584,11 +584,18 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Endereco e = new Endereco();
         Documento d = new Documento();
-        Telefone t = new Telefone();
-        TipoTelefone tt = new TipoTelefone();
 
         p.setNome(txtNome.getText());
         p.setEmail(txtEmail.getText());
+
+        d.setCpf(txtCpf.getText());
+        d.setRg(txtRg.getText());
+
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAddEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEnderecoActionPerformed
+        Endereco e = new Endereco();
+
         e.setRua(txtRua.getText());
         e.setNumero(Integer.parseInt(txtNumero.getText()));
         e.setCep(txtCep.getText());
@@ -596,18 +603,10 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         e.setUf(txtUf.getText());
         e.setpReferencia(txtPReferencia.getText());
         e.setBairro(txtBairro.getText());
-        d.setCpf(txtCpf.getText());
-        d.setRg(txtRg.getText());
-        t.getNumero();
-        tt.getTipo();
-        /*pADAO.insert(p);
-         e.setIdPessoa(p.getIdPessoa());
-         eDAO.insert(e);*/
 
-    }//GEN-LAST:event_btnSalvarActionPerformed
+        p.addEndereco(e);
+        p.mostrarEndereco();
 
-    private void btnAddEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEnderecoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnAddEnderecoActionPerformed
 
     private void ckbTelefonePrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbTelefonePrincipalActionPerformed
@@ -632,9 +631,9 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
-        limparTabela();
-        String nome = txtNome.getText();
-        buscaNome(nome);
+//        limparTabela();
+//        String nome = txtNome.getText();
+//        buscaNome(nome);
     }//GEN-LAST:event_txtNomeKeyPressed
 
     public void listaTelefone(List<Telefone> mostrarTelefone) {

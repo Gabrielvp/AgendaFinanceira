@@ -28,14 +28,19 @@ public class CadastroClienteDAO extends MySQL {
             ps.setString(2, pessoa.getEmail());
             ps.setString(3, pessoa.getDocumento().getCpf());
             ps.setString(4, pessoa.getDocumento().getRg());
-            // ps.setString(5, pessoa.getTelefone().getNumero());
-            ps.setString(6, pessoa.getEndereco().getRua());
-            ps.setInt(7, pessoa.getEndereco().getNumero());
-            ps.setString(8, pessoa.getEndereco().getCep());
-            ps.setString(9, pessoa.getEndereco().getCidade());
-            ps.setString(10, pessoa.getEndereco().getBairro());
-            ps.setString(11, pessoa.getEndereco().getUf());
-            ps.setString(12, pessoa.getEndereco().getpReferencia());
+            
+//            ps.setInt(6, pessoa.getEndereco().getIdPessoa());
+//            
+//            ps.setString(3, pessoa.getDocumento().getCpf());
+//            ps.setString(4, pessoa.getDocumento().getRg());
+//            ps.setString(5, pessoa.getTelefone().getNumero());
+//            ps.setString(6, pessoa.getEndereco().getRua());
+//            ps.setInt(7, pessoa.getEndereco().getNumero());
+//            ps.setString(8, pessoa.getEndereco().getCep());
+//            ps.setString(9, pessoa.getEndereco().getCidade());
+//            ps.setString(10, pessoa.getEndereco().getBairro());
+//            ps.setString(11, pessoa.getEndereco().getUf());
+//            ps.setString(12, pessoa.getEndereco().getpReferencia());
 
             ps.execute();
             ps.close();

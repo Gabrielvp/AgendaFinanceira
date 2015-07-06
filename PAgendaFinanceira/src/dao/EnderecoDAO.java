@@ -1,17 +1,13 @@
 package dao;
 
-import entity.Agenda;
 import entity.Endereco;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.management.Query;
-import view.TelaAgendamento;
 
 /**
  *
@@ -29,7 +25,7 @@ public class EnderecoDAO extends MySQL {
         try {
             PreparedStatement ps
                     = c.prepareStatement("INSERT INTO endereco "
-                            + "(rua, numero, cep, cidade, uf, ponto_referencia, idPessoa, baiRro)  "
+                            + "(rua, numero, cep, cidade, uf, ponto_referencia, idPessoa, bairro)  "
                             + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )");
             ps.setString(1, endereco.getRua());
             ps.setInt(2, endereco.getNumero());

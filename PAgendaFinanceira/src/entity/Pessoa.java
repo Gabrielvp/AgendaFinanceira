@@ -16,6 +16,23 @@ public class Pessoa {
     private Documento documento;
     private Endereco endereco;
     private List<Telefone> listaTelefone;
+    private List<Endereco> listaEndereco;
+
+    public List<Endereco> getListaEndereco() {
+        return listaEndereco;
+    }
+
+    public void setListaEndereco(List<Endereco> listaEndereco) {
+        this.listaEndereco = listaEndereco;
+    }
+
+    public void addEndereco(Endereco endereco) {
+        listaEndereco.add(endereco);
+    }
+
+    public List<Endereco> mostrarEndereco() {
+        return listaEndereco;
+    }
 
     public Pessoa() {
         listaTelefone = new ArrayList<>();
