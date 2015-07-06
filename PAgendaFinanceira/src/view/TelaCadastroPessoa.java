@@ -622,7 +622,6 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void ckbCadastroIncompletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbCadastroIncompletoActionPerformed
-        limparTabela();
         atualizaTabelaPessoa();
     }//GEN-LAST:event_ckbCadastroIncompletoActionPerformed
 
@@ -631,9 +630,8 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
-//        limparTabela();
-//        String nome = txtNome.getText();
-//        buscaNome(nome);
+        String nome = txtNome.getText();
+        buscaNome(nome);
     }//GEN-LAST:event_txtNomeKeyPressed
 
     public void listaTelefone(List<Telefone> mostrarTelefone) {
@@ -650,10 +648,9 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             List<Pessoa> listaPessoaIncompleto = cDAO.listarPessoasIncompletos(0);
 
             DefaultTableModel model = (DefaultTableModel) this.tblPessoa.getModel();
+            model.setNumRows(0);
             for (int i = 0; i < listaPessoaIncompleto.size(); i++) {
-                if (tblPessoa.getRowCount() < listaPessoaIncompleto.size()) {
-                    model.addRow(new Object[]{});
-                }
+                model.addRow(new Object[]{});
                 model.setValueAt(listaPessoaIncompleto.get(i).getIdPessoa(), i, 0);
                 model.setValueAt(listaPessoaIncompleto.get(i).getNome(), i, 1);
             }
@@ -661,10 +658,9 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             CadastroClienteDAO cDAO = new CadastroClienteDAO();
             List<Pessoa> listaPessoaCompleto = cDAO.listarPessoasCompleto();
             DefaultTableModel model = (DefaultTableModel) this.tblPessoa.getModel();
+            model.setNumRows(0);
             for (int i = 0; i < listaPessoaCompleto.size(); i++) {
-                if (tblPessoa.getRowCount() < listaPessoaCompleto.size()) {
-                    model.addRow(new Object[]{});
-                }
+                model.addRow(new Object[]{});
                 model.setValueAt(listaPessoaCompleto.get(i).getIdPessoa(), i, 0);
                 model.setValueAt(listaPessoaCompleto.get(i).getNome(), i, 1);
                 model.setValueAt(listaPessoaCompleto.get(i).getDocumento().getCpf(), i, 2);
@@ -696,17 +692,11 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         CadastroClienteDAO cDAO = new CadastroClienteDAO();
         List<Pessoa> listaBuscaNome = cDAO.buscarNome(nome);
         DefaultTableModel model = (DefaultTableModel) this.tblPessoa.getModel();
+        model.setNumRows(0);
         for (int i = 0; i < listaBuscaNome.size(); i++) {
+            model.addRow(new Object[]{});
             model.setValueAt(listaBuscaNome.get(i).getIdPessoa(), i, 0);
             model.setValueAt(listaBuscaNome.get(i).getNome(), i, 1);
-        }
-    }
-
-    public void limparTabela() {
-        DefaultTableModel model
-                = (DefaultTableModel) this.tblPessoa.getModel();
-        for (int i = 0; i < tblPessoa.getRowCount(); i++) {
-            model.removeRow(i);
         }
     }
 
