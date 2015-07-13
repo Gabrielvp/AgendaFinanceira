@@ -154,7 +154,7 @@ public class agendamentoDAO extends MySQL {
         Connection c = this.getConnection();
         try {
             PreparedStatement ps
-                    = c.prepareStatement("SELECT pessoa.nome, agendamento.data, agendamento.hora"
+                    = c.prepareStatement("SELECT pessoa.nome, agendamento.data, agendamento.hora, agendamento.dia"
                             + " FROM pessoa INNER JOIN agendamento on"
                             + " pessoa.idPessoa = agendamento.idPessoa WHERE nome like ? and data >= current_date ORDER BY data asc");
             ps.setString(1, nome + "%");
@@ -165,6 +165,7 @@ public class agendamentoDAO extends MySQL {
                 Pessoa pessoa = new Pessoa();
                 agenda.setData(rs.getDate("Data"));
                 agenda.setHora(rs.getTime("Hora"));
+                agenda.setDia(rs.getString("Dia"));
                 pessoa.setNome(rs.getString("Nome"));
 
                 agenda.setPessoa(pessoa);
@@ -190,7 +191,7 @@ public class agendamentoDAO extends MySQL {
         Connection c = this.getConnection();
         try {
             PreparedStatement ps
-                    = c.prepareStatement("SELECT pessoa.nome, agendamento.data, agendamento.hora"
+                    = c.prepareStatement("SELECT pessoa.nome, agendamento.data, agendamento.hora, agendamento.dia"
                             + " FROM pessoa INNER JOIN agendamento on"
                             + " pessoa.idPessoa = agendamento.idPessoa WHERE nome like ? "
                             + "and data < current_date order by data desc LIMIT 10 ");
@@ -202,6 +203,7 @@ public class agendamentoDAO extends MySQL {
                 Pessoa pessoa = new Pessoa();
                 agenda.setData(rs.getDate("Data"));
                 agenda.setHora(rs.getTime("Hora"));
+                agenda.setDia(rs.getString("Dia"));
                 pessoa.setNome(rs.getString("Nome"));
 
                 agenda.setPessoa(pessoa);

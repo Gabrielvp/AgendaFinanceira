@@ -7,18 +7,13 @@ package view;
 
 import dao.agendamentoDAO;
 import entity.Agenda;
-import entity.DataHora;
 import entity.Pessoa;
-import java.awt.Color;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -39,7 +34,6 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         setResizable(false);
         tabelaHorarioLivre();
         this.dt = data;
-        // diaPesquisa(dt);
     }
 
     Date dt;
@@ -145,19 +139,6 @@ public class TelaProximoHorario extends javax.swing.JDialog {
             model.setValueAt(sdfD.format(dia), i, 1);
             model.setValueAt(listaPeriodo.get(i), i, 2);
 
-        }
-    }
-
-    public void retiraHorarioTabela() {
-
-        int linha = tblHorarioLivre.getRowCount();
-        String tbl = tblHorarioLivre.getValueAt(linha, 0).toString();
-        String tb = tblHorarioLivre.getColumn(0).toString();
-                
-        agendamentoDAO aDAO = new agendamentoDAO();
-        List<Agenda> lista = aDAO.listarAgendamentosString(tb);
-        for (Agenda hora : lista) {
-            
         }
     }
 

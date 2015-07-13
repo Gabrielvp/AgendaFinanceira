@@ -1,8 +1,6 @@
 package entity;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -15,21 +13,12 @@ public class Agenda {
     private Pessoa pessoa;
     private Date data;
     private Date hora;
-    private Date date;
     private String descricao;
     private String dia;
 
     @Override
     public String toString() {
         return descricao;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     public int getIdPessoa() {
