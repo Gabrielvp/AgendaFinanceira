@@ -41,14 +41,12 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         dataTela();
-        iconeTela();
-        //configuracao();
+        iconeTela();       
         tabelaPrincipal();
         atualizaTabela();
         atualizaDiaSemanaTela();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //String dia = lblDiaSemana.getText();
-        //configuracaoHora(dia);
+        
     }
 
     agendamentoDAO aDAO = new agendamentoDAO();

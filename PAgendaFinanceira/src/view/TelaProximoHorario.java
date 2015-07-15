@@ -7,6 +7,7 @@ package view;
 
 import dao.agendamentoDAO;
 import entity.Agenda;
+import entity.DataHora;
 import entity.Pessoa;
 import java.awt.Color;
 import java.text.ParseException;
@@ -43,7 +44,9 @@ public class TelaProximoHorario extends javax.swing.JDialog {
 
     Date dt;
     List<Agenda> listaAgendamentos;
-    SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");   
+    SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
+    boolean novo = true;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -81,7 +84,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(tblHorarioLivre);
         if (tblHorarioLivre.getColumnModel().getColumnCount() > 0) {
-            tblHorarioLivre.getColumnModel().getColumn(0).setPreferredWidth(90);
+            tblHorarioLivre.getColumnModel().getColumn(0).setPreferredWidth(30);
             tblHorarioLivre.getColumnModel().getColumn(1).setPreferredWidth(15);
             tblHorarioLivre.getColumnModel().getColumn(2).setPreferredWidth(5);
         }
@@ -94,11 +97,11 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(btnAnterior)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnProximo))
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,12 +131,29 @@ public class TelaProximoHorario extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblHorarioLivreMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHorarioLivreMousePressed
-
+        DataHora d = new DataHora();
+        if (evt.getClickCount() == 2) {
+            int linha = tblHorarioLivre.getSelectedRow();
+            d.setDia(tblHorarioLivre.getValueAt(linha, 0).toString());
+            String tblData = tblHorarioLivre.getValueAt(linha, 1).toString();
+            String tblHora = tblHorarioLivre.getValueAt(linha, 2).toString();
+            try {
+                d.setData(sdfD.parse(tblData));
+            } catch (ParseException ex) {
+                Logger.getLogger(TelaProximoHorario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                d.setHorario(sdfH.parse(tblHora));
+            } catch (ParseException ex) {
+                Logger.getLogger(TelaProximoHorario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             TelaAgendamento a = new TelaAgendamento(null, rootPaneCheckingEnabled, d, novo);
+                a.setVisible(true);
+                this.dispose();
+        }
     }//GEN-LAST:event_tblHorarioLivreMousePressed
 
     private void tabelaHorarioLivre() {
-        DefaultTableCellRenderer direita = new DefaultTableCellRenderer();
-        direita.setHorizontalAlignment(SwingConstants.RIGHT);
         Pessoa p = new Pessoa();
         Agenda a = new Agenda();
         agendamentoDAO aDAO = new agendamentoDAO();
@@ -163,19 +183,22 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         dt = calInicio.getTime();
         java.sql.Date dia;
         dia = new java.sql.Date(dt.getTime());
-
+        Calendar c = Calendar.getInstance();
+        int diaSemanaInt = c.get(Calendar.DAY_OF_WEEK);
+        String diaDaSemana[] = {"Domingo", "Segunda-Feira", "Terça-Feira",
+            "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"};
         //pega o modelo da Tabela e coloca na variavel "model"
         DefaultTableModel model
                 = (DefaultTableModel) this.tblHorarioLivre.getModel();
-        tblHorarioLivre.getColumnModel().getColumn(0).setCellRenderer(direita);
         //laço para inserir o número de linhas igual ao da lista
         for (int i = 0; i < listaPeriodo.size(); i++) {
             model.addRow(new Object[]{});
+            model.setValueAt(diaDaSemana[diaSemanaInt], i, 0);
             model.setValueAt(sdfD.format(dia), i, 1);
             model.setValueAt(listaPeriodo.get(i), i, 2);
 
         }
-        
+
     }
 
     public void removeLinha() {
