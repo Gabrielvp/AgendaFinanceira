@@ -84,44 +84,8 @@ public class agendamentoDAO extends MySQL {
             PreparedStatement ps
                     = c.prepareStatement("SELECT agendamento.hora, agendamento.descricao, pessoa.nome"
                             + " FROM agendamento INNER JOIN pessoa on"
-                            + " pessoa.idPessoa = agendamento.idPessoa WHERE data = ?");
+                            + " pessoa.idPessoa = agendamento.idPessoa WHERE data = ? ORDER BY hora ASC");
             ps.setDate(1, data);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-
-                Agenda agenda = new Agenda();
-                Pessoa pessoa = new Pessoa();
-                agenda.setDescricao(rs.getString("Descricao"));
-                agenda.setHora(rs.getTime("Hora"));
-                pessoa.setNome(rs.getString("Nome"));
-
-                agenda.setPessoa(pessoa);
-                lista.add(agenda);
-
-            }
-            rs.close();
-            ps.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                c.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return lista;
-    }
-    
-    public List<Agenda> listarAgendamentosString(String data) {
-        List<Agenda> lista = new ArrayList<>();
-        Connection c = this.getConnection();
-        try {
-            PreparedStatement ps
-                    = c.prepareStatement("SELECT agendamento.hora, agendamento.descricao, pessoa.nome"
-                            + " FROM agendamento INNER JOIN pessoa on"
-                            + " pessoa.idPessoa = agendamento.idPessoa WHERE data = ?");
-            ps.setString(1, data);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 
@@ -209,35 +173,6 @@ public class agendamentoDAO extends MySQL {
                 agenda.setPessoa(pessoa);
                 lista.add(agenda);
 
-            }
-            rs.close();
-            ps.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                c.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return lista;
-    }
-
-    public List<Agenda> listarOcupados(Date data) {
-        List<Agenda> lista = new ArrayList<>();
-        Connection c = this.getConnection();
-        try {
-            PreparedStatement ps
-                    = c.prepareStatement("SELECT data, hora FROM agendamento WHERE data = ?");
-            ps.setDate(1, data);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Agenda agenda = new Agenda();
-                agenda.setData(rs.getDate("Data"));
-                agenda.setHora(rs.getTime("Hora"));
-
-                lista.add(agenda);
             }
             rs.close();
             ps.close();

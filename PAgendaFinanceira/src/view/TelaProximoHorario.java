@@ -8,12 +8,16 @@ package view;
 import dao.agendamentoDAO;
 import entity.Agenda;
 import entity.Pessoa;
+import java.awt.Color;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -34,10 +38,11 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         setResizable(false);
         tabelaHorarioLivre();
         this.dt = data;
+        removeLinha();
     }
 
     Date dt;
-    List<Agenda> listaOcupados;
+    List<Agenda> listaAgendamentos;
     SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
@@ -49,11 +54,16 @@ public class TelaProximoHorario extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblHorarioLivre = new javax.swing.JTable();
+        btnAnterior = new javax.swing.JButton();
+        btnProximo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Próximo Horário - Agenda Financeira");
+
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 51, 153), 2, true));
 
         tblHorarioLivre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tblHorarioLivre.setModel(new javax.swing.table.DefaultTableModel(
@@ -71,22 +81,47 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(tblHorarioLivre);
         if (tblHorarioLivre.getColumnModel().getColumnCount() > 0) {
-            tblHorarioLivre.getColumnModel().getColumn(0).setPreferredWidth(20);
-            tblHorarioLivre.getColumnModel().getColumn(1).setPreferredWidth(20);
-            tblHorarioLivre.getColumnModel().getColumn(2).setPreferredWidth(20);
+            tblHorarioLivre.getColumnModel().getColumn(0).setPreferredWidth(90);
+            tblHorarioLivre.getColumnModel().getColumn(1).setPreferredWidth(15);
+            tblHorarioLivre.getColumnModel().getColumn(2).setPreferredWidth(5);
         }
+
+        btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.png"))); // NOI18N
+
+        btnProximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Forward.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(btnAnterior)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnProximo))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAnterior)
+                    .addComponent(btnProximo))
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -140,6 +175,31 @@ public class TelaProximoHorario extends javax.swing.JDialog {
             model.setValueAt(listaPeriodo.get(i), i, 2);
 
         }
+        
+    }
+
+    public void removeLinha() {
+        DefaultTableModel model
+                = (DefaultTableModel) this.tblHorarioLivre.getModel();
+        agendamentoDAO aDAO = new agendamentoDAO();
+        int linha = tblHorarioLivre.getRowCount() - 1;
+        String tb = tblHorarioLivre.getValueAt(linha, 1).toString();
+
+        String verificaHora;
+        GregorianCalendar calInicio = new GregorianCalendar();
+        calInicio.add(GregorianCalendar.DAY_OF_MONTH, 1);
+        dt = calInicio.getTime();
+        java.sql.Date data;
+        data = new java.sql.Date(dt.getTime());
+        listaAgendamentos = aDAO.listarAgendamentos(data);
+        for (int j = 0; j < tblHorarioLivre.getRowCount(); j++) {
+            for (int i = 0; i < listaAgendamentos.size(); i++) {
+                verificaHora = tblHorarioLivre.getValueAt(j, 2).toString() + ":00";
+                if (listaAgendamentos.get(i).getHora().toString().equals(verificaHora)) {
+                    model.removeRow(j);
+                }
+            }
+        }
     }
 
     /**
@@ -185,6 +245,9 @@ public class TelaProximoHorario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnterior;
+    private javax.swing.JButton btnProximo;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblHorarioLivre;
     // End of variables declaration//GEN-END:variables

@@ -548,7 +548,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
     public void atualizaTabela() {
 
-        Agenda a = new Agenda();
         DefaultTableModel model
                 = (DefaultTableModel) this.tblPrincipal.getModel();
 
@@ -559,6 +558,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         Date dt = txtData.getDate();
         java.sql.Date data;
         data = new java.sql.Date(dt.getTime());
+        
         String dataAtual = sdfD.format(new Date());
         String dat = sdfD.format(txtData.getDate());
 
@@ -570,7 +570,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         }
         listaAgendamentos = aDAO.listarAgendamentos(data);
         for (int j = 0; j < tblPrincipal.getRowCount(); j++) {
-            verificaHora = tblPrincipal.getValueAt(j, 0).toString() + ":00";
+            verificaHora = tblPrincipal.getValueAt(j, 0).toString()+":00";
             for (int i = 0; i < listaAgendamentos.size(); i++) {
                 if (listaAgendamentos.get(i).getHora().toString().equals(verificaHora)) {
                     model.setValueAt(listaAgendamentos.get(i), j, 2);
