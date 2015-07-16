@@ -5,7 +5,6 @@
  */
 package view;
 
-import dao.ConfiguracaoDAO;
 import dao.agendamentoDAO;
 import entity.Agenda;
 import entity.Configuracao;
@@ -46,7 +45,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         atualizaTabela();
         atualizaDiaSemanaTela();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-
     }
 
     agendamentoDAO aDAO = new agendamentoDAO();
@@ -80,6 +78,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         lblDiaSemana = new javax.swing.JLabel();
         txtData = new com.toedter.calendar.JDateChooser();
         btnProximoHorario = new javax.swing.JButton();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jPanel3 = new javax.swing.JPanel();
         btnCadCliente = new javax.swing.JButton();
         btnOrcamento = new javax.swing.JButton();
@@ -128,7 +127,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnPesquisaHoraMarcada, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -149,11 +148,11 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 13, 630, 130));
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 13, 640, 130));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Data");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
 
         txtHorario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
         try {
@@ -220,8 +219,8 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         lblDiaSemana.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblDiaSemana.setForeground(new java.awt.Color(255, 51, 51));
         lblDiaSemana.setText("diaSemana");
-        jPanel2.add(lblDiaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, -1, -1));
-        jPanel2.add(txtData, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 147, -1));
+        jPanel2.add(lblDiaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, -1, -1));
+        jPanel2.add(txtData, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 42, -1));
 
         btnProximoHorario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Find.png"))); // NOI18N
         btnProximoHorario.setText("Próximo Horário");
@@ -231,6 +230,14 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btnProximoHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(475, 161, -1, 46));
+
+        jFormattedTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
+        try {
+            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPanel2.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 90, 20));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 51, 153)));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -325,16 +332,18 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 331, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
@@ -418,7 +427,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             } else {
                 int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja Excluir o  Agendamento?", "Exclusão", 0, 0);
                 if (confirmacao == 0) {
-                    //pega a linha da Tabela que foi selecionada pelo usuário
                     int line = tblPrincipal.getSelectedRow();
                     String hora = tblPrincipal.getValueAt(linha, 0).toString();
                     Date dt = txtData.getDate();
@@ -458,11 +466,18 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisaHoraMarcadaActionPerformed
 
     private void btnProximoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoHorarioActionPerformed
+        if(txtHorario.getText().equals("  :  ")){
         Date data = txtData.getDate();
-        String hora = txtHorario.getText() + "1";
-        TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data);
+        TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data, "  :  ");
         tela.setVisible(true);
         limparTela();
+        }else{
+        Date data = txtData.getDate();
+        String hora = txtHorario.getText();
+        TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data, hora);
+        tela.setVisible(true);
+        limparTela();
+        }
     }//GEN-LAST:event_btnProximoHorarioActionPerformed
 
     private void ckbConsultasRealizadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbConsultasRealizadasActionPerformed
@@ -657,6 +672,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnProximoHorario;
     private javax.swing.JButton btnServico;
     private javax.swing.JCheckBox ckbConsultasRealizadas;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

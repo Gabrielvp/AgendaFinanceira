@@ -29,17 +29,20 @@ public class TelaProximoHorario extends javax.swing.JDialog {
     /**
      * Creates new form TelaProximoHorario
      */
-    public TelaProximoHorario(java.awt.Frame parent, boolean modal, Date data) {
+    public TelaProximoHorario(java.awt.Frame parent, boolean modal, Date data, String hora) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
+        this.h = hora;
         tabelaHorarioLivre();
         this.dt = data;
         removeLinha();
+
     }
 
     Date dt;
+    String h;
     List<Agenda> listaAgendamentos;
     SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
@@ -144,6 +147,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
             TelaAgendamento a = new TelaAgendamento(null, rootPaneCheckingEnabled, d, novo);
             a.setVisible(true);
             // this.dispose();
+            removeLinha();
         }
     }//GEN-LAST:event_tblHorarioLivreMousePressed
 
@@ -153,23 +157,45 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         agendamentoDAO aDAO = new agendamentoDAO();
         ArrayList<String> listaPeriodo = new ArrayList<>();
 
-        Calendar inicial = Calendar.getInstance();
-        inicial.set(Calendar.HOUR_OF_DAY, 8);
-        inicial.set(Calendar.MINUTE, 0);
+        if (h.equals("  :  ")) {
+            Calendar inicial = Calendar.getInstance();
+            inicial.set(Calendar.HOUR_OF_DAY, 8);
+            inicial.set(Calendar.MINUTE, 0);
 
-        Calendar Final = Calendar.getInstance();
-        Final.set(Calendar.HOUR_OF_DAY, 18);
-        Final.set(Calendar.MINUTE, 0);
+            Calendar Final = Calendar.getInstance();
+            Final.set(Calendar.HOUR_OF_DAY, 18);
+            Final.set(Calendar.MINUTE, 0);
 
-        int minute = 30;
+            int minute = 30;
 
-        int diaInicial = inicial.get(Calendar.DAY_OF_MONTH);
-        int diaFinal = Final.get(Calendar.DAY_OF_MONTH);
+            int diaInicial = inicial.get(Calendar.DAY_OF_MONTH);
+            int diaFinal = Final.get(Calendar.DAY_OF_MONTH);
 
-        while (inicial.before(Final)) {
-            listaPeriodo.add(String.format("%02d",
-                    inicial.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", inicial.get(Calendar.MINUTE)));
-            inicial.add(Calendar.MINUTE, minute);
+            while (inicial.before(Final)) {
+                listaPeriodo.add(String.format("%02d",
+                        inicial.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", inicial.get(Calendar.MINUTE)));
+                inicial.add(Calendar.MINUTE, minute);
+            }
+        } else {
+            int hora = Integer.parseInt(h.substring(0, 2));
+            Calendar inicial = Calendar.getInstance();
+            inicial.set(Calendar.HOUR_OF_DAY, hora);
+            inicial.set(Calendar.MINUTE, 0);
+
+            Calendar Final = Calendar.getInstance();
+            Final.set(Calendar.HOUR_OF_DAY, hora);
+            Final.set(Calendar.MINUTE, 0);
+
+            int minute = 30;
+
+            int diaInicial = inicial.get(Calendar.DAY_OF_MONTH);
+            int diaFinal = Final.get(Calendar.DAY_OF_MONTH);
+
+            while (inicial.equals(Final)) {
+                listaPeriodo.add(String.format("%02d",
+                        inicial.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", inicial.get(Calendar.MINUTE)));
+                inicial.add(Calendar.MINUTE, minute);
+            }
         }
 
         GregorianCalendar calInicio = new GregorianCalendar();
@@ -192,7 +218,6 @@ public class TelaProximoHorario extends javax.swing.JDialog {
             model.setValueAt(listaPeriodo.get(i), i, 2);
 
         }
-
     }
 
     public void removeLinha() {
@@ -208,7 +233,6 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         dt = calInicio.getTime();
         java.sql.Date data;
         data = new java.sql.Date(dt.getTime());
-
         listaAgendamentos = aDAO.listarAgendamentos(data);
         for (int j = 0; j < tblHorarioLivre.getRowCount(); j++) {
             for (int i = 0; i < listaAgendamentos.size(); i++) {
@@ -250,7 +274,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                TelaProximoHorario dialog = new TelaProximoHorario(new javax.swing.JFrame(), true, null);
+                TelaProximoHorario dialog = new TelaProximoHorario(new javax.swing.JFrame(), true, null, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
