@@ -112,6 +112,43 @@ public class agendamentoDAO extends MySQL {
         }
         return lista;
     }
+    
+     public List<Agenda> listarAgendamentosHorario(Date data, String hora) {
+        List<Agenda> lista = new ArrayList<>();
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps
+                    = c.prepareStatement("SELECT agendamento.hora, agendamento.descricao, pessoa.nome"
+                            + " FROM agendamento INNER JOIN pessoa on"
+                            + " pessoa.idPessoa = agendamento.idPessoa WHERE data = ? AND hora = ? ORDER BY hora ASC");
+            ps.setDate(1, data);
+            ps.setString(2, hora);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                Agenda agenda = new Agenda();
+                Pessoa pessoa = new Pessoa();
+                agenda.setDescricao(rs.getString("Descricao"));
+                agenda.setHora(rs.getTime("Hora"));
+                pessoa.setNome(rs.getString("Nome"));
+
+                agenda.setPessoa(pessoa);
+                lista.add(agenda);
+
+            }
+            rs.close();
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return lista;
+    }
 
     public List<Agenda> listarAgendamentosPessoa(String nome) {
         List<Agenda> lista = new ArrayList<>();

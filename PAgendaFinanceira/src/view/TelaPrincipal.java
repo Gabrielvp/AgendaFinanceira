@@ -41,12 +41,12 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         dataTela();
-        iconeTela();       
+        iconeTela();
         tabelaPrincipal();
         atualizaTabela();
         atualizaDiaSemanaTela();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+
     }
 
     agendamentoDAO aDAO = new agendamentoDAO();
@@ -54,6 +54,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     boolean antigas = false;
     Configuracao c = new Configuracao();
     boolean novo;
+    SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm:ss");
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -161,7 +162,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txtHorario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanel2.add(txtHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 42, -1));
+        jPanel2.add(txtHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 50, 20));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Horário");
@@ -324,10 +325,11 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 342, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -457,6 +459,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnProximoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoHorarioActionPerformed
         Date data = txtData.getDate();
+        String hora = txtHorario.getText() + "1";
         TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data);
         tela.setVisible(true);
         limparTela();
@@ -550,13 +553,12 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 = (DefaultTableModel) this.tblPrincipal.getModel();
 
         SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm:ss");
 
         String verificaHora;
         Date dt = txtData.getDate();
         java.sql.Date data;
         data = new java.sql.Date(dt.getTime());
-        
+
         String dataAtual = sdfD.format(new Date());
         String dat = sdfD.format(txtData.getDate());
 
@@ -568,7 +570,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         }
         listaAgendamentos = aDAO.listarAgendamentos(data);
         for (int j = 0; j < tblPrincipal.getRowCount(); j++) {
-            verificaHora = tblPrincipal.getValueAt(j, 0).toString()+":00";
+            verificaHora = tblPrincipal.getValueAt(j, 0).toString() + ":00";
             for (int i = 0; i < listaAgendamentos.size(); i++) {
                 if (listaAgendamentos.get(i).getHora().toString().equals(verificaHora)) {
                     model.setValueAt(listaAgendamentos.get(i), j, 2);

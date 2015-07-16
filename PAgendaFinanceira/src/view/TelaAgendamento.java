@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -243,6 +244,7 @@ public class TelaAgendamento extends javax.swing.JDialog {
         pADAO.insert(p);
         a.setIdPessoa(p.getIdPessoa());
         aDAO.insert(a);
+        JOptionPane.showMessageDialog(rootPane, "Salvo com Sucesso!");
 
         this.dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed
