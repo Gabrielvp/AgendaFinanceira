@@ -178,6 +178,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
             }
         } else {
             int hora = Integer.parseInt(h.substring(0, 2));
+            int minuto = Integer.parseInt(h.substring(3, 5));
             Calendar inicial = Calendar.getInstance();
             inicial.set(Calendar.HOUR_OF_DAY, hora);
             inicial.set(Calendar.MINUTE, 0);
@@ -186,11 +187,10 @@ public class TelaProximoHorario extends javax.swing.JDialog {
             Final.set(Calendar.HOUR_OF_DAY, hora);
             Final.set(Calendar.MINUTE, 0);
 
-            int minute = 30;
+            int minute = minuto;
 
             int diaInicial = inicial.get(Calendar.DAY_OF_MONTH);
             int diaFinal = Final.get(Calendar.DAY_OF_MONTH);
-
             while (inicial.equals(Final)) {
                 listaPeriodo.add(String.format("%02d",
                         inicial.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", inicial.get(Calendar.MINUTE)));
