@@ -25,8 +25,9 @@ public class EnderecoDAO extends MySQL {
         try {
             PreparedStatement ps
                     = c.prepareStatement("INSERT INTO endereco "
-                            + "(rua, numero, cep, cidade, uf, ponto_referencia, idPessoa, bairro)  "
-                            + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )");
+                            + "(rua, numero, cep, cidade, uf, ponto_referencia, idPessoa, bairro, tipo_Endereco, endereco_principal)  "
+                            + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
+
             ps.setString(1, endereco.getRua());
             ps.setInt(2, endereco.getNumero());
             ps.setString(3, endereco.getCep());
@@ -35,6 +36,8 @@ public class EnderecoDAO extends MySQL {
             ps.setString(6, endereco.getpReferencia());
             ps.setInt(7, endereco.getIdPessoa());
             ps.setString(8, endereco.getBairro());
+            ps.setInt(9, endereco.getTipoEndereco());
+            ps.setInt(10, endereco.getPrincipal());
 
             ps.execute();
             ps.close();
@@ -123,6 +126,7 @@ public class EnderecoDAO extends MySQL {
                             + " endereco.bairro, endereco.uf, endereco.ponto_referencia"
                             + " FROM endereco where idpessoa = ?");
             ps.setInt(1, id);
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
 

@@ -9,6 +9,15 @@ public class Documento {
     private int idDocumento;
     private String cpf;
     private String rg;
+    private int idPessoa;
+
+    public int getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(int idPessoa) {
+        this.idPessoa = idPessoa;
+    }
 
     public int getIdDocumento() {
         return idDocumento;
