@@ -176,47 +176,71 @@ public class TelaProximoHorario extends javax.swing.JDialog {
                         inicial.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", inicial.get(Calendar.MINUTE)));
                 inicial.add(Calendar.MINUTE, minute);
             }
+
+            GregorianCalendar calInicio = new GregorianCalendar();
+            calInicio.add(GregorianCalendar.DAY_OF_MONTH, 1);
+            dt = calInicio.getTime();
+            java.sql.Date dia;
+            dia = new java.sql.Date(dt.getTime());
+            Calendar c = Calendar.getInstance();
+            int diaSemanaInt = c.get(Calendar.DAY_OF_WEEK);
+            String diaDaSemana[] = {"Domingo", "Segunda-Feira", "Terça-Feira",
+                "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"};
+            //pega o modelo da Tabela e coloca na variavel "model"
+            DefaultTableModel model
+                    = (DefaultTableModel) this.tblHorarioLivre.getModel();
+            //laço para inserir o número de linhas igual ao da lista
+            for (int i = 0; i < listaPeriodo.size(); i++) {
+                model.addRow(new Object[]{});
+                model.setValueAt(diaDaSemana[diaSemanaInt], i, 0);
+                model.setValueAt(sdfD.format(dia), i, 1);
+                model.setValueAt(listaPeriodo.get(i), i, 2);
+
+            }
+
         } else {
+
             int hora = Integer.parseInt(h.substring(0, 2));
             int minuto = Integer.parseInt(h.substring(3, 5));
             Calendar inicial = Calendar.getInstance();
             inicial.set(Calendar.HOUR_OF_DAY, hora);
-            inicial.set(Calendar.MINUTE, 0);
-
-            Calendar Final = Calendar.getInstance();
-            Final.set(Calendar.HOUR_OF_DAY, hora);
-            Final.set(Calendar.MINUTE, 0);
-
-            int minute = minuto;
+            inicial.set(Calendar.MINUTE, minuto);
 
             int diaInicial = inicial.get(Calendar.DAY_OF_MONTH);
-            int diaFinal = Final.get(Calendar.DAY_OF_MONTH);
-            while (inicial.equals(Final)) {
+
+            GregorianCalendar calInicio = new GregorianCalendar();
+            calInicio.add(GregorianCalendar.DAY_OF_MONTH, 1);
+            dt = calInicio.getTime();
+            java.sql.Date dia;
+            dia = new java.sql.Date(dt.getTime());
+            Calendar c = Calendar.getInstance();
+            int diaSemanaInt = c.get(Calendar.DAY_OF_WEEK);
+            String diaDaSemana[] = {"Domingo", "Segunda-Feira", "Terça-Feira",
+                "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"};
+
+            listaPeriodo.add(String.format("%02d",
+                    inicial.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", inicial.get(Calendar.MINUTE)));
+            //pega o modelo da Tabela e coloca na variavel "model"
+            DefaultTableModel model
+                    = (DefaultTableModel) this.tblHorarioLivre.getModel();
+            for (int i = 0; i < 15; i++) {
+                model.addRow(new Object[]{});
+                model.setValueAt(diaDaSemana[diaSemanaInt], i, 0);
+                model.setValueAt(sdfD.format(dia), i, 1);
+                model.setValueAt(listaPeriodo.get(i), i, 2);
+                calInicio.add(GregorianCalendar.DAY_OF_MONTH, 1);
+                dt = calInicio.getTime();
+                dia = new java.sql.Date(dt.getTime());
                 listaPeriodo.add(String.format("%02d",
                         inicial.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", inicial.get(Calendar.MINUTE)));
-                inicial.add(Calendar.MINUTE, minute);
+                if (diaSemanaInt < 6) {
+                    diaSemanaInt++;
+                    System.out.println(diaSemanaInt);
+                } else {
+                    diaSemanaInt = 0;
+                    System.out.println(diaSemanaInt);
+                }
             }
-        }
-
-        GregorianCalendar calInicio = new GregorianCalendar();
-        calInicio.add(GregorianCalendar.DAY_OF_MONTH, 1);
-        dt = calInicio.getTime();
-        java.sql.Date dia;
-        dia = new java.sql.Date(dt.getTime());
-        Calendar c = Calendar.getInstance();
-        int diaSemanaInt = c.get(Calendar.DAY_OF_WEEK);
-        String diaDaSemana[] = {"Domingo", "Segunda-Feira", "Terça-Feira",
-            "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"};
-        //pega o modelo da Tabela e coloca na variavel "model"
-        DefaultTableModel model
-                = (DefaultTableModel) this.tblHorarioLivre.getModel();
-        //laço para inserir o número de linhas igual ao da lista
-        for (int i = 0; i < listaPeriodo.size(); i++) {
-            model.addRow(new Object[]{});
-            model.setValueAt(diaDaSemana[diaSemanaInt], i, 0);
-            model.setValueAt(sdfD.format(dia), i, 1);
-            model.setValueAt(listaPeriodo.get(i), i, 2);
-
         }
     }
 
