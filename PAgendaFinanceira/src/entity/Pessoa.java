@@ -28,6 +28,9 @@ public class Pessoa {
     public void addEndereco(Endereco endereco) {
         this.listaEndereco.add(endereco);
     }
+    public void deletaEndereco(Endereco endereco) {
+        this.listaEndereco.remove(endereco);
+    }
 
     public List<Endereco> mostrarEndereco() {
         return listaEndereco;
@@ -53,6 +56,9 @@ public class Pessoa {
 
     public void addTelefone(Telefone telefone) {
         this.listaTelefone.add(telefone);
+    }
+    public void removeTelefone(Telefone telefone) {
+        this.listaTelefone.remove(telefone);
     }
 
     public List<Telefone> mostrarTelefone() {

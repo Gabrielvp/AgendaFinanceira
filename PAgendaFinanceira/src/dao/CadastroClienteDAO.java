@@ -101,8 +101,9 @@ public class CadastroClienteDAO extends MySQL {
     public void delete(int id) {
         Connection c = this.getConnection();
         try {
-            PreparedStatement ps = c.prepareStatement("DELETE FROM pessoas "
-                    + "WHERE idPessoas");
+            PreparedStatement ps = c.prepareStatement("DELETE FROM pessoa "
+                    + "WHERE idPessoa = ?");
+            
             ps.setInt(1, id);
 
             ps.execute();

@@ -9,11 +9,25 @@ public class Telefone {
     private int idTelefone;
     private int idPessoa;
     private String numero;
-    private EnumTipoFone tipoFone;
+    private int tipoFone;
+    private int telefonePrincipal;
 
     @Override
     public String toString() {
-        return numero + " - " + tipoFone.getDescricao();
+        return  numero + "- " + EnumTipoFone.CELULAR.getEnumPorCodigo(tipoFone + 1);
+    }
+
+    
+    
+    public int getTelefonePrincipal() {
+        return telefonePrincipal;
+    }
+
+    public void setTelefonePrincipal(int telefonePrincipal) {
+        this.telefonePrincipal = telefonePrincipal;
+    }
+
+    public Telefone() {
     }
 
     public int getIdPessoa() {
@@ -24,11 +38,11 @@ public class Telefone {
         this.idPessoa = idPessoa;
     }
 
-    public EnumTipoFone getTipoFone() {
+    public int getTipoFone() {
         return tipoFone;
     }
 
-    public void setTipoFone(EnumTipoFone tipoFone) {
+    public void setTipoFone(int tipoFone) {
         this.tipoFone = tipoFone;
     }
 

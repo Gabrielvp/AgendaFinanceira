@@ -42,7 +42,10 @@ public enum EnumTipoFone {
 
     @Override
     public String toString() {
-        return descricao;
+        return descricao ;
     }
+    
+    
+    
 }
 
