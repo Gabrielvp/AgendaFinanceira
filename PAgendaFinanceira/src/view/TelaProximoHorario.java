@@ -45,6 +45,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
     String h;
     List<Agenda> listaAgendamentos;
     SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat sdfDI = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
     boolean novo = true;
 
@@ -85,7 +86,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         jScrollPane2.setViewportView(tblHorarioLivre);
         if (tblHorarioLivre.getColumnModel().getColumnCount() > 0) {
             tblHorarioLivre.getColumnModel().getColumn(0).setPreferredWidth(30);
-            tblHorarioLivre.getColumnModel().getColumn(1).setPreferredWidth(15);
+            tblHorarioLivre.getColumnModel().getColumn(1).setPreferredWidth(20);
             tblHorarioLivre.getColumnModel().getColumn(2).setPreferredWidth(5);
         }
 
@@ -99,7 +100,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(btnAnterior)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
                 .addComponent(btnProximo))
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
@@ -117,7 +118,9 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,17 +198,13 @@ public class TelaProximoHorario extends javax.swing.JDialog {
                 model.setValueAt(diaDaSemana[diaSemanaInt], i, 0);
                 model.setValueAt(sdfD.format(dia), i, 1);
                 model.setValueAt(listaPeriodo.get(i), i, 2);
-
             }
-
         } else {
-
             int hora = Integer.parseInt(h.substring(0, 2));
             int minuto = Integer.parseInt(h.substring(3, 5));
             Calendar inicial = Calendar.getInstance();
             inicial.set(Calendar.HOUR_OF_DAY, hora);
             inicial.set(Calendar.MINUTE, minuto);
-
             int diaInicial = inicial.get(Calendar.DAY_OF_MONTH);
 
             GregorianCalendar calInicio = new GregorianCalendar();
@@ -235,10 +234,8 @@ public class TelaProximoHorario extends javax.swing.JDialog {
                         inicial.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", inicial.get(Calendar.MINUTE)));
                 if (diaSemanaInt < 6) {
                     diaSemanaInt++;
-                    System.out.println(diaSemanaInt);
                 } else {
                     diaSemanaInt = 0;
-                    System.out.println(diaSemanaInt);
                 }
             }
         }
@@ -252,6 +249,8 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         String tb = tblHorarioLivre.getValueAt(linha, 1).toString();
 
         String verificaHora;
+        String verificaData;
+        String transforma;
         GregorianCalendar calInicio = new GregorianCalendar();
         calInicio.add(GregorianCalendar.DAY_OF_MONTH, 1);
         dt = calInicio.getTime();
@@ -260,8 +259,10 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         listaAgendamentos = aDAO.listarAgendamentos(data);
         for (int j = 0; j < tblHorarioLivre.getRowCount(); j++) {
             for (int i = 0; i < listaAgendamentos.size(); i++) {
+                verificaData = tblHorarioLivre.getValueAt(j, 1).toString();
                 verificaHora = tblHorarioLivre.getValueAt(j, 2).toString() + ":00";
-                if (listaAgendamentos.get(i).getHora().toString().equals(verificaHora)) {
+                if (listaAgendamentos.get(i).getHora().toString().equals(verificaHora)
+                        && sdfD.format(listaAgendamentos.get(i).getData()).toString().equals(verificaData)) {
                     model.removeRow(j);
                 }
             }

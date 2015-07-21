@@ -161,6 +161,16 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txtHorario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtHorario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtHorarioMousePressed(evt);
+            }
+        });
+        txtHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHorarioActionPerformed(evt);
+            }
+        });
         jPanel2.add(txtHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 50, 20));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -466,17 +476,21 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisaHoraMarcadaActionPerformed
 
     private void btnProximoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoHorarioActionPerformed
-        if(txtHorario.getText().equals("  :  ")){
-        Date data = txtData.getDate();
-        TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data, "  :  ");
-        tela.setVisible(true);
-        limparTela();
-        }else{
-        Date data = txtData.getDate();
-        String hora = txtHorario.getText();
-        TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data, hora);
-        tela.setVisible(true);
-        limparTela();
+        if (txtHorario.getText().equals("  :  ")) {
+            Date data = txtData.getDate();
+            TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data, "  :  ");
+            tela.setVisible(true);
+            limparTela();
+        } else {
+            Date data = txtData.getDate();
+            String hora = txtHorario.getText();
+            if (verificaHorario(hora)) {
+                TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data, hora);
+                tela.setVisible(true);
+                limparTela();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Horário Inválido!");
+            }
         }
     }//GEN-LAST:event_btnProximoHorarioActionPerformed
 
@@ -487,6 +501,32 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             antigas = false;
         }
     }//GEN-LAST:event_ckbConsultasRealizadasActionPerformed
+
+    private void txtHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHorarioActionPerformed
+
+    }//GEN-LAST:event_txtHorarioActionPerformed
+
+    private void txtHorarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtHorarioMousePressed
+        txtHorario.setSelectionStart(0);
+        txtHorario.setSelectionEnd(5);
+    }//GEN-LAST:event_txtHorarioMousePressed
+
+    public boolean verificaHorario(String hora) {
+        int h1 = Integer.parseInt(hora.substring(0, 1));
+        int h2 = Integer.parseInt(hora.substring(1, 2));
+        int m1 = Integer.parseInt(hora.substring(3, 4));
+        if (h1 > 2) {
+            limparTela();
+            return false;
+        } else if (m1 > 5) {
+            limparTela();
+            return false;
+        } else if (h2 > 3) {
+            limparTela();
+            return false;
+        }
+        return true;
+    }
 
     public void dataTela() {
         try {
