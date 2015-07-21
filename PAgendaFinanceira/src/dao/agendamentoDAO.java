@@ -77,6 +77,29 @@ public class agendamentoDAO extends MySQL {
         return false;
     }
 
+    public void deletePessoa(int id) {
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps = c.prepareStatement("DELETE FROM agendamento "
+                    + "WHERE idPessoa = ?");
+
+            ps.setInt(1, id);
+
+            ps.execute();
+            ps.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
     public List<Agenda> listarAgendamentos(Date data) {
         List<Agenda> lista = new ArrayList<>();
         Connection c = this.getConnection();
@@ -113,8 +136,8 @@ public class agendamentoDAO extends MySQL {
         }
         return lista;
     }
-    
-     public List<Agenda> listarAgendamentosHorario(Date data, String hora) {
+
+    public List<Agenda> listarAgendamentosHorario(Date data, String hora) {
         List<Agenda> lista = new ArrayList<>();
         Connection c = this.getConnection();
         try {

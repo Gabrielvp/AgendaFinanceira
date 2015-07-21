@@ -5,19 +5,37 @@ package entity;
  * @author Homologação
  */
 public class Endereco {
-    
+
     private int idEndereco;
     private int idPessoa;
+    private int principal;
     private String rua;
     private int numero;
+    private int tipoEndereco;
     private String cep;
     private String bairro;
     private String cidade;
     private String uf;
     private String pReferencia;
 
+    public int getPrincipal() {
+        return principal;
+    }
+
+    public void setPrincipal(int principal) {
+        this.principal = principal;
+    }
+
     public int getIdPessoa() {
         return idPessoa;
+    }
+
+    public int getTipoEndereco() {
+        return tipoEndereco;
+    }
+
+    public void setTipoEndereco(int tipoEndereco) {
+        this.tipoEndereco = tipoEndereco;
     }
 
     public void setIdPessoa(int idPessoa) {
@@ -87,6 +105,5 @@ public class Endereco {
     public void setpReferencia(String pReferencia) {
         this.pReferencia = pReferencia;
     }
-    
-    
+
 }

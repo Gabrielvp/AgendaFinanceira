@@ -14,7 +14,6 @@ public class Pessoa {
     private String email;
     private boolean completo;
     private Documento documento;
-    private Endereco endereco;
     private List<Telefone> listaTelefone;
     private List<Endereco> listaEndereco;
 
@@ -27,7 +26,10 @@ public class Pessoa {
     }
 
     public void addEndereco(Endereco endereco) {
-        listaEndereco.add(endereco);
+        this.listaEndereco.add(endereco);
+    }
+    public void deletaEndereco(Endereco endereco) {
+        this.listaEndereco.remove(endereco);
     }
 
     public List<Endereco> mostrarEndereco() {
@@ -36,6 +38,7 @@ public class Pessoa {
 
     public Pessoa() {
         listaTelefone = new ArrayList<>();
+        listaEndereco = new ArrayList<>();
     }
 
     public List<Telefone> getListaTelefone() {
@@ -53,6 +56,9 @@ public class Pessoa {
 
     public void addTelefone(Telefone telefone) {
         this.listaTelefone.add(telefone);
+    }
+    public void removeTelefone(Telefone telefone) {
+        this.listaTelefone.remove(telefone);
     }
 
     public List<Telefone> mostrarTelefone() {
@@ -77,14 +83,6 @@ public class Pessoa {
 
     public void setCompleto(boolean completo) {
         this.completo = completo;
-    }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
     }
 
     public String getEmail() {
