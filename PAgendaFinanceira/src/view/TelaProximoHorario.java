@@ -45,7 +45,6 @@ public class TelaProximoHorario extends javax.swing.JDialog {
     String h;
     List<Agenda> listaAgendamentos;
     SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
-    SimpleDateFormat sdfDI = new SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
     boolean novo = true;
 
@@ -250,14 +249,16 @@ public class TelaProximoHorario extends javax.swing.JDialog {
 
         String verificaHora;
         String verificaData;
-        String transforma;
         GregorianCalendar calInicio = new GregorianCalendar();
         calInicio.add(GregorianCalendar.DAY_OF_MONTH, 1);
         dt = calInicio.getTime();
         java.sql.Date data;
         data = new java.sql.Date(dt.getTime());
-        listaAgendamentos = aDAO.listarAgendamentos(data);
         for (int j = 0; j < tblHorarioLivre.getRowCount(); j++) {
+            calInicio.add(GregorianCalendar.DAY_OF_MONTH, 1);
+            dt = calInicio.getTime();
+            data = new java.sql.Date(dt.getTime());
+            listaAgendamentos = aDAO.listarAgendamentos(data);
             for (int i = 0; i < listaAgendamentos.size(); i++) {
                 verificaData = tblHorarioLivre.getValueAt(j, 1).toString();
                 verificaHora = tblHorarioLivre.getValueAt(j, 2).toString() + ":00";
