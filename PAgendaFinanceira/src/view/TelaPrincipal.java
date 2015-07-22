@@ -78,7 +78,8 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         lblDiaSemana = new javax.swing.JLabel();
         txtData = new com.toedter.calendar.JDateChooser();
         btnProximoHorario = new javax.swing.JButton();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        btnAnterior = new javax.swing.JButton();
+        btnProximo = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnCadCliente = new javax.swing.JButton();
         btnOrcamento = new javax.swing.JButton();
@@ -161,6 +162,16 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txtHorario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtHorario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtHorarioMousePressed(evt);
+            }
+        });
+        txtHorario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHorarioActionPerformed(evt);
+            }
+        });
         jPanel2.add(txtHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 50, 20));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -219,8 +230,8 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         lblDiaSemana.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblDiaSemana.setForeground(new java.awt.Color(255, 51, 51));
         lblDiaSemana.setText("diaSemana");
-        jPanel2.add(lblDiaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, -1, -1));
-        jPanel2.add(txtData, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 42, -1));
+        jPanel2.add(lblDiaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, -1, -1));
+        jPanel2.add(txtData, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 130, -1));
 
         btnProximoHorario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Find.png"))); // NOI18N
         btnProximoHorario.setText("Próximo Horário");
@@ -231,13 +242,16 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         });
         jPanel2.add(btnProximoHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(475, 161, -1, 46));
 
-        jFormattedTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
-        try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jPanel2.add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 90, 20));
+        btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.png"))); // NOI18N
+        jPanel2.add(btnAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, -1, -1));
+
+        btnProximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Forward.png"))); // NOI18N
+        btnProximo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProximoActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnProximo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, -1, -1));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 51, 153)));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -466,17 +480,21 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPesquisaHoraMarcadaActionPerformed
 
     private void btnProximoHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoHorarioActionPerformed
-        if(txtHorario.getText().equals("  :  ")){
-        Date data = txtData.getDate();
-        TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data, "  :  ");
-        tela.setVisible(true);
-        limparTela();
-        }else{
-        Date data = txtData.getDate();
-        String hora = txtHorario.getText();
-        TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data, hora);
-        tela.setVisible(true);
-        limparTela();
+        if (txtHorario.getText().equals("  :  ")) {
+            Date data = txtData.getDate();
+            TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data, "  :  ");
+            tela.setVisible(true);
+            limparTela();
+        } else {
+            Date data = txtData.getDate();
+            String hora = txtHorario.getText();
+            if (verificaHorario(hora)) {
+                TelaProximoHorario tela = new TelaProximoHorario(this, rootPaneCheckingEnabled, data, hora);
+                tela.setVisible(true);
+                limparTela();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Horário Inválido!");
+            }
         }
     }//GEN-LAST:event_btnProximoHorarioActionPerformed
 
@@ -487,6 +505,62 @@ public final class TelaPrincipal extends javax.swing.JFrame {
             antigas = false;
         }
     }//GEN-LAST:event_ckbConsultasRealizadasActionPerformed
+
+    private void txtHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHorarioActionPerformed
+
+    }//GEN-LAST:event_txtHorarioActionPerformed
+
+    private void txtHorarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtHorarioMousePressed
+        txtHorario.setSelectionStart(0);
+        txtHorario.setSelectionEnd(5);
+    }//GEN-LAST:event_txtHorarioMousePressed
+
+    private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
+        DataHora dt = new DataHora();
+        SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
+        int linha = tblPrincipal.getSelectedRow();
+
+        dt.setData(txtData.getDate());
+        try {
+            dt.setHorario(sdfH.parse(tblPrincipal.getValueAt(linha, 0).toString()));
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dt.setDia(lblDiaSemana.getText());
+
+        if (tblPrincipal.getValueAt(linha, 1).toString().equals("")) {
+            novo = true;
+            TelaAgendamento a = new TelaAgendamento(this, rootPaneCheckingEnabled, dt, novo);
+            a.setVisible(true);
+        } else {
+            novo = false;
+            TelaAgendamento a = new TelaAgendamento(this, rootPaneCheckingEnabled, dt, novo);
+            a.setVisible(true);
+        }
+
+        limparTabela();
+        atualizaTabela();
+        atualizaDiaSemanaTela();
+
+    }//GEN-LAST:event_btnProximoActionPerformed
+
+    public boolean verificaHorario(String hora) {
+        int h1 = Integer.parseInt(hora.substring(0, 1));
+        int h2 = Integer.parseInt(hora.substring(1, 2));
+        int m1 = Integer.parseInt(hora.substring(3, 4));
+        if (h1 > 2) {
+            limparTela();
+            return false;
+        } else if (m1 > 5) {
+            limparTela();
+            return false;
+        } else if (h2 > 3) {
+            limparTela();
+            return false;
+        }
+        return true;
+    }
 
     public void dataTela() {
         try {
@@ -661,6 +735,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnCadCliente;
     private javax.swing.JButton btnCaixa;
     private javax.swing.JButton btnConfiguracao;
@@ -669,10 +744,10 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnOrcamento;
     private javax.swing.JButton btnPesquisaHoraMarcada;
     private javax.swing.JButton btnProduto;
+    private javax.swing.JButton btnProximo;
     private javax.swing.JButton btnProximoHorario;
     private javax.swing.JButton btnServico;
     private javax.swing.JCheckBox ckbConsultasRealizadas;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
