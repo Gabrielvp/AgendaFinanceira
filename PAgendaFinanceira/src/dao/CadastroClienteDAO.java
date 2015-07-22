@@ -236,7 +236,7 @@ public class CadastroClienteDAO extends MySQL {
         Pessoa objPessoa = new Pessoa();
 
         try {
-            PreparedStatement ps = c.prepareStatement("SELECT pessoa.idPessoa, pessoa.nome "
+            PreparedStatement ps = c.prepareStatement("SELECT pessoa.idPessoa, pessoa.nome, pessoa.email "
                     + "FROM Pessoa WHERE idPessoa = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -244,6 +244,7 @@ public class CadastroClienteDAO extends MySQL {
 
                 objPessoa.setIdPessoa(rs.getInt("idPessoa"));
                 objPessoa.setNome(rs.getString("nome"));
+                objPessoa.setEmail(rs.getString("email"));
 
             }
             rs.close();
