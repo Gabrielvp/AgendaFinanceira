@@ -16,11 +16,19 @@ public class Produto {
     private String descricao;
     private String codBarras;
     private boolean ativo;
-    private String unidade;
+    private int unidade;
     private int ncm;
     private int origem;
     private String observacao;
     private int cstIcms;
+
+    public int getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(int unidade) {
+        this.unidade = unidade;
+    }
 
     public int getCstIcms() {
         return cstIcms;
@@ -60,14 +68,6 @@ public class Produto {
 
     public void setCodBarras(String codBarras) {
         this.codBarras = codBarras;
-    }
-
-    public String getUnidade() {
-        return unidade;
-    }
-
-    public void setUnidade(String unidade) {
-        this.unidade = unidade;
     }
 
     public boolean isAtivo() {

@@ -518,7 +518,7 @@ public class TelaProdutos extends javax.swing.JDialog {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Produto p = new Produto();
         p.setDescricao(txtDescricao.getText());
-        p.setUnidade(cbUnidade.getSelectedItem().toString());
+        p.setUnidade(cbUnidade.getSelectedIndex());
         p.setCodBarras(txtCodBarras.getText());
         p.setNcm(Integer.parseInt(txtNcm.getText()));
         p.setOrigem(cbOrigem.getSelectedIndex());

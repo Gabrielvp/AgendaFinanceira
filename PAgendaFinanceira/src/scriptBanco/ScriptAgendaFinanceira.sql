@@ -201,15 +201,18 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AgendaFinanceira`.`produto` (
   `idproduto` INT NOT NULL AUTO_INCREMENT,
-  `codigo` VARCHAR(20) NOT NULL,
   `produto` VARCHAR(150) NOT NULL,
   `qtd` DOUBLE NOT NULL,
   `vl_compra` DOUBLE NOT NULL,
   `vl_venda` DOUBLE NOT NULL,
   `marca` VARCHAR(150) NOT NULL,
   `modelo` VARCHAR(150) NOT NULL,
-  `decricao` VARCHAR(500) NULL,
   `cod_barras` VARCHAR(45) NULL,
+  `observacao` VARCHAR(500) NULL,
+  `ativo` BOOLEAN NOT NULL,
+  `unidade`INT NOT NULL,
+  `ncm`INT NOT NULL,
+  `origem` INT NOT NULL,
   PRIMARY KEY (`idproduto`))
 ENGINE = InnoDB;
 

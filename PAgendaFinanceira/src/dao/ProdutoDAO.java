@@ -1,13 +1,9 @@
 package dao;
 
-import entity.Endereco;
 import entity.Produto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -32,7 +28,7 @@ public class ProdutoDAO extends MySQL {
             ps.setString(7, produto.getCodBarras());
             ps.setString(8, produto.getObservacao());
             ps.setBoolean(9, produto.isAtivo());
-            ps.setString(10, produto.getUnidade());
+            ps.setInt(10, produto.getUnidade());
             ps.setInt(11, produto.getNcm());
             ps.setInt(12, produto.getOrigem());
 
