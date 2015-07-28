@@ -7,7 +7,6 @@ package entity;
 public class Produto {
 
     private int idProduto;
-    private int codigo;
     private String nome;
     private double qtd;
     private double valorCompra;
@@ -15,14 +14,68 @@ public class Produto {
     private String marca;
     private String modelo;
     private String descricao;
-    private int codBarras;
+    private String codBarras;
+    private boolean ativo;
+    private String unidade;
+    private int ncm;
+    private int origem;
+    private String observacao;
+    private int cstIcms;
 
-    public int getCodBarras() {
+    public int getCstIcms() {
+        return cstIcms;
+    }
+
+    public void setCstIcms(int cstIcms) {
+        this.cstIcms = cstIcms;
+    }
+
+    public int getOrigem() {
+        return origem;
+    }
+
+    public void setOrigem(int origem) {
+        this.origem = origem;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
+    public int getNcm() {
+        return ncm;
+    }
+
+    public void setNcm(int ncm) {
+        this.ncm = ncm;
+    }
+
+    public String getCodBarras() {
         return codBarras;
     }
 
-    public void setCodBarras(int codBarras) {
+    public void setCodBarras(String codBarras) {
         this.codBarras = codBarras;
+    }
+
+    public String getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(String unidade) {
+        this.unidade = unidade;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public int getIdProduto() {
@@ -31,14 +84,6 @@ public class Produto {
 
     public void setIdProduto(int idProduto) {
         this.idProduto = idProduto;
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
     }
 
     public String getNome() {
@@ -96,7 +141,5 @@ public class Produto {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
-    
-    
+
 }
