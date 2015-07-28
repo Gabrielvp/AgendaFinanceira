@@ -652,7 +652,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         String dat = sdfD.format(txtData.getDate());
 
         if (!dat.equals(dataAtual)) {
-            tblPrincipal.setBackground(Color.yellow);
+            tblPrincipal.setBackground(Color.PINK);
 
         } else {
             tblPrincipal.setBackground(null);
