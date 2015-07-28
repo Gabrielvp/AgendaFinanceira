@@ -39,7 +39,6 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         atualizaTabelaPessoa();
         cbTipoFone.setModel(new DefaultComboBoxModel<>(EnumTipoFone.values()));
         cbTipoEndereco.setModel(new DefaultComboBoxModel<>(EnumTipoEndereco.values()));
-        atualizaTabelaEndereco(1);
         atualizaID();
 
     }
@@ -144,7 +143,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             }
         });
 
-        jLabel15.setText("e-mail");
+        jLabel15.setText("E-mail");
 
         txtEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
 
@@ -245,11 +244,6 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         });
 
         ckbTelefonePrincipal.setText("Principal");
-        ckbTelefonePrincipal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ckbTelefonePrincipalActionPerformed(evt);
-            }
-        });
 
         jScrollPane4.setViewportView(lstTelefone);
 
@@ -610,18 +604,26 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAddTelefoneActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        alterar = false;
 
         Endereco e = new Endereco();
         Documento d = new Documento();
+        DocumentoDAO dDAO = new DocumentoDAO();
 
+        d.setIdPessoa(p.getIdPessoa());
         d.setCpf(txtCpf.getText());
         d.setRg(txtRg.getText());
-        d.setIdPessoa(p.getIdPessoa());
+        dDAO.insert(d);
 
-        p.setNome(txtNome.getText());
-        p.setEmail(txtEmail.getText());
-        p.setCompleto(true);
-        p.setDocumento(d);
+        try {
+
+            p.setNome(txtNome.getText());
+            p.setEmail(txtEmail.getText());
+            p.setCompleto(true);
+            p.setDocumento(d);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
 
         if (alterar) {
             pDAO.update(p, id);
@@ -629,8 +631,6 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             pDAO.insert(p);
 
         }
-
-        alterar = false;
 
         atualizaTabelaPessoa();
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -648,6 +648,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         end.setUf(txtUf.getText());
         end.setpReferencia(txtPReferencia.getText());
         end.setTipoEndereco(cbTipoEndereco.getSelectedIndex());
+
         if (ckbEnderecoPrincipal.isSelected()) {
             end.setPrincipal(1);
         } else {
@@ -662,11 +663,9 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnAddEnderecoActionPerformed
 
-    private void ckbTelefonePrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckbTelefonePrincipalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ckbTelefonePrincipalActionPerformed
-
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        alterar = true;
+
         int linha = tblPessoa.getSelectedRow();
         id = Integer.parseInt(tblPessoa.getValueAt(linha, 0).toString());
         p = pDAO.getPessoaById(id);
@@ -674,14 +673,27 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         DocumentoDAO dDAO = new DocumentoDAO();
         Documento d = dDAO.selecionarDocumento(id);
 
+        limparCampos();
+
         txtNome.setText(p.getNome());
         txtCodigo.setText(p.getIdPessoa() + "");
-        alterar = true;
-        txtEmail.setText(p.getEmail());
-        txtCpf.setText(d.getCpf());
-        txtRg.setText(d.getRg());
-        
-        
+
+        if (p.getEmail() == (null)) {
+            txtEmail.setText("");
+
+        } else if (d.getCpf() == (null)) {
+            txtCpf.setText("");
+
+        } else if (d.getRg() == (null)) {
+            txtRg.setText("");
+
+        } else {
+            txtEmail.setText(p.getEmail());
+            txtCpf.setText(d.getCpf());
+            txtRg.setText(d.getRg());
+
+        }
+
         atualizaTabelaEndereco(id);
         atualizaListaTelefone(tDAO.listarTelefone(id));
         atualizaTabelaPessoa();
@@ -694,6 +706,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         agendamentoDAO aDAO = new agendamentoDAO();
+        DocumentoDAO dDAO = new DocumentoDAO();
         EnderecoDAO eDAO = new EnderecoDAO();
         TelefoneDAO tDAO = new TelefoneDAO();
         int linha = tblPessoa.getSelectedRow();
@@ -704,6 +717,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         eDAO.delete(id);
         pDAO.delete(id);
         tDAO.delete(id);
+        dDAO.delete(id);
 
         atualizaTabelaPessoa();
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -716,14 +730,14 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
 
         atualizaListaTelefone(p.mostrarTelefone());
     }//GEN-LAST:event_btnExcuirTelefoneActionPerformed
+    public void limparCampos() {
+        txtEmail.setText("");
+        txtCpf.setText("");
+        txtRg.setText("");
+        txtNome.setText("");
 
-//    public void listaTelefone(List<Telefone> mostrarTelefone) {
-//        DefaultListModel modelo = new DefaultListModel();
-//        for (Telefone telefone : mostrarTelefone) {
-//            modelo.addElement(telefone);
-//        }
-//        lstTelefone.setModel(modelo);
-//    }
+    }
+
     public void atualizaListaTelefone(List<Telefone> mostrarTelefone) {
         DefaultListModel modelo = new DefaultListModel();
         for (Telefone telefone : mostrarTelefone) {

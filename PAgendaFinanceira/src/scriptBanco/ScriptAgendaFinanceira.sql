@@ -22,7 +22,7 @@ USE `AgendaFinanceira` ;
 -- Table `AgendaFinanceira`.`pessoa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AgendaFinanceira`.`pessoa` (
-  `idPessoa` INT NOT NULL AUTO_INCREMENT,
+  `idPessoa` INT  NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(200) NOT NULL,
   `email` VARCHAR(200) NULL,
   `completo` TINYINT(1) NOT NULL,
@@ -59,7 +59,7 @@ ENGINE = InnoDB;
 -- Table `AgendaFinanceira`.`documento`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `AgendaFinanceira`.`documento` (
-  `iddocumento` INT UNSIGNED NOT NULL,
+  `iddocumento` INT Primary KEY NOT NULL AUTO_INCREMENT ,
   `cpf` CHAR(14) NOT NULL,
   `rg` VARCHAR(20) NOT NULL,
   `idPessoa` INT NOT NULL,

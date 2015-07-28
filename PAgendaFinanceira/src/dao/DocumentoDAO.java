@@ -1,14 +1,10 @@
 package dao;
 
 import entity.Documento;
-import entity.Documento;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -21,11 +17,11 @@ public class DocumentoDAO extends MySQL {
         try {
             PreparedStatement ps
                     = c.prepareStatement("INSERT INTO documento "
-                            + "(cpf, rg, iddocumento )  "
+                            + "(cpf, rg, idpessoa )  "
                             + "VALUES ( ?, ?, ? )");
             ps.setString(1, documento.getCpf());
             ps.setString(2, documento.getRg());
-            ps.setInt(3, documento.getIdDocumento());
+            ps.setInt(3, documento.getIdPessoa());
 
             ps.execute();
             ps.close();
