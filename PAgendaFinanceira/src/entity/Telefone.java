@@ -27,8 +27,6 @@ public class Telefone {
         this.telefonePrincipal = telefonePrincipal;
     }
 
-    public Telefone() {
-    }
 
     public int getIdPessoa() {
         return idPessoa;

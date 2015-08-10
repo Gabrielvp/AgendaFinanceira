@@ -86,8 +86,8 @@ public class EnderecoDAO extends MySQL {
         }
         return listaEndereco;
     }
-    
-        public void delete(int id) {
+
+    public void delete(int id) {
         Connection c = this.getConnection();
         try {
             PreparedStatement ps = c.prepareStatement("DELETE FROM endereco "
@@ -109,7 +109,27 @@ public class EnderecoDAO extends MySQL {
         }
     }
 
+    public void deleteRua(String rua) {
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps = c.prepareStatement("DELETE FROM endereco "
+                    + "WHERE rua = ?");
+            ps.setString(1, rua);
 
+            ps.execute();
+            ps.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
     /*public FContratado getFuncionarioById(int id) {
      Connection c = this.getConnection();
      FContratado funcionario = null;
