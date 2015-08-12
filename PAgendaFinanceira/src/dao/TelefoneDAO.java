@@ -1,7 +1,6 @@
 package dao;
 
 import entity.Telefone;
-import entity.Telefone;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,12 +64,34 @@ public class TelefoneDAO extends MySQL {
         }
     }
 
+    public void deleteNumero(String numero) {
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps = c.prepareStatement("DELETE FROM telefone "
+                    + "WHERE numero = ?");
+            ps.setString(1, numero);
+
+            ps.execute();
+            ps.close();
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
     public List<Telefone> listarTelefone(int id) {
         List<Telefone> listaTelefone = new ArrayList<>();
         Connection c = this.getConnection();
         try {
             PreparedStatement ps
-                    = c.prepareStatement("SELECT tipo_telefone, numero"
+                    = c.prepareStatement("SELECT tipo_telefone, numero, telefone_principal"
                             + " FROM telefone where idpessoa = ?");
             ps.setInt(1, id);
 
@@ -78,9 +99,10 @@ public class TelefoneDAO extends MySQL {
             while (rs.next()) {
 
                 Telefone telefone = new Telefone();
-                
+
                 telefone.setTipoFone(rs.getInt("tipo_telefone"));
                 telefone.setNumero(rs.getString("Numero"));
+                telefone.setTelefonePrincipal(rs.getInt("telefone_principal"));
 
                 listaTelefone.add(telefone);
             }
@@ -97,4 +119,5 @@ public class TelefoneDAO extends MySQL {
         }
         return listaTelefone;
     }
+
 }

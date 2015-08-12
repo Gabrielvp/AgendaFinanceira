@@ -19,7 +19,7 @@ import entity.Pessoa;
 import entity.Telefone;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -79,8 +79,8 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         btnAddTelefone = new javax.swing.JButton();
         btnExcuirTelefone = new javax.swing.JButton();
         ckbTelefonePrincipal = new javax.swing.JCheckBox();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        lstTelefone = new javax.swing.JList();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblTelefone = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPessoa = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
@@ -245,38 +245,56 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
 
         ckbTelefonePrincipal.setText("Principal");
 
-        jScrollPane4.setViewportView(lstTelefone);
+        tblTelefone.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Número", "Tipo"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblTelefone);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFone, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(ckbTelefonePrincipal))
-                    .addComponent(cbTipoFone, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAddTelefone)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExcuirTelefone)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4)
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtFone, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ckbTelefonePrincipal))
+                            .addComponent(cbTipoFone, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAddTelefone)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcuirTelefone)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnAddTelefone)
                     .addComponent(btnExcuirTelefone)
@@ -290,7 +308,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
                             .addComponent(txtFone, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbTipoFone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -327,24 +345,25 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 48, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Pessoa", jPanel1);
@@ -397,6 +416,11 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         });
 
         btnExcuirEndereco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/No-entry.png"))); // NOI18N
+        btnExcuirEndereco.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcuirEnderecoActionPerformed(evt);
+            }
+        });
 
         ckbEnderecoPrincipal.setText("Principal");
 
@@ -526,7 +550,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Endereço", jPanel6);
@@ -573,13 +597,13 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 503, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnExcluir)
                     .addComponent(btnAlterar))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 19, Short.MAX_VALUE))
         );
 
         jTabbedPane1.getAccessibleContext().setAccessibleName("");
@@ -597,16 +621,27 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         t.setTipoFone(cbTipoFone.getSelectedIndex());
         t.setIdPessoa(p.getIdPessoa());
 
-        tDAO.insert(t);
+        if (ckbTelefonePrincipal.isSelected()) {
+            t.setTelefonePrincipal(1);
+        } else {
+            t.setTelefonePrincipal(0);
+        }
 
-        p.addTelefone(t);
-        atualizaListaTelefone(p.mostrarTelefone());
+        if (limitaTelefonePrincipal(p.getIdPessoa()) && ckbTelefonePrincipal.isSelected()) {
+
+            JOptionPane.showMessageDialog(rootPane, "Você pode cadastrar apenas 1 telefone principal!");
+
+        } else {
+            tDAO.insert(t);
+            p.addTelefone(t);
+        }
+
+        atualizaListaTelefone(id);
+        atualizaTabelaPessoa();
     }//GEN-LAST:event_btnAddTelefoneActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        alterar = false;
 
-        Endereco e = new Endereco();
         Documento d = new Documento();
         DocumentoDAO dDAO = new DocumentoDAO();
 
@@ -631,7 +666,9 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
             pDAO.insert(p);
 
         }
-
+        
+        JOptionPane.showMessageDialog(rootPane, "Cadastro efetuado com sucesso!");
+        alterar = false;
         atualizaTabelaPessoa();
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -695,7 +732,7 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
         }
 
         atualizaTabelaEndereco(id);
-        atualizaListaTelefone(tDAO.listarTelefone(id));
+        atualizaListaTelefone(id);
         atualizaTabelaPessoa();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -723,13 +760,23 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnExcuirTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcuirTelefoneActionPerformed
+        int linha = tblTelefone.getSelectedRow();
+        String numero = (String) tblTelefone.getValueAt(linha, 0);
         TelefoneDAO tDAO = new TelefoneDAO();
+        tDAO.deleteNumero(numero);
 
-        p.removeTelefone((Telefone) lstTelefone.getSelectedValue());
-        tDAO.delete(id);
-
-        atualizaListaTelefone(p.mostrarTelefone());
+        atualizaListaTelefone(id);
+        atualizaTabelaPessoa();
     }//GEN-LAST:event_btnExcuirTelefoneActionPerformed
+
+    private void btnExcuirEnderecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcuirEnderecoActionPerformed
+        int linha = tblEndereco.getSelectedRow();
+        String rua = (String) tblEndereco.getValueAt(linha, 0);
+        EnderecoDAO eDAO = new EnderecoDAO();
+        eDAO.deleteRua(rua);
+
+        atualizaTabelaEndereco(id);
+    }//GEN-LAST:event_btnExcuirEnderecoActionPerformed
     public void limparCampos() {
         txtEmail.setText("");
         txtCpf.setText("");
@@ -738,12 +785,41 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
 
     }
 
-    public void atualizaListaTelefone(List<Telefone> mostrarTelefone) {
-        DefaultListModel modelo = new DefaultListModel();
-        for (Telefone telefone : mostrarTelefone) {
-            modelo.addElement(telefone);
+    public void atualizaListaTelefone(int id) {
+        TelefoneDAO tDAO = new TelefoneDAO();
+        List<Telefone> listaTelefone = tDAO.listarTelefone(id);
+
+        DefaultTableModel model = (DefaultTableModel) this.tblTelefone.getModel();
+        model.setRowCount(0);
+        for (int i = 0; i < listaTelefone.size(); i++) {
+            model.addRow(new Object[]{});
+            model.setValueAt(listaTelefone.get(i).getNumero(), i, 0);
+            switch (listaTelefone.get(i).getTipoFone()) {
+                case 0:
+                    model.setValueAt("Celular", i, 1);
+                    break;
+                case 1:
+                    model.setValueAt("Comercial", i, 1);
+                    break;
+                case 2:
+                    model.setValueAt("Contato", i, 1);
+                    break;
+                case 3:
+                    model.setValueAt("Fax", i, 1);
+                    break;
+                case 4:
+                    model.setValueAt("Pager", i, 1);
+                    break;
+                case 5:
+                    model.setValueAt("Residencial", i, 1);
+                    break;
+                default:
+                    model.setValueAt("Outros", i, 1);
+                    break;
+
+            }
+
         }
-        lstTelefone.setModel(modelo);
     }
 
     public void atualizaTabelaPessoa() {
@@ -770,9 +846,39 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
                 model.setValueAt(listaPessoaCompleto.get(i).getDocumento().getCpf(), i, 2);
                 model.setValueAt(listaPessoaCompleto.get(i).getDocumento().getRg(), i, 3);
                 model.setValueAt(listaPessoaCompleto.get(i).getEmail(), i, 4);
-                //model.setValueAt(listaPessoaCompleto.get(i).getListaTelefone().getNumero(), i, 5);
+                model.setValueAt(verificaTelefonePrincipal(listaPessoaCompleto.get(i).getIdPessoa()), i, 5);
+
             }
         }
+    }
+
+    public String verificaTelefonePrincipal(int id) {
+        TelefoneDAO tDAO = new TelefoneDAO();
+        List<Telefone> listaTelefone = tDAO.listarTelefone(id);
+        for (Telefone telefone : listaTelefone) {
+            if (telefone.getTelefonePrincipal() == 1) {
+                return telefone.getNumero();
+            }
+        }
+        return null;
+    }
+
+    public boolean limitaTelefonePrincipal(int id) {
+        TelefoneDAO tDAO = new TelefoneDAO();
+        List<Telefone> listaTelefone = tDAO.listarTelefone(id);
+        int cont = 0;
+        for (int i = 0; i < listaTelefone.size(); i++) {
+            for (Telefone telefone : listaTelefone) {
+                if (telefone.getTelefonePrincipal() == 1) {
+                    cont++;
+                }
+            }
+        }
+
+        if (cont == 0) {
+            return false;
+        }
+        return true;
     }
 
     public void atualizaTabelaEndereco(int codigo) {
@@ -894,14 +1000,14 @@ public class TelaCadastroPessoa extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblcodigo;
-    private javax.swing.JList lstTelefone;
     private javax.swing.JTable tblEndereco;
     private javax.swing.JTable tblPessoa;
+    private javax.swing.JTable tblTelefone;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JFormattedTextField txtCep;
     private javax.swing.JTextField txtCidade;
