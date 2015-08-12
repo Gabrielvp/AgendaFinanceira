@@ -5,6 +5,7 @@
  */
 package view;
 
+import com.toedter.calendar.JCalendar;
 import dao.agendamentoDAO;
 import entity.Agenda;
 import entity.Configuracao;
@@ -53,6 +54,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     Configuracao c = new Configuracao();
     boolean novo;
     SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm:ss");
+    int cont = 0;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,6 +82,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         btnProximoHorario = new javax.swing.JButton();
         btnAnterior = new javax.swing.JButton();
         btnProximo = new javax.swing.JButton();
+        btnDataDia = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnCadCliente = new javax.swing.JButton();
         btnOrcamento = new javax.swing.JButton();
@@ -230,7 +233,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         lblDiaSemana.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblDiaSemana.setForeground(new java.awt.Color(255, 51, 51));
         lblDiaSemana.setText("diaSemana");
-        jPanel2.add(lblDiaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, -1, -1));
+        jPanel2.add(lblDiaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, -1, -1));
         jPanel2.add(txtData, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 130, -1));
 
         btnProximoHorario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Find.png"))); // NOI18N
@@ -243,15 +246,36 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         jPanel2.add(btnProximoHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(475, 161, -1, 46));
 
         btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.png"))); // NOI18N
+        btnAnterior.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnAnteriorMousePressed(evt);
+            }
+        });
         jPanel2.add(btnAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, -1, -1));
 
         btnProximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Forward.png"))); // NOI18N
-        btnProximo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProximoActionPerformed(evt);
+        btnProximo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnProximoMousePressed(evt);
             }
         });
-        jPanel2.add(btnProximo, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, -1, -1));
+        jPanel2.add(btnProximo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
+
+        btnDataDia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Refresh.png"))); // NOI18N
+        btnDataDia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDataDiaMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnDataDiaMousePressed(evt);
+            }
+        });
+        btnDataDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDataDiaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnDataDia, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, -1, -1));
 
         jPanel3.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 51, 153)));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -515,35 +539,47 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         txtHorario.setSelectionEnd(5);
     }//GEN-LAST:event_txtHorarioMousePressed
 
-    private void btnProximoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoActionPerformed
-        DataHora dt = new DataHora();
-        SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
-        int linha = tblPrincipal.getSelectedRow();
-
-        dt.setData(txtData.getDate());
-        try {
-            dt.setHorario(sdfH.parse(tblPrincipal.getValueAt(linha, 0).toString()));
-        } catch (ParseException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        dt.setDia(lblDiaSemana.getText());
-
-        if (tblPrincipal.getValueAt(linha, 1).toString().equals("")) {
-            novo = true;
-            TelaAgendamento a = new TelaAgendamento(this, rootPaneCheckingEnabled, dt, novo);
-            a.setVisible(true);
-        } else {
-            novo = false;
-            TelaAgendamento a = new TelaAgendamento(this, rootPaneCheckingEnabled, dt, novo);
-            a.setVisible(true);
-        }
+    private void btnProximoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProximoMousePressed
+        GregorianCalendar calInicio = new GregorianCalendar();
+        int aux = evt.getClickCount();
+        cont += aux;
+        Date dt = txtData.getDate();
+        calInicio.add(GregorianCalendar.DAY_OF_MONTH, cont);
+        dt = calInicio.getTime();
+        txtData.setDate(dt);
 
         limparTabela();
         atualizaTabela();
         atualizaDiaSemanaTela();
+    }//GEN-LAST:event_btnProximoMousePressed
 
-    }//GEN-LAST:event_btnProximoActionPerformed
+    private void btnDataDiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDataDiaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDataDiaMouseClicked
+
+    private void btnDataDiaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDataDiaMousePressed
+        dataTela();
+        atualizaTabela();
+        atualizaDiaSemanaTela();
+        cont = 0;
+    }//GEN-LAST:event_btnDataDiaMousePressed
+
+    private void btnDataDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDataDiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDataDiaActionPerformed
+
+    private void btnAnteriorMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnteriorMousePressed
+        GregorianCalendar calInicio = new GregorianCalendar();
+        cont -= 1;
+        Date dt = txtData.getDate();
+        calInicio.add(GregorianCalendar.DAY_OF_MONTH, cont);
+        dt = calInicio.getTime();
+        txtData.setDate(dt);
+
+        limparTabela();
+        atualizaTabela();
+        atualizaDiaSemanaTela();
+    }//GEN-LAST:event_btnAnteriorMousePressed
 
     public boolean verificaHorario(String hora) {
         int h1 = Integer.parseInt(hora.substring(0, 1));
@@ -739,6 +775,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnCadCliente;
     private javax.swing.JButton btnCaixa;
     private javax.swing.JButton btnConfiguracao;
+    private javax.swing.JButton btnDataDia;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnFinanceiro;
     private javax.swing.JButton btnOrcamento;
