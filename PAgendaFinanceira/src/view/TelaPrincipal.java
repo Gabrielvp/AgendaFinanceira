@@ -170,11 +170,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 txtHorarioMousePressed(evt);
             }
         });
-        txtHorario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtHorarioActionPerformed(evt);
-            }
-        });
         jPanel2.add(txtHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 180, 50, 20));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -530,10 +525,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ckbConsultasRealizadasActionPerformed
 
-    private void txtHorarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHorarioActionPerformed
-
-    }//GEN-LAST:event_txtHorarioActionPerformed
-
     private void txtHorarioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtHorarioMousePressed
         txtHorario.setSelectionStart(0);
         txtHorario.setSelectionEnd(5);
@@ -541,8 +532,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
     private void btnProximoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProximoMousePressed
         GregorianCalendar calInicio = new GregorianCalendar();
-        int aux = evt.getClickCount();
-        cont += aux;
+        cont++;
         Date dt = txtData.getDate();
         calInicio.add(GregorianCalendar.DAY_OF_MONTH, cont);
         dt = calInicio.getTime();
@@ -558,6 +548,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDataDiaMouseClicked
 
     private void btnDataDiaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDataDiaMousePressed
+        limparTabela();
         dataTela();
         atualizaTabela();
         atualizaDiaSemanaTela();
@@ -582,16 +573,12 @@ public final class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAnteriorMousePressed
 
     public boolean verificaHorario(String hora) {
-        int h1 = Integer.parseInt(hora.substring(0, 1));
-        int h2 = Integer.parseInt(hora.substring(1, 2));
-        int m1 = Integer.parseInt(hora.substring(3, 4));
-        if (h1 > 2) {
+        int h = Integer.parseInt(hora.substring(0, 2));
+        int m = Integer.parseInt(hora.substring(3, 4));
+        if (h > 24) {
             limparTela();
             return false;
-        } else if (m1 > 5) {
-            limparTela();
-            return false;
-        } else if (h2 > 3) {
+        } else if (m > 5) {
             limparTela();
             return false;
         }
