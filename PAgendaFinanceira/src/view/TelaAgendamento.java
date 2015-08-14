@@ -41,7 +41,7 @@ public class TelaAgendamento extends javax.swing.JDialog {
         lblHorario.setText(sdfH.format(dtHora.getHorario()));
         lblDia.setText(dtHora.getDia());
         this.novo = novo;
-        if(!novo){
+        if (!novo) {
             btnSalvar.setEnabled(false);
         }
     }
@@ -78,6 +78,8 @@ public class TelaAgendamento extends javax.swing.JDialog {
         btnSalvar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         lblDia = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblPessoa = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agendamento - Agenda Financeira");
@@ -88,8 +90,8 @@ public class TelaAgendamento extends javax.swing.JDialog {
 
         txtNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
         txtNome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtNomeKeyPressed(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNomeKeyReleased(evt);
             }
         });
 
@@ -171,10 +173,10 @@ public class TelaAgendamento extends javax.swing.JDialog {
                                     .addComponent(lblDia))
                                 .addComponent(btnPesquisaOrcamento))))
                     .addComponent(jLabel1)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,9 +186,9 @@ public class TelaAgendamento extends javax.swing.JDialog {
                     .addComponent(btnSalvar)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, 0)
+                        .addGap(4, 4, 4)
                         .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
+                        .addGap(4, 4, 4)
                         .addComponent(jLabel6)
                         .addGap(0, 0, 0)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -207,18 +209,53 @@ public class TelaAgendamento extends javax.swing.JDialog {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnFinanceiro)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
+
+        tblPessoa.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nome", "Fone"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblPessoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPessoaMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblPessoa);
+        if (tblPessoa.getColumnModel().getColumnCount() > 0) {
+            tblPessoa.getColumnModel().getColumn(0).setResizable(false);
+            tblPessoa.getColumnModel().getColumn(0).setPreferredWidth(200);
+            tblPessoa.getColumnModel().getColumn(1).setResizable(false);
+            tblPessoa.getColumnModel().getColumn(1).setPreferredWidth(20);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -254,9 +291,32 @@ public class TelaAgendamento extends javax.swing.JDialog {
         f.setVisible(true);
     }//GEN-LAST:event_btnFinanceiroActionPerformed
 
-    private void txtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyPressed
-       
-    }//GEN-LAST:event_txtNomeKeyPressed
+    private void txtNomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNomeKeyReleased
+      String nome = txtNome.getText();
+        buscaNome(nome);
+    }//GEN-LAST:event_txtNomeKeyReleased
+
+    private void tblPessoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPessoaMouseClicked
+        int linha = tblPessoa.getSelectedRow();
+        Pessoa p = (Pessoa)tblPessoa.getValueAt(linha, 0);
+        txtNome.setText(p.getNome().toString());
+    }//GEN-LAST:event_tblPessoaMouseClicked
+
+    public void buscaNome(String nome) {
+        CadastroClienteDAO cDAO = new CadastroClienteDAO();
+        List<Pessoa> listaBuscaNome = cDAO.buscarNome(nome);
+        DefaultTableModel model = (DefaultTableModel) this.tblPessoa.getModel();
+        model.setNumRows(0);
+        for (int i = 0; i < listaBuscaNome.size(); i++) {
+            if(txtNome.getText().isEmpty()){
+                model.setNumRows(0);
+            }else{
+            model.addRow(new Object[]{});
+            model.setValueAt(listaBuscaNome.get(i).getNome(), i, 0);
+            model.setValueAt(listaBuscaNome.get(i).getListaTelefone(), i, 1);
+            }
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -312,9 +372,11 @@ public class TelaAgendamento extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblDia;
     private javax.swing.JLabel lblHorario;
+    private javax.swing.JTable tblPessoa;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtOrcamento;
     private javax.swing.JTextArea txtaDescricao;

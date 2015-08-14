@@ -69,7 +69,7 @@ public class TelaConfiguracoes extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configurações - Agenda Financeira");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)), "Almoço:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)), "Almoço:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(0, 51, 153))); // NOI18N
 
         jLabel4.setText("Início:");
 
@@ -81,6 +81,11 @@ public class TelaConfiguracoes extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtAlmocoInicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtAlmocoInicioMousePressed(evt);
+            }
+        });
 
         txtAlmocoFim.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
         try {
@@ -88,6 +93,11 @@ public class TelaConfiguracoes extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtAlmocoFim.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtAlmocoFimMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -118,7 +128,7 @@ public class TelaConfiguracoes extends javax.swing.JDialog {
                 .addGap(33, 33, 33))
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)), "Horas:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 51, 153))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)), "Horas:", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("sansserif", 1, 12), new java.awt.Color(0, 51, 153))); // NOI18N
 
         jLabel1.setText("Horário Inicial:");
 
@@ -132,6 +142,11 @@ public class TelaConfiguracoes extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtHoraInicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtHoraInicioMousePressed(evt);
+            }
+        });
 
         txtHoraFim.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
         try {
@@ -139,8 +154,18 @@ public class TelaConfiguracoes extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtHoraFim.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtHoraFimMousePressed(evt);
+            }
+        });
 
         txtIntervalo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
+        txtIntervalo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                txtIntervaloMousePressed(evt);
+            }
+        });
 
         cbDia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbDia.setBorder(null);
@@ -281,7 +306,7 @@ public class TelaConfiguracoes extends javax.swing.JDialog {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         Configuracao c = new Configuracao();
         ConfiguracaoDAO cDAO = new ConfiguracaoDAO();
-       
+
         try {
             c.setHoraInicial(sdfH.parse(txtHoraInicio.getText()));
         } catch (ParseException ex) {
@@ -294,17 +319,25 @@ public class TelaConfiguracoes extends javax.swing.JDialog {
         }
         c.setIntervalo(Integer.parseInt(txtIntervalo.getText()));
         c.setDia((EnumDiaSemana) cbDia.getSelectedItem());
-        try {
-            c.setAlmocoInicio(sdfH.parse(txtAlmocoInicio.getText()));
-        } catch (ParseException ex) {
-            Logger.getLogger(TelaConfiguracoes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            c.setAlmocoFim(sdfH.parse(txtAlmocoFim.getText()));
-        } catch (ParseException ex) {
-            Logger.getLogger(TelaConfiguracoes.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
+        if (txtAlmocoInicio.getText().equals("  :  ")) {
+            
+        } else {
+            try {
+                c.setAlmocoInicio(sdfH.parse(txtAlmocoInicio.getText()));
+            } catch (ParseException ex) {
+                Logger.getLogger(TelaConfiguracoes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        if (txtAlmocoFim.getText().equals("  :  ")) {
+            
+        } else {
+            try {
+                c.setAlmocoFim(sdfH.parse(txtAlmocoFim.getText()));
+            } catch (ParseException ex) {
+                Logger.getLogger(TelaConfiguracoes.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         String dia = cbDia.getSelectedItem().toString();
         cDAO.insert(c);
         limparTela();
@@ -334,13 +367,38 @@ public class TelaConfiguracoes extends javax.swing.JDialog {
                 int confirmacao = JOptionPane.showConfirmDialog(this, "Deseja Excluir a configuração?", "Exclusão", 0, 0);
                 if (confirmacao == 0) {
                     cDAO.delete(dia);
-                     this.limparTabela();
+                    this.limparTabela();
                 }
             }
         }
-        
+
         this.atualizaTabelaConfiguracao();
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void txtHoraInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtHoraInicioMousePressed
+        txtHoraInicio.setSelectionStart(0);
+        txtHoraInicio.setSelectionEnd(5);
+    }//GEN-LAST:event_txtHoraInicioMousePressed
+
+    private void txtHoraFimMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtHoraFimMousePressed
+        txtHoraFim.setSelectionStart(0);
+        txtHoraFim.setSelectionEnd(5);
+    }//GEN-LAST:event_txtHoraFimMousePressed
+
+    private void txtIntervaloMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtIntervaloMousePressed
+        txtIntervalo.setSelectionStart(0);
+        txtIntervalo.setSelectionEnd(3);
+    }//GEN-LAST:event_txtIntervaloMousePressed
+
+    private void txtAlmocoInicioMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAlmocoInicioMousePressed
+        txtAlmocoInicio.setSelectionStart(0);
+        txtAlmocoInicio.setSelectionEnd(5);
+    }//GEN-LAST:event_txtAlmocoInicioMousePressed
+
+    private void txtAlmocoFimMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAlmocoFimMousePressed
+        txtAlmocoFim.setSelectionStart(0);
+        txtAlmocoFim.setSelectionEnd(5);
+    }//GEN-LAST:event_txtAlmocoFimMousePressed
 
     public void limparTabela() {
         DefaultTableModel model
@@ -351,18 +409,18 @@ public class TelaConfiguracoes extends javax.swing.JDialog {
             model.setValueAt(text, i, 1);
             model.setValueAt(text, i, 2);
             model.setValueAt(text, i, 3);
-            
+
         }
     }
-    
-    public void limparTela(){
+
+    public void limparTela() {
         txtHoraInicio.setText("");
         txtHoraFim.setText("");
         txtIntervalo.setText("");
         txtAlmocoInicio.setText("");
         txtAlmocoFim.setText("");
     }
-    
+
     public void atualizaTabelaConfiguracao() {
         ConfiguracaoDAO cDAO = new ConfiguracaoDAO();
         List<Configuracao> listaConfiguracoes = cDAO.listarConfiguracao();

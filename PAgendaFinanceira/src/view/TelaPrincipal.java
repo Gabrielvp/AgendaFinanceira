@@ -5,7 +5,7 @@
  */
 package view;
 
-import com.toedter.calendar.JCalendar;
+import dao.ConfiguracaoDAO;
 import dao.agendamentoDAO;
 import entity.Agenda;
 import entity.Configuracao;
@@ -615,9 +615,6 @@ public final class TelaPrincipal extends javax.swing.JFrame {
 
     private void tabelaPrincipal() {
 
-        Pessoa p = new Pessoa();
-        Agenda a = new Agenda();
-        agendamentoDAO aDAO = new agendamentoDAO();
         ArrayList<String> listaPeriodo = new ArrayList<>();
 
         //Seta a hora inicial  

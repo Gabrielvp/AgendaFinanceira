@@ -27,14 +27,39 @@ public class ConfiguracaoDAO extends MySQL {
         try {
             PreparedStatement ps
                     = c.prepareStatement("INSERT INTO configuracoes "
-                            + "(horaInicial, horaFinal, intervalo, almocoInicio, almocoFim, dia)  "
-                            + "VALUES ( ?, ?, ?, ?, ?, ?)");
+                            + "(horaInicial, horaFinal, intervalo, dia)  "
+                            + "VALUES ( ?, ?, ?, ?)");
             ps.setString(1, sdfH.format(configuracao.getHoraInicial()));
             ps.setString(2, sdfH.format(configuracao.getHoraFinal()));
             ps.setInt(3, configuracao.getIntervalo());
-            ps.setString(4, sdfH.format(configuracao.getAlmocoInicio()));
-            ps.setString(5, sdfH.format(configuracao.getAlmocoFim()));
-            ps.setInt(6, configuracao.getDia().getCodigo());
+            ps.setInt(4, configuracao.getDia().getCodigo());
+
+            ps.execute();
+            ps.close();
+            return true;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                c.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public boolean insertAlmoco(Configuracao configuracao) {
+
+        Connection c = this.getConnection();
+        try {
+            PreparedStatement ps
+                    = c.prepareStatement("INSERT INTO configuracoes "
+                            + "(almocoInicio, almocoFim)  "
+                            + "VALUES ( ?, ?)");
+            ps.setString(1, sdfH.format(configuracao.getAlmocoInicio()));
+            ps.setString(2, sdfH.format(configuracao.getAlmocoFim()));
 
             ps.execute();
             ps.close();
@@ -107,7 +132,7 @@ public class ConfiguracaoDAO extends MySQL {
         }
         return listaConfiguracoes;
     }
-    
+
     public List<Configuracao> listarConfiguracaoTela(String dia) {
         List<Configuracao> listaConfiguracoes = new ArrayList<>();
         Connection c = this.getConnection();
