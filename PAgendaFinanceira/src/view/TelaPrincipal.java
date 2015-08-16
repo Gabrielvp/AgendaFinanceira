@@ -228,7 +228,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
         lblDiaSemana.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblDiaSemana.setForeground(new java.awt.Color(255, 51, 51));
         lblDiaSemana.setText("diaSemana");
-        jPanel2.add(lblDiaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, -1, -1));
+        jPanel2.add(lblDiaSemana, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, -1, -1));
         jPanel2.add(txtData, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 130, -1));
 
         btnProximoHorario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Find.png"))); // NOI18N
@@ -246,7 +246,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 btnAnteriorMousePressed(evt);
             }
         });
-        jPanel2.add(btnAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, -1, -1));
+        jPanel2.add(btnAnterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 180, -1, -1));
 
         btnProximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Forward.png"))); // NOI18N
         btnProximo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -254,7 +254,7 @@ public final class TelaPrincipal extends javax.swing.JFrame {
                 btnProximoMousePressed(evt);
             }
         });
-        jPanel2.add(btnProximo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, -1, -1));
+        jPanel2.add(btnProximo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, -1, -1));
 
         btnDataDia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Refresh.png"))); // NOI18N
         btnDataDia.addMouseListener(new java.awt.event.MouseAdapter() {

@@ -8,7 +8,6 @@ package view;
 import dao.agendamentoDAO;
 import entity.Agenda;
 import entity.DataHora;
-import entity.Pessoa;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -154,8 +153,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
     }//GEN-LAST:event_tblHorarioLivreMousePressed
 
     private void tabelaHorarioLivre() {
-        Pessoa p = new Pessoa();
-        Agenda a = new Agenda();
+
         agendamentoDAO aDAO = new agendamentoDAO();
         ArrayList<String> listaPeriodo = new ArrayList<>();
 
@@ -185,13 +183,13 @@ public class TelaProximoHorario extends javax.swing.JDialog {
             java.sql.Date dia;
             dia = new java.sql.Date(dt.getTime());
             Calendar c = Calendar.getInstance();
-            int diaSemanaInt = c.get(Calendar.DAY_OF_WEEK);
-            String diaDaSemana[] = {"Domingo", "Segunda-Feira", "Terça-Feira",
-                "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"};
+            int diaSemanaInt = calInicio.get(calInicio.DAY_OF_WEEK);
+            System.out.println(calInicio);
+            String diaDaSemana[] = {" ", "Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"};
             //pega o modelo da Tabela e coloca na variavel "model"
             DefaultTableModel model
                     = (DefaultTableModel) this.tblHorarioLivre.getModel();
-            //laço para inserir o número de linhas igual ao da lista
+
             for (int i = 0; i < listaPeriodo.size(); i++) {
                 model.addRow(new Object[]{});
                 model.setValueAt(diaDaSemana[diaSemanaInt], i, 0);
@@ -212,8 +210,8 @@ public class TelaProximoHorario extends javax.swing.JDialog {
             java.sql.Date dia;
             dia = new java.sql.Date(dt.getTime());
             Calendar c = Calendar.getInstance();
-            int diaSemanaInt = c.get(Calendar.DAY_OF_WEEK);
-            String diaDaSemana[] = {"Domingo", "Segunda-Feira", "Terça-Feira",
+            int diaSemanaInt = calInicio.get(calInicio.DAY_OF_WEEK);
+            String diaDaSemana[] = {" ","Domingo", "Segunda-Feira", "Terça-Feira",
                 "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"};
 
             listaPeriodo.add(String.format("%02d",
@@ -231,10 +229,10 @@ public class TelaProximoHorario extends javax.swing.JDialog {
                 dia = new java.sql.Date(dt.getTime());
                 listaPeriodo.add(String.format("%02d",
                         inicial.get(Calendar.HOUR_OF_DAY)) + ":" + String.format("%02d", inicial.get(Calendar.MINUTE)));
-                if (diaSemanaInt < 6) {
+                if (diaSemanaInt < 7) {
                     diaSemanaInt++;
                 } else {
-                    diaSemanaInt = 0;
+                    diaSemanaInt = 1;
                 }
             }
         }
