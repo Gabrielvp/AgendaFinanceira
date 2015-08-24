@@ -46,6 +46,7 @@ public class TelaProximoHorario extends javax.swing.JDialog {
     SimpleDateFormat sdfD = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
     boolean novo = true;
+    int cont = 0;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -91,6 +92,11 @@ public class TelaProximoHorario extends javax.swing.JDialog {
         btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Back.png"))); // NOI18N
 
         btnProximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Forward.png"))); // NOI18N
+        btnProximo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnProximoMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -151,6 +157,10 @@ public class TelaProximoHorario extends javax.swing.JDialog {
             removeLinha();
         }
     }//GEN-LAST:event_tblHorarioLivreMousePressed
+
+    private void btnProximoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProximoMousePressed
+        
+    }//GEN-LAST:event_btnProximoMousePressed
 
     private void tabelaHorarioLivre() {
 

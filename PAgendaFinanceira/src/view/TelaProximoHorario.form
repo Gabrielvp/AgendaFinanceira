@@ -134,6 +134,9 @@
               <Image iconType="3" name="/images/Forward.png"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnProximoMousePressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
